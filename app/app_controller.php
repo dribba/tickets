@@ -4,7 +4,7 @@ class AppController extends Controller {
 
 	var $helpers = array('MyHtml', 'MyPaginator', 'MyForm', 'Session');
 	//var $components = array('RequestHandler', 'Session', 'Cookie', 'Filter', 'Uploader');
-	var $components = array('RequestHandler', 'Session');
+	//var $components = array('RequestHandler', 'Session');
 
 	function delete($id) {
 
@@ -73,5 +73,30 @@ class AppController extends Controller {
 		$this->__setAjaxFlash($options);
 	}
 
+	function beforeFilter() {
+
+
+		/** Check for a logged in user */
+		if ($this->Session->check('User')) {
+
+			/** Saves current logged in user */
+			$user = $this->Session->read('User');
+			App::import('Model', 'User');
+			User::store($user);
+
+		} else if (
+			!in_array(
+				$this->params['action'],
+				array('login', 'logout', 'forgot_password', 'add')))
+		{
+			$this->redirect(
+				array(
+					'controller' 	=> 'users',
+					'action' 		=> 'login'
+				)
+			);
+		}
+
+	}
 
 }

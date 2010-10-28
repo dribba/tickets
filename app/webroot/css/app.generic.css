@@ -59,6 +59,7 @@ table {
         background:#d1dff2;
 }
 
+
 /************************************************************************************************************
 *																											*
 *													HEADER													*
@@ -166,15 +167,12 @@ table {
 *																											*
 /***********************************************************************************************************/
 #content_ext{
-	
-
-	border-radius:14px 14px 14px 14px;
-	-moz-border-radius:14px 14px 14px 14px;
-	-webkit-border-radius:14px 14px 14px 14px;
-	background-color:#5786b2; 
+	height:516px;
+	weight:992px;
 	margin:3px;
-	padding:7px;
-	width:auto;
+	padding-top:7px;
+	-moz-border-radius:14px;
+	-webkit-border-radius:14px;
 }
 
 #content {

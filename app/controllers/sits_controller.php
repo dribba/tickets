@@ -3,27 +3,32 @@ class SitsController extends AppController {
 
 	var $name = 'Sits';
 
-	function index() {
+	function admin_index() {
 		$this->Sit->recursive = 0;
-		$this->set('sits', $this->paginate());
+		$this->set('data', $this->paginate());
 	}
 
-	function view($id = null) {
+	function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid sit', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('sit', $this->Sit->read(null, $id));
+		$this->set('data', $this->Sit->read(null, $id));
 	}
 
-	function add() {
+	function admin_add($id = null) {
 		if (!empty($this->data)) {
 			$this->Sit->create();
 			if ($this->Sit->save($this->data)) {
-				$this->Session->setFlash(__('The sit has been saved', true));
+				$this->Session->setFlash(__('Butaca agregada', true), 'flash_success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The sit could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('Error al agregar butaca', true), 'flash_error');
+			}
+		} else {
+			if (!empty($id)) {
+				$this->data = $this->Sit->read(null, $id);
+				$this->set('id', $this->data['Sit']['id']);
 			}
 		}
 		$locations = $this->Sit->Location->find('list');
@@ -52,16 +57,16 @@ class SitsController extends AppController {
 		$this->set(compact('locations', 'events'));
 	}
 
-	function delete($id = null) {
+	function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for sit', true));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Sit->delete($id)) {
-			$this->Session->setFlash(__('Sit deleted', true));
+			$this->Session->setFlash(__('Butaca eliminada', true), 'flash_success');
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Sit was not deleted', true));
+		$this->Session->setFlash(__('Error al eliminar Butaca', true), 'flash_error');
 		$this->redirect(array('action' => 'index'));
 	}
 }

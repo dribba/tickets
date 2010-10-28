@@ -1,13 +1,15 @@
-<div class="users form">
-<?php echo $this->Form->create('User', array('action' => 'login'));?>
+<div class="users">
+<?php
+	echo $this->Form->create('User', array('action' => 'login'));
+?>
 	<fieldset>
-		<legend><?php __('Login'); ?></legend>
+		<legend><?php __('Ingresar'); ?></legend>
 	<?php
-		echo $this->MyForm->input('username', array('label' => __('Documento', true)));
-		echo $this->MyForm->input('password', array('label' => __('Contraseña', true)));
-
+		echo $this->Form->input('username', array('label' => __('Username', true)));
+		echo $this->Form->input('password', array('label' => __('Password', true)));
 	?>
-	
 	</fieldset>
-<?php echo $this->Form->end(__('Ingresar', true));?>
+<?php echo $this->MyForm->submit(__('Ingresar', true), array('class' => 'action', 'id' => 'save', 'div' => false));
+	$this->Form->end();
+?>
 </div>

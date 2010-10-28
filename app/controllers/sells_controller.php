@@ -4,8 +4,9 @@ class SellsController extends AppController {
 	var $name = 'Sells';
 
 	function index() {
-		$this->Sell->recursive = 0;
-		$this->set('sells', $this->paginate());
+		//$this->Sell->recursive = 0;
+		$this->paginate['conditions'] = array('Sell.user_id' => 2);
+		$this->set('data', $this->paginate());
 	}
 
 	function view($id = null) {

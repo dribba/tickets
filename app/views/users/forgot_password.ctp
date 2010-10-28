@@ -2,7 +2,7 @@
 
 $out[] = $this->MyForm->create('User', array('class' => ''));
 
-$content[] = $this->MyForm->input('username', array('label' => __('Documento', true)));
+$content[] = $this->MyForm->input('document', array('label' => __('Documento', true)));
 
 
 $mobile[] = $this->MyHtml->tag('legend', __('Mobile phone', true));
@@ -12,6 +12,6 @@ $mobile[] = $this->MyForm->input('User.phone_number', array('label' => __('Numer
 $content[] = $this->MyHtml->tag('div', $this->MyHtml->tag('fieldset', $mobile), array('class' => 'input'));
 
 $out[] = $this->MyHtml->tag('div', $content, array('id' => 'container'));
-$out[] = $this->element("footer");
+$out[] = $this->element('footer', array('controller' => 'users'));
 
 echo $myHtml->out($out);

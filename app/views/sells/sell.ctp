@@ -16,23 +16,24 @@ $content[] = $this->MyForm->input('Sell.sit_id',
 $content[] = $this->MyForm->input('Sell.carnet',
 	array(
 		'options' 	=> array('Y' => __('Si', true), 'N' => __('No', true)),
-		'default' 	=> 'N',
+		'default' 	=> 'Y',
 		'label' 	=> 'Posee carnet'
 	)
 );
 $content[] = $this->MyForm->input('Sell.number', array('label' => __('Numero de carnet', true)));
 
-$street[] = $this->MyForm->input('Sell.street', array('label' => __('Direccion de entrega', true)));
-$street[] = $this->MyForm->input('Sell.horario', array('label' => __('Horario de entrega', true)));
 $street[] = $this->MyHtml->tag('label', __('Costo con envio a domicilio $20', true));
 $street[] = $this->MyHtml->tag('label', __('Costo retirando en sede $15', true));
 $street[] = $this->MyForm->input('Sell.send',
 	array(
 		'options' 	=> array('Y' => __('Si', true), 'N' => __('No', true)),
-		'default' => 'Y',
-		'label' => 'Enviar a domicilio'
+		'default'	=> 'Y',
+		'label'		=> 'Enviar a domicilio'
 	)
 );
+$streetDetail[] = $this->MyForm->input('Sell.street', array('label' => __('Direccion de entrega', true)));
+$streetDetail[] = $this->MyForm->input('Sell.horario', array('label' => __('Horario de entrega', true)));
+$street[] = $this->MyHtml->tag('div', $streetDetail, array('id' => 'street-detail'));
 
 $content[] = $this->MyHtml->tag('div', $street, array('id' => 'street'));
 $content[] = $this->MyForm->input('Sell.option',
@@ -46,7 +47,7 @@ $content[] = $this->MyForm->input('Sell.option',
 $out[] = $this->MyHtml->tag('div', $content, array('id' => 'container'));
 
 
-$out[] = $this->element("footer");
+$out[] = $this->element("footer", array('controller' => 'sells'));
 $out[] = $this->MyForm->end();
 
 echo $myHtml->out($out);
@@ -73,6 +74,13 @@ echo $this->MyHtml->scriptBlock(
 				$("#street").hide();
 			}
 		}
+		$("#SellSend").change(function() {
+			if ($(this).val() == "N") {
+				$("#street-detail").hide();
+			} else {
+				$("#street-detail").show();
+			}
+		});
 
-	});'
+	});', array('inline' => false)
 );
