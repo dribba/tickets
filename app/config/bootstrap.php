@@ -49,13 +49,6 @@
  *
  */
 
-
-/** Define access constants */
-define('RESUME', 1);
-define('READ', 2);
-define('WRITE', 4);
-
-
 /**
  * Easy debug and die method.
  *

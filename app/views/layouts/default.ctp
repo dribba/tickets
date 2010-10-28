@@ -1,118 +1,108 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<script type="text/javascript">
-	var base_url = "<?php echo Router::url('/'); ?>";
-</script>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<title><?php __('User'); ?></title>
-
+	<?php echo $this->Html->charset(); ?>
+	<title>
+		<?php echo $title_for_layout; ?>
+	</title>
 	<?php
+		echo $this->Html->meta('icon');
+
+		echo $this->Html->css('cake.generic');
 		echo $this->Html->css('smoothness/jquery-ui-1.8.1.custom');
-		echo $this->Html->css('app.generic') . "\n";
-		echo $this->Html->css('app.subject') . "\n";
-		//echo $this->Html->css('app.user.jquery-ui/jquery-ui-1.8.2.custom');
 
-
-		$jsFiles[] = 'jquery/jquery-1.4.2';
+		$jsFiles[] = 'jquery/jquery-1.4.3.min';
 		$jsFiles[] = 'jquery/jquery-ui-1.8.1.custom';
-
-
 		$jsFiles[] = 'default';
-		$jsFiles[] = 'dialogs';
-		$jsFiles[] = 'modals';
-		
 		echo $this->Html->script($jsFiles);
 
+		echo $scripts_for_layout;
+
+		$info = json_encode(
+			array(
+				'base_url'				=> Router::url('/'),
+				'current_controller' 	=> $this->params['controller'],
+				'current_action' 		=> $this->params['action']
+			)
+		);
+
 	?>
-	
 </head>
 <body>
-
-	<div id="page">
-
-		<?php
-
-		//echo $this->element('header');
-
-		?>
-
-		<div id="actions_bar">
-			<div class="left">
+	<div id="main-container">
+		<div id="header">
+			<h1>
 				<?php
-				/*$links = null;
-				$links[] = $this->MyHtml->link(
-					__('Obtener clave', true),
-					array('controller' => 'users', 'action' => 'forgot_password'),
-					array('title' => __('Obtener clave', true), 'class' => 'open_modal')
-				);
-				echo $this->element('actions', array('links' => $links));
 
-				$links = null;
-				$links[] = $this->MyHtml->link(
-					__('Asociarse', true),
-					array('controller' => 'wizards', 'action' => 'wizard', 'insert_document'),
-					array('title' => __('Asociarse', true), 'class' => 'open_modal')
-				);
-				echo $this->element('actions', array('links' => $links));
-			*/
-				$links = null;
-				$links[] = $this->MyHtml->link(
-					__('Comprar entrada', true),
-					array('controller' => 'sells', 'action' => 'sell'),
-					array('title' => __('Comprar entrada', true), 'class' => 'open_modal')
-				);
-				echo $this->element('actions', array('links' => $links));
+				$user = $this->Session->read('User');
+				if (!empty($user)) {
 
-				$links = null;
-				$links[] = $this->MyHtml->link(
-					__('Cerrar sesión', true),
-					array('controller' => 'users', 'action' => 'logout'),
-					array('title' => __('Cerrar sesión', true))
-				);
-				echo $this->element('actions', array('links' => $links));
+					if ($user['User']['type'] == 'admin') {
 
-				?>
+						echo $this->MyHtml->link(
+							__('Eventos', true),
+							array('admin' => true, 'controller' => 'events', 'action' => 'index')
+						);
 
-				
-			</div> <!-- left div-->
+						echo $this->MyHtml->link(
+							__('Locaciones', true),
+							array('admin' => true, 'controller' => 'locations', 'action' => 'index')
+						);
 
-			<div class="right">
+						echo $this->MyHtml->link(
+							__('Butacas', true),
+							array('admin' => true, 'controller' => 'sits', 'action' => 'index')
+						);
 
-			</div> <!-- right div-->
+						echo $this->MyHtml->link(
+							__('Socios', true),
+							array('admin' => true, 'controller' => 'users', 'action' => 'index')
+						);
 
-		</div> <!-- actions_bar-->
+					} else {
 
-		<div id="content_ext">
-			<div id="content_for_layout">
-				<div id="content">
-					<?php echo $content_for_layout; ?>
-				</div>
-			</div>
-		</div>
+						echo $this->MyHtml->link(__('Comprar entrada', true), array('controller' => 'sells', 'action' => 'sell'));
 
- 	</div><!--page-->
+					}
 
-	
-	<script type="text/javascript">
-	
-		$(document).ready(function($) {
+					echo $this->MyHtml->link(__('Cambiar contrasena', true), array('admin' => false, 'controller' => 'users', 'action' => 'change_password'));
 
-			/** Show flash message comming straight out from the controller */
-			var flashMessage = '<?php echo str_replace("'", "\'", $this->Session->flash()); ?>';
-			if (flashMessage != '') {
-				var flashMessageData = flashMessage.split('|');
-				if (flashMessageData[0] == 'SUCCESS') {
-					dialogs.showSuccess(flashMessageData[1]);
-				} else if (flashMessageData[0] == 'ERROR') {
-					dialogs.showError(flashMessageData[1]);
+					echo $this->MyHtml->link(__('Salir', true), array('controller' => 'users', 'action' => 'logout', 'admin' => false));
+				} else {
+					echo $this->MyHtml->link(
+						__('Recuperar contrasena', true),
+						array('admin' => false, 'controller' => 'users', 'action' => 'forgot_password')
+					);
+
+					echo $this->MyHtml->link(
+						__('Registrarse', true),
+						array('admin' => false, 'controller' => 'users', 'action' => 'add')
+					);
 				}
-			}
+				?>
+			</h1>
+		</div>
+		<div id="content">
 
+			<?php
+				
+				$message = explode('|', $this->Session->flash());
+				if (!empty($message[0])) {
+					echo $this->MyHtml->tag('div', $message[1], array('class' => 'message ' . $message[0]));
+				}
+			?>
 
-		}); //$(document).ready
-	</script>
-		
-	<?php echo $scripts_for_layout; ?>
+			<?php echo $content_for_layout; ?>
+
+		</div>
+		<div id="footer">
+		</div>
+	</div>
 	<?php echo $this->element('sql_dump'); ?>
+
+	<script type="text/javascript">
+		var info = '<?php echo $info; ?>';
+	</script>
+
 </body>
 </html>

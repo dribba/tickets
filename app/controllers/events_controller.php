@@ -2,31 +2,34 @@
 class EventsController extends AppController {
 
 
-	function index() {
-		$this->Event->recursive = 0;
-		$this->set('events', $this->paginate());
+	function admin_index() {
+		//$this->Event->recursive = 0;
+		$this->set('data', $this->paginate());
 	}
 
-	function view($id = null) {
+	function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid event', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('event', $this->Event->read(null, $id));
+		$this->set('data', $this->Event->read(null, $id));
 	}
 
-	function add() {
+	function admin_add($id = null) {
 		if (!empty($this->data)) {
 			$this->Event->create();
 			if ($this->Event->save($this->data)) {
-				$this->Session->setFlash(__('The event has been saved', true));
+				$this->Session->setFlash(__('Evento agregado', true), 'flash_success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The event could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('El evento no se pudo agregar', true), 'flash_error');
+			}
+		} else {
+			if (!empty($id)) {
+				$this->data = $this->Event->read(null, $id);
+				$this->set('id', $this->data['Event']['id']);
 			}
 		}
-		$sits = $this->Event->Sit->find('list');
-		$this->set(compact('sits'));
 	}
 
 	function edit($id = null) {
@@ -49,16 +52,16 @@ class EventsController extends AppController {
 		$this->set(compact('sits'));
 	}
 
-	function delete($id = null) {
+	function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for event', true));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Event->delete($id)) {
-			$this->Session->setFlash(__('Event deleted', true));
+			$this->Session->setFlash(__('Evento eliminado', true), 'flash_success');
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Event was not deleted', true));
+		$this->Session->setFlash(__('Error al eliminar evento', true), 'flash_error');
 		$this->redirect(array('action' => 'index'));
 	}
 }

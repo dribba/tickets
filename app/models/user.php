@@ -4,7 +4,9 @@ App::import('Vendor', 'Calculation', true,
 	'xmlrpc.inc'
 );
 class User extends AppModel {
-
+	var $virtualFields = array(
+		'formated_created' => 'DATE_FORMAT(User.created, "%d/%m/%Y")'
+	);
 	protected function _initialitation() {
 
 		//$this->options = array(0 => __('No', true), 1 => __('Yes', true));
@@ -13,40 +15,50 @@ class User extends AppModel {
 			'document' => array(
 				'notempty' => array(
 					'rule' => array('notempty'),
-					'message' => __("Document can't be empty", true),
+					'message' => __("Inrese su documento", true),
 					'last' => true, // Stop validation after this rule
 				),
 			),
 			'email' => array(
 				'notempty' => array(
 					'rule' => array('email'),
-					'message' => __("Enter a valid email", true),
+					'message' => __("Ingrese un email valida", true),
 					'last' => true, // Stop validation after this rule
 				),
 			),
 			'phone_area' => array(
 				'notempty' => array(
 					'rule' => array('notempty'),
-					'message' => __("Phone area can't be empty", true),
+					'message' => __("Ingrese el codigo de area sin el 0", true),
+					'last' => true, // Stop validation after this rule
+				),
+				'numero' => array(
+					'rule' => array('numeric'),
+					'message' => __("Solo datos numericos", true),
 					'last' => true, // Stop validation after this rule
 				),
 			),
 			'phone_number' => array(
 				'notempty' => array(
 					'rule' => array('notempty'),
-					'message' => __("Phone number can't be empty", true),
+					'message' => __("Ingrese su numero de celular sin el 15", true),
+					'last' => true, // Stop validation after this rule
+				),
+				'numero' => array(
+					'rule' => array('numeric'),
+					'message' => __("Solo datos numericos", true),
 					'last' => true, // Stop validation after this rule
 				),
 			),
 			'birthday' => array(
 				'notempty' => array(
 					'rule' => array('notempty'),
-					'message' => __("Birthday can't be empty", true),
+					'message' => __("Ingrese su fecha de nacimiento", true),
 					'last' => true, // Stop validation after this rule
 				),
 				'valid' => array(
 					'rule' => array('date'),
-					'message' => __("Enter a valid date", true),
+					'message' => __("Fecha ingresada incorrecta", true),
 					'last' => true, // Stop validation after this rule
 				)
 			),
@@ -92,8 +104,7 @@ class User extends AppModel {
             $user = $this->find('first',
 				array(
 					'conditions'	=> array(
-						'User.username'	=> 'agency'
-						//'User.username'	=> $data['User']['username'],
+						'User.username'	=> $data['User']['username'],
 						//'User.password'	=> $data['User']['password'],
 						//'User.state'	=> 'active'
 					),
@@ -158,7 +169,7 @@ class User extends AppModel {
 http://www.pseudocoder.com/archives/2008/10/06/accessing-user-sessions-from-models-or-anywhere-in-cakephp-revealed/
 *
 **************************************************************************************************/
-    function &getInstance($user=null) {
+    function &getInstance($user = null) {
 		static $instance = array();
 
 		if ($user) {

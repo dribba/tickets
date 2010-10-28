@@ -23,4 +23,18 @@ class Sit extends AppModel {
 		)
 	);
 
+	protected function _initialitation() {
+
+		$this->validate = array(
+			'code' => array(
+				'notempty' => array(
+					'rule' => array('notempty'),
+					'message' => __("Ingrese el nombre del evento", true),
+					'last' => true, // Stop validation after this rule
+				),
+			)
+		);
+
+    }
+
 }

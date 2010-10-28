@@ -16,9 +16,99 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+#street > div {
+	 padding-left:0px;
+	 
+}
+#street-detail > div {
+	 padding-left:0px;
+
+}
+#street > label {
+	width: auto;
+	clear: both;
+	margin:10px 0px;
+}
+
+
+.passengers{
+	display:inline;
+	float:left;
+	width:300px;
+}
+
+.action {
+	float:right !important;
+}
+
+#filters .select > label {
+	width:70px;
+}
+
+#filters form > div {
+	float:right;
+	display:inline;
+	clear:none;
+}
+#filters form {
+	float:right;
+	margin-right: 0px;
+}
+#filters {
+	float:right;
+	display:inline !important;
+	width: 600px;
+}
+.clear{
+	width:80px;
+	height: 28px;
+	padding-top:2px !important;
+}
+
+.clear-both{
+	clear: both;
+}
+#CharterDestinationId {
+	margin-left:15px;
+}
+
+.filter > label {
+	width:60px;
+	padding-top:5px;
+}
+
+.charters {
+	width:150px;
+	display: inline;
+}
+
 * {
 	margin:0;
 	padding:0;
+}
+
+.users {
+	margin:0 auto;
+	width:550px;
+}
+
+.aircraft {
+	width: 768px;
+	position: relative;
+	height: 326px;
+	clear: both;
+	margin: 25px;
+	margin-left: 60px;
+}
+.aircraft-background {
+	position: absolute;
+	height: 100%;
+	background-color: red;
+}
+.aircraft-img {
+	position:relative;
+	top:0;
+	left:0;
 }
 
 /** General Style Info **/
@@ -26,7 +116,7 @@ body {
 	background: #003d4c;
 	color: #fff;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
-	font-size:90%;
+	font-size:75%;
 	margin: 0;
 }
 a {
@@ -52,7 +142,7 @@ h1 {
 }
 h2 {
 	background:#fff;
-	color: #e32;
+	color: #333;
 	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
 	font-size: 190%;
 }
@@ -70,29 +160,54 @@ ul, li {
 }
 
 /** Layout **/
-#container {
+#main-container {
 	text-align: left;
+	width:950px;
+	margin:0 auto;
 }
 
 #header{
-	padding: 10px 20px;
+	background: url('../img/talleres.png') no-repeat top left;
+	height: 40px;
+	padding-top: 160px;
+}
+.button {
+	float:right;
+	padding-top:8px;
 }
 #header h1 {
 	line-height:20px;
-	background: #003d4c url('../img/cake.icon.png') no-repeat left;
+	background: #CCC;
 	color: #fff;
 	padding: 0px 30px;
+	padding-left: 5px;
+	height: 35px;
+	margin-top: 5px;
+	padding-top:7px;
 }
 #header h1 a {
-	color: #fff;
-	background: #003d4c;
+	color: #333333;
 	font-weight: normal;
+	padding:5px;
 	text-decoration: none;
+	border:1px solid white;
+	margin-right:5px;
+	background:#e6e49f;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f1f1d4), to(#e6e49f));
+	background-image: -moz-linear-gradient(top, #f1f1d4, #e6e49f);
+	border:1px solid #aaac62;
+	-webkit-border-radius:8px;
+	-moz-border-radius:8px;
+	border-radius:8px;
+	text-decoration:none;
+	text-shadow: #fff 0px 1px 0px;
+	
 }
 #header h1 a:hover {
-	color: #fff;
-	background: #003d4c;
-	text-decoration: underline;
+	color: #000;
+	text-decoration: none;
+	background: #f0f09a;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f7f7e1), to(#eeeca9));
 }
 #content{
 	background: #fff;
@@ -105,13 +220,14 @@ ul, li {
 	clear: both;
 	padding: 6px 10px;
 	text-align: right;
+	float: left;
 }
 
 /** containers **/
 div.form,
 div.index,
 div.view {
-	float:right;
+	float:left;
 	width:76%;
 	border-left:1px solid #666;
 	padding:10px 2%;
@@ -192,6 +308,7 @@ div.paging {
 	color: #ccc;
 	margin-top: 1em;
 	clear:both;
+	
 }
 div.paging span.disabled {
 	color: #ddd;
@@ -213,14 +330,16 @@ dl .altrow {
 	background: #f4f4f4;
 }
 dt {
+	display:block;
 	font-weight: bold;
 	padding-left: 4px;
 	vertical-align: top;
 }
 dd {
-	margin-left: 10em;
+	margin-left: 12em;
 	margin-top: -2em;
 	vertical-align: top;
+	padding-left:15px;
 }
 
 /** Forms **/
@@ -258,7 +377,7 @@ form div {
 	clear: both;
 	margin-bottom: 1em;
 	padding: .5em;
-	vertical-align: text-top;
+	1vertical-align: text-top;
 }
 form .input {
 	color: #444;
@@ -278,15 +397,19 @@ form div.submit {
 }
 label {
 	display: block;
-	font-size: 110%;
+	1font-size: 110%;
 	margin-bottom:3px;
+	width: 150px;
+	float: left;
 }
 input, textarea {
-	clear: both;
-	font-size: 140%;
+	float: left;
+	1clear: both;
+	1font-size: 140%;
 	font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;
 	padding: 1%;
-	width:98%;
+	width:250px;
+	1height: 20px;
 }
 select {
 	clear: both;
@@ -299,6 +422,9 @@ select[multiple=multiple] {
 option {
 	font-size: 120%;
 	padding: 0 3px;
+}
+optgroup option {
+	padding-left:20px;
 }
 input[type=checkbox] {
 	clear: left;
@@ -322,7 +448,7 @@ input[type=submit] {
 	font-size: 110%;
 	width: auto;
 }
-form .submit input[type=submit] {
+form .submit input[type=submit], .cancel{
 	background:#62af56;
 	background: -webkit-gradient(linear, left top, left bottom, from(#a8ea9c), to(#62af56));
 	background-image: -moz-linear-gradient(top, #a8ea9c, #62af56);
@@ -330,27 +456,41 @@ form .submit input[type=submit] {
 	color: #000;
 	text-shadow: #8cee7c 0px 1px 0px;
 }
-form .submit input[type=submit]:hover {
+form .submit input[type=submit]:hover, .cancel:hover{
 	background:#4ca83d;
 	background: -webkit-gradient(linear, left top, left bottom, from(#85e573), to(#4ca83d));
 	background-image: -moz-linear-gradient(top, #85e573, #4ca83d);
+}
+
+.cancel{
+	display: block;
+	float: left;
+	padding:6px !important;
+	margin-right: 10px;
+	
+}
+.cancel a {
+	text-transform: capitalize;
+	text-decoration: none !important;
+	font-weight: normal !important;
+	color: #333 !important;
 }
 
 /** Notices and Errors **/
 div.message {
 	clear: both;
 	color: #fff;
-	font-size: 140%;
+	font-size: 100%;
 	font-weight: bold;
 	margin: 0 0 1em 0;
 	background: #c73e14;
 	padding: 5px;
 }
-div.error-message {
-	clear: both;
-	color: #fff;
-	font-weight: bold;
-	background: #c73e14;
+div.error-message, .ERROR {
+	background: red !important;
+}
+div.ok-message, .SUCCESS {
+	background: green !important;
 }
 p.error {
 	background-color: #e32;
@@ -401,9 +541,13 @@ div.actions ul li a:hover {
 	text-decoration: underline;
 }
 
+input[type=text], input[type=password] {
+	height: 10px;
+}
+
 input[type=submit],
 div.actions ul li a,
-td.actions a {
+td.actions a, .cancel {
 	font-weight:normal;
 	padding: 4px 8px;
 	background:#e6e49f;
@@ -420,7 +564,7 @@ td.actions a {
 }
 input[type=submit]:hover,
 div.actions ul li a:hover,
-td.actions a:hover {
+td.actions a:hover, .cancel:hover {
 	background: #f0f09a;
 	background: -webkit-gradient(linear, left top, left bottom, from(#f7f7e1), to(#eeeca9));
 }
@@ -532,4 +676,20 @@ div.code-coverage-results span.result-ok {
 }
 div.code-coverage-results span.result-good {
 	color: #0a0;
+}
+
+div#paginator span.disabled {
+	width:75px;
+	float:left;
+	display:block;
+	1border:1px solid red;
+}
+
+.action .cancel{
+	margin-right: 0px;
+	padding-top:3px !important;
+}
+.action #search{
+	margin-right: 15px;
+	float: left;
 }

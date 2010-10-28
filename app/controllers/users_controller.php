@@ -4,7 +4,8 @@ class UsersController extends AppController {
 	var $paginate = array('order' => array('User.username'));
 
 	function index() {
-		d($this->User->get_personal_data('27959940'));
+		//d($this->User->get_personal_data('27959940'));
+		$this->set('data', $this->paginate());
 	}
 	function forgot_password() {
 		if (!empty($this->data)) {
@@ -13,7 +14,7 @@ class UsersController extends AppController {
 			$user = $this->User->find('first',
 				array(
 					'conditions' => array(
-						'User.document'		=> $this->data['User']['username'],
+						'User.document'		=> $this->data['User']['document'],
 						'User.mobile_phone'	=> $mobilePhone
 					)
 				)
@@ -28,13 +29,13 @@ class UsersController extends AppController {
 				);
 				$this->User->send_sms($user['User']['mobile_phone'], $message);
 				return $this->Session->setFlash(
-					__('Your user and password has been sent to your mobile phone.', true),
+					__('Su usuario y contrasena fueron enviados a su celular', true),
 					'flash_success'
 				);
 
 			} else {
 				return $this->Session->setFlash(
-					__('The document/mobile phone are not correct. Please, try again.', true),
+					__('Los datos ingresados son incorrectos', true),
 					'flash_error'
 				);
 			}
@@ -45,17 +46,15 @@ class UsersController extends AppController {
     function login() {
 
 		if (!empty($this->data)) {
-			
+
 			if ($user = $this->User->validate($this->data)) {
 
 				if ($user['User']['type'] == 'admin') {
-					$prefixRoute = 'admin';
 					$redirect = array(
 						'admin'			=> true,
 						'controller'	=> 'events',
 					);
 				} else {
-					$prefixRoute = '';
 					$redirect = array(
 						'controller'	=> 'sells',
 					);
@@ -66,8 +65,8 @@ class UsersController extends AppController {
 				$this->redirect($redirect);
 			} else {
 				$this->Session->setFlash(
-					__('The username/password are not correct. Please, try again.', true),
-					'flash_success'
+					__('Los datos ingresados son incorrectos', true),
+					'flash_error'
 				);
 				$this->redirect(array(
 					'controller'	=> 'users',
@@ -75,8 +74,6 @@ class UsersController extends AppController {
 				));
 			}
 		}
-
-		$this->layout = 'login';
 	}
 
 
@@ -185,7 +182,7 @@ class UsersController extends AppController {
 
 /**
  * Create
- */
+ */ /*
 	function admin_add($id = null) {
 		$this->set('types', array('admin' => 'admin', 'agency' => 'agency'));
 		if (!empty($this->data)) {
@@ -210,6 +207,23 @@ class UsersController extends AppController {
 				$this->data = $user;
 			}
 		}
+	}*/
+
+	function admin_add($id = null) {
+		if (!empty($this->data)) {
+			$this->User->create();
+			if ($this->User->save($this->data)) {
+				$this->Session->setFlash(__('The user has been saved', true));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.', true));
+			}
+		} else {
+			if (!empty($id)) {
+				$this->data = $this->User->read(null, $id);
+				$this->set('id', $this->data['User']['id']);
+			}
+		}
 	}
 
 
@@ -217,12 +231,10 @@ class UsersController extends AppController {
  * Read
  */
 	function admin_view($id) {
-		$this->set('types', array('admin' => 'admin', 'agency' => 'agency'));
+		
 		$this->set('id', $id);
 		//$this->set('attributes', getConf('/App/Cards/Card[name=users]/Attributes/Attribute/.'));
-		$user = $this->User->read(null, $id);
-		$this->data = $user;
-		$this->render('admin_add');
+		$this->set('data', $this->User->read(null, $id));
 		
 	}
 
@@ -256,12 +268,12 @@ class UsersController extends AppController {
 
 		if ($this->User->delete($id)) {
 			$this->Session->setFlash(
-				__('User deleted', true),
+				__('Socio eliminado', true),
 				'flash_success'
 			);
 		} else {
 			$this->Session->setFlash(
-				__('User was not deleted', true),
+				__('Error al eliminar socio', true),
 				'flash_error'
 			);
 		}

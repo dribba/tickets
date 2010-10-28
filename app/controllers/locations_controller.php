@@ -3,27 +3,31 @@ class LocationsController extends AppController {
 
 	var $name = 'Locations';
 
-	function index() {
-		$this->Location->recursive = 0;
-		$this->set('locations', $this->paginate());
+	function admin_index() {
+		$this->set('data', $this->paginate());
 	}
 
-	function view($id = null) {
+	function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid location', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('location', $this->Location->read(null, $id));
+		$this->set('data', $this->Location->read(null, $id));
 	}
 
-	function add() {
+	function admin_add($id = null) {
 		if (!empty($this->data)) {
 			$this->Location->create();
 			if ($this->Location->save($this->data)) {
-				$this->Session->setFlash(__('The location has been saved', true));
+				$this->Session->setFlash(__('Locacion agregada', true), 'flash_success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The location could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('La locacion no se pudo agregar', true), 'flash_error');
+			}
+		} else {
+			if (!empty($id)) {
+				$this->data = $this->Location->read(null, $id);
+				$this->set('id', $this->data['Location']['id']);
 			}
 		}
 	}
@@ -46,16 +50,16 @@ class LocationsController extends AppController {
 		}
 	}
 
-	function delete($id = null) {
+	function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for location', true));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Location->delete($id)) {
-			$this->Session->setFlash(__('Location deleted', true));
+			$this->Session->setFlash(__('Locacion eliminada', true), 'flash_success');
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Location was not deleted', true));
+		$this->Session->setFlash(__('Error al eliminar locacion', true), 'flash_error');
 		$this->redirect(array('action' => 'index'));
 	}
 }
