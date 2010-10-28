@@ -1,108 +1,45 @@
 <?php
-
-App::import('Vendor', 'Calculation', true,
-	array(APP . 'vendors' . DS . 'xmlrpc'),
-	'xmlrpc.inc'
-);
-
 class UsersController extends AppController {
 
 	var $paginate = array('order' => array('User.username'));
 
-	// Configuracion para conectar desde fuera
-	// Proveedor: ROL
-	var $remote_server = 'http://web.riesgoonline.com/servicios/';
-
-	// Servicio a ejecutar, para obtener simplemente una identificacion
-	var $remote_service = 'riesgoonlineProcess.obtenerIdentificacion';
-
-	// Servicio a ejecutar, para obtener localizacion mediate loteo
-	//var $remote_service = 'riesgoonlineProcess.obtenerLocalizacion';
-
-	// Usuario para todos los servicios
-	// Proveedor: ROL
-	var $remote_user = 'consultas';
-
-	// Contraseña para todos los servicios
-	// Proveedor: ROL
-	var $remote_pass = 'consultas21215';
-
-	// Identificador alternativo de cliente para todos los servicios
-	// Proveedor: Cliente
-	var $remote_uidx = '';
-
-
-	/**
-	* XML-RPC Query
-	*
-	*/
-	function xmlrpc_query($server, $service, $params = false, $debug = 0) {
-
-		if ($params) {
-			foreach ($params as $k => $v) {
-				$params[$k] = php_xmlrpc_encode($v);
-			}
-		}
-
-		$f = new xmlrpcmsg($service, $params);
-		$c = new xmlrpc_client($server);
-		$c->setDebug($debug);
-		$r = $c->send($f);
-
-		if (!$r->faultCode()) {
-
-			$data = array();
-
-			foreach ($r->value()->me['array'][0]->me['struct'] as $key => $value) {
-				$data[$key] = $value->me['string'];
-			}
-
-			return $data;
-
-		} else {
-
-			return array(
-				array('error' => array($r->faultCode() => htmlspecialchars($r->faultString())))
-			);
-
-		}
+	function index() {
+		d($this->User->get_personal_data('27959940'));
 	}
-
-
-	function __sendSMS($number, $data) {
-		//uniqid()
-	
-	}
-
-	function register() {
-
+	function forgot_password() {
 		if (!empty($this->data)) {
-			$this->data['User']['type'] = '';
-			$this->User->save();
-		} else {
 
-			$r = $this->xmlrpc_query(
-				$this->remote_server,
-				$this->remote_service,
+			$mobilePhone = $this->data['User']['phone_area'] . $this->data['User']['phone_number'];
+			$user = $this->User->find('first',
 				array(
-					$this->remote_user,
-					$this->remote_pass,
-					$this->remote_uidx,
-					array('documento' => '5995910', 'sexo' => 'F')
+					'conditions' => array(
+						'User.document'		=> $this->data['User']['username'],
+						'User.mobile_phone'	=> $mobilePhone
+					)
 				)
 			);
 
-			$data['document'] = $r['documento'];
-			$data['full_name'] = $r['apellido'] . ' ' . $r['nombre'];
-			$data['sex'] = $r['sexo'];
+			if (!empty($user)) {
+				
+				$message = sprintf(
+					"Nombre de usuario: %s Contraseña: %s",
+					$user['User']['document'],
+					$user['User']['mobile_phone']
+				);
+				$this->User->send_sms($user['User']['mobile_phone'], $message);
+				return $this->Session->setFlash(
+					__('Your user and password has been sent to your mobile phone.', true),
+					'flash_success'
+				);
 
-			$this->data['User'] = $data;
+			} else {
+				return $this->Session->setFlash(
+					__('The document/mobile phone are not correct. Please, try again.', true),
+					'flash_error'
+				);
+			}
+			
 		}
-
-	}
-
-	function forgot_password() {
-
 	}
 
     function login() {
@@ -120,7 +57,7 @@ class UsersController extends AppController {
 				} else {
 					$prefixRoute = '';
 					$redirect = array(
-						'controller'	=> 'events',
+						'controller'	=> 'sells',
 					);
 				}
 				$userSession = $user;
@@ -129,7 +66,7 @@ class UsersController extends AppController {
 				$this->redirect($redirect);
 			} else {
 				$this->Session->setFlash(
-					__('The email/password are not correct. Please, try again.', true),
+					__('The username/password are not correct. Please, try again.', true),
 					'flash_success'
 				);
 				$this->redirect(array(
@@ -139,7 +76,7 @@ class UsersController extends AppController {
 			}
 		}
 
-		//$this->layout = 'login';
+		$this->layout = 'login';
 	}
 
 

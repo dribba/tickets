@@ -1,50 +1,56 @@
 <?php
-
+App::import('Vendor', 'Calculation', true,
+	array(APP . 'vendors' . DS . 'xmlrpc'),
+	'xmlrpc.inc'
+);
 class User extends AppModel {
 
 	protected function _initialitation() {
 
 		//$this->options = array(0 => __('No', true), 1 => __('Yes', true));
 
-
-        $this->validate = array(
-			'username' => array(
+		$this->validate = array(
+			'document' => array(
 				'notempty' => array(
 					'rule' => array('notempty'),
-					'message' => __("Username can't be empty", true),
-					'last' => true, // Stop validation after this rule
-				),
-			),
-			'full_name' => array(
-				'notempty' => array(
-					'rule' => array('notempty'),
-					'message' => __("Full name can't be empty", true),
+					'message' => __("Document can't be empty", true),
 					'last' => true, // Stop validation after this rule
 				),
 			),
 			'email' => array(
 				'notempty' => array(
 					'rule' => array('email'),
-					'message' => __("Email can't be empty", true),
+					'message' => __("Enter a valid email", true),
 					'last' => true, // Stop validation after this rule
 				),
 			),
-			'password' => array(
+			'phone_area' => array(
 				'notempty' => array(
 					'rule' => array('notempty'),
-					'message' => __("Password can't be empty", true),
+					'message' => __("Phone area can't be empty", true),
 					'last' => true, // Stop validation after this rule
 				),
 			),
-			're-password' => array(
+			'phone_number' => array(
 				'notempty' => array(
-					'rule' => array('isSamePassword'),
-					'message' => __('Passwords do not match', true),
+					'rule' => array('notempty'),
+					'message' => __("Phone number can't be empty", true),
 					'last' => true, // Stop validation after this rule
 				),
 			),
-			
-	);
+			'birthday' => array(
+				'notempty' => array(
+					'rule' => array('notempty'),
+					'message' => __("Birthday can't be empty", true),
+					'last' => true, // Stop validation after this rule
+				),
+				'valid' => array(
+					'rule' => array('date'),
+					'message' => __("Enter a valid date", true),
+					'last' => true, // Stop validation after this rule
+				)
+			),
+		);
 
     }
 
@@ -86,9 +92,9 @@ class User extends AppModel {
             $user = $this->find('first',
 				array(
 					'conditions'	=> array(
-						//'User.email'	=> 'mradosta@pragmatia.com'
-						'User.username'	=> $data['User']['username'],
-						'User.password'	=> md5($data['User']['password']),
+						'User.username'	=> 'agency'
+						//'User.username'	=> $data['User']['username'],
+						//'User.password'	=> $data['User']['password'],
 						//'User.state'	=> 'active'
 					),
 				)
@@ -198,5 +204,81 @@ http://www.pseudocoder.com/archives/2008/10/06/accessing-user-sessions-from-mode
 
 		return $value[0];
     }
+
+	function send_sms($to, $message) {
+		$c = curl_init();
+		$url = sprintf(
+			'http://ws.intertronmobile.com/Gateway/WSMessage.asmx/SendNow?pUser=userRol&pPassword=r07nl1n3.&pToNum=%s&pToCompany=4&pFromNum=11011&pMessage=%s&pmsgId=45',
+			$to,
+			$message
+		);
+   
+		curl_setopt($c, CURLOPT_URL, $url);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+		$out = curl_exec($c);
+		curl_close($c);
+		
+		return $out;
+	}
+
+	function get_personal_data($document) {
+		$r = $this->xmlrpc_query(
+			array(
+				array('documento' => $document, 'sexo' => 'M')
+			)
+		);
+		return $r;
+	}
+
+	/**
+	* XML-RPC Query
+	*
+	*/
+	function xmlrpc_query($params = false, $debug = 0) {
+
+		// Configuracion para conectar desde fuera
+		// Proveedor: ROL
+		$server = 'http://web.riesgoonline.com/servicios/';
+		
+		// Servicio a ejecutar, para obtener simplemente una identificacion
+		$service = 'riesgoonlineProcess.obtenerIdentificacion';
+
+		$defaultParams[] = 'consultas'; //user
+		$defaultParams[] = 'consultas21215'; //pass
+		$defaultParams[] = ''; //uidx
+
+		if ($params) {
+			$params = array_merge($defaultParams, $params);
+			foreach ($params as $k => $v) {
+				$params[$k] = php_xmlrpc_encode($v);
+			}
+		}
+
+		$f = new xmlrpcmsg($service, $params);
+		$c = new xmlrpc_client($server);
+		$c->setDebug($debug);
+		$r = $c->send($f);
+
+		if (!$r->faultCode()) {
+
+			$data = array();
+
+			foreach ($r->value()->me['array'][0]->me['struct'] as $key => $value) {
+				$data[$key] = $value->me['string'];
+			}
+
+			return $data;
+
+		} else {
+
+			return array(
+				array('error' => array($r->faultCode() => htmlspecialchars($r->faultString())))
+			);
+
+		}
+	}
+
+	
+
 
 }

@@ -10,7 +10,8 @@ class Sell extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+		'Location'
 	);
 
 	var $hasMany = array(

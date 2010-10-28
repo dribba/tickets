@@ -1,19 +1,13 @@
-<?php
+<div class="users form">
+<?php echo $this->Form->create('User', array('action' => 'login'));?>
+	<fieldset>
+		<legend><?php __('Login'); ?></legend>
+	<?php
+		echo $this->MyForm->input('username', array('label' => __('Documento', true)));
+		echo $this->MyForm->input('password', array('label' => __('Contraseña', true)));
 
-$out[] = $session->flash('auth');
-$out[] = $myForm->create('User', array('action' => 'login'));
-$out[] = $myForm->input('username', array('label' => __('Documento', true)));
-$out[] = $myForm->input('password', array('label' => __('Clave', true)));
-$out[] = $myForm->end(__('Enter', true));
-
-$out[] = $myHtml->link(
-	__('Obtener clave', true),
-	array('controller' => 'users', 'action' => 'forgot_password')
-);
-$out[] = $myHtml->link(
-	__('Asociarse', true),
-	array('controller' => 'users', 'action' => 'register')
-);
-
-
-echo $myHtml->out($out);
+	?>
+	
+	</fieldset>
+<?php echo $this->Form->end(__('Ingresar', true));?>
+</div>

@@ -30,6 +30,21 @@ class SellsController extends AppController {
 		$this->set(compact('users'));
 	}
 
+	function sell() {
+		$this->set('locations', $this->Sell->Location->find('list'));
+		//d($this->Sell->EventsSit->Sit->find('list'));
+
+		if (!empty($this->data)) {
+			$this->Sell->create();
+			if ($this->Sell->save($this->data)) {
+				$this->Session->setFlash(__('The sell has been saved', true));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The sell could not be saved. Please, try again.', true));
+			}
+		}
+	}
+
 	function edit($id = null) {
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid sell', true));

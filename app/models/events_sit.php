@@ -2,7 +2,6 @@
 class EventsSit extends AppModel {
 	var $name = 'EventsSit';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
 	var $belongsTo = array(
 		'Event' => array(
 			'className' => 'Event',
