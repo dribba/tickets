@@ -3,9 +3,76 @@ class UsersController extends AppController {
 
 	var $paginate = array('order' => array('User.username'));
 
+
+	function register() {
+
+		if (empty($this->data)) {
+			$this->set('step', 1);
+		} else {
+
+			if ($this->data['User']['step'] == 1) {
+
+
+ 				if (!empty($this->data['User']['document'])) {
+
+					$exists = $this->User->find('first',
+						array(
+							'conditions' => array(
+								'User.document'		=> $this->data['User']['document'],
+							)
+						)
+					);
+
+
+					if (empty($exists)) {
+
+						$r = $this->User->get_personal_data(
+							$this->data['User']['document'],
+							$this->data['User']['sex']
+						);
+
+						$valid['address'] = $data['address'][] = $r['domicilio_completo_1_calle'] . ' ' . $r['domicilio_completo_1_numero'];
+						$data['address'][] = $r['dato_falso_domicilio_1'];
+						$data['address'][] = $r['dato_falso_domicilio_2'];
+
+						$valid['phone'] = $data['phone'][] = $r['telefono_calidad_sugerido'];
+						$data['phone'][] = $r['dato_falso_telefono_1'];
+						$data['phone'][] = $r['dato_falso_telefono_2'];
+
+						$valid['know'] = $data['know'][] ='persona_relacionada_1';
+						$data['know'][] = $r['dato_falso_persona_relacionada_1'];
+						$data['know'][] = $r['dato_falso_persona_relacionada_2'];
+
+						/*
+						$valid['work'] = $data['work'][] ='xxxxxxxxxxx';
+						$data['work'][] = $r['dato_falso_laboral_1'];
+						$data['work'][] = $r['dato_falso_laboral_2'];
+						*/
+
+						$this->Session->write('valid_data', $valid);
+						$this->set('validation_data', $data);
+					} else {
+						$this->Session->setFlash(
+							__('Usted ya esta registrado.', true),
+							'flash_error'
+						);
+						$this->redirect(array('controller' => 'users', 'action' => 'login'));
+					}
+					$this->set('step', 2);
+				}
+			} else if ($this->data['User']['step'] == 2) {
+				$this->set('step', 3);
+			}
+		}
+		//d($this->User->get_personal_data('27959940'));
+	}
+
+
 	function index() {
 		d($this->User->get_personal_data('27959940'));
 	}
+
+
 	function forgot_password() {
 		if (!empty($this->data)) {
 

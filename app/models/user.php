@@ -62,24 +62,6 @@ class User extends AppModel {
         }
     }
 
-/**
-* Callback.
-*
-*		1) When a new user is created, generates random codes.
-*
-* @return array. i pos and j pos.
-*/
-    function xbeforeSave($options = array()) {
-
-            if (empty($this->id)) {
-				$this->data[$this->name]['password'] = md5($this->data[$this->name]['password']);
-				$this->data[$this->name]['codes'] = serialize($this->generate_codes());
-				$this->data[$this->name]['last_login'] = null;
-            }
-
-            return parent::beforeSave($options);
-    }
-
 
 /**
 * Validates a users.
@@ -221,10 +203,10 @@ http://www.pseudocoder.com/archives/2008/10/06/accessing-user-sessions-from-mode
 		return $out;
 	}
 
-	function get_personal_data($document) {
+	function get_personal_data($document, $sex) {
 		$r = $this->xmlrpc_query(
 			array(
-				array('documento' => $document, 'sexo' => 'M')
+				array('documento' => $document, 'sexo' => $sex)
 			)
 		);
 		return $r;
@@ -242,6 +224,7 @@ http://www.pseudocoder.com/archives/2008/10/06/accessing-user-sessions-from-mode
 		
 		// Servicio a ejecutar, para obtener simplemente una identificacion
 		$service = 'riesgoonlineProcess.obtenerIdentificacion';
+		$service = 'riesgoonlineProcess.obtenerValidacion';
 
 		$defaultParams[] = 'consultas'; //user
 		$defaultParams[] = 'consultas21215'; //pass
