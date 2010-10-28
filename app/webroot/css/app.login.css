@@ -1,0 +1,140 @@
+/********************************************
+*											*
+*					RESET					*
+*											*
+********************************************/
+
+* {
+	margin:0px;
+	padding:0px;
+}
+
+/********************************************
+*											*
+*					LAYOUT					*
+*											*
+********************************************/
+
+body {
+	background-color:#132D52;
+	background: url('app.subject.images/background.jpg') repeat-x;
+	font-family: arial;
+}
+
+#links > a {
+margin-left:8px;
+text-decoration:none;
+color:#132D52;
+}
+
+#login {
+	clear:left;
+	position:relative;
+	border-radius:14px 14px 14px 14px;
+	-moz-border-radius:14px 14px 14px 14px;
+	-webkit-border-radius:14px 14px 14px 14px;
+	background-color:#FFFFFF;
+	border:1px solid #8d969d;
+	margin:0px auto;
+	width:500px;
+	margin-top:170px;
+	box-shadow:0px  0px 10px #000;
+	-moz-box-shadow:0px  0px 10px #000;
+	-webkit-box-shadow:0px  0px 10px #000;
+}
+
+#content_for_layout {
+	border-radius:14px 14px 14px 14px;
+	-moz-border-radius:14px 14px 14px 14px;
+	-webkit-border-radius:14px 14px 14px 14px;
+	background-color:#5786b2; 
+	margin:3px;
+	padding:7px;
+	width:auto;
+}
+
+#UserLoginForm {
+	border-radius:14px 14px 0px 0px;
+	-moz-border-radius:14px 14px 0px 0px;
+	-webkit-border-radius:14px 14px 0px 0px;
+	background-color:#FFFFFF;
+	border:3px solid #43668e;
+	margin:0 auto;
+}
+
+#UserLoginForm fieldset {
+	padding:10px;
+	border:0px;
+}
+
+#UserLoginForm legend {
+	color:#43668e;
+	font-size:18px;
+	font-weight:bold;
+	padding:7px;
+}
+
+#UserLoginForm .input {
+	text-align:right;
+	margin:0 auto;
+	width:325px;
+}
+
+.submit {
+	background-color:#eee;
+	text-align:right;
+	height:59px;
+}
+
+/********************************************
+*											*
+*				FORM ELEMENTS				*
+*											*
+********************************************/
+
+
+.submit input {
+	margin-right:10px;
+	background-image:url('./images/save.png');
+	background-color:transparent;
+	border:0px;
+	height:34px;
+	width:107px;
+	color:#494949;
+	font-weight:bold;
+	text-align:left;
+	padding-left:10px;
+	margin-top:12px;
+}
+
+.input label {
+	height:25px;
+	line-height:25px;
+	color:#fff;
+	background-color:43668e;
+	font-weight:bold;
+	padding:0px 8px;
+	display:inline-block;
+	margin-top:2px;
+	text-align:right;
+	text-transform:uppercase;
+	font-size:11px;
+	margin-right:10px;
+}
+
+input[type=text], input[type=password] {
+	border-bottom: 1px solid #c2c2c2;
+	border-right: 1px solid #c2c2c2;
+	border-top: 2px solid #c2c2c2;
+	border-left: 2px solid #c2c2c2;
+	height:23px;
+	color:#6c6c6c;
+	font-size:12px;
+	font-weight:bold;
+	padding:0 10px;
+}
+
+.help_msg {
+	font-size:11px;
+	margin-top:7px;
+}
