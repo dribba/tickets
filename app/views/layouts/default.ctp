@@ -79,7 +79,7 @@
 
 					echo $this->MyHtml->link(
 						__('Registrarse', true),
-						array('admin' => false, 'controller' => 'users', 'action' => 'add')
+						array('admin' => false, 'controller' => 'users', 'action' => 'register')
 					);
 				}
 				?>
