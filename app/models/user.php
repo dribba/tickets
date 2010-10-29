@@ -1,69 +1,110 @@
 <?php
-App::import('Vendor', 'Calculation', true,
+
+App::import('Vendor', 'xmlrpc', true,
 	array(APP . 'vendors' . DS . 'xmlrpc'),
 	'xmlrpc.inc'
 );
+
 class User extends AppModel {
+
 	var $virtualFields = array(
 		'formated_created' => 'DATE_FORMAT(User.created, "%d/%m/%Y")'
 	);
-	protected function _initialitation() {
 
-		//$this->options = array(0 => __('No', true), 1 => __('Yes', true));
+	protected function _initialitation() {
 
 		$this->validate = array(
 			'document' => array(
 				'notempty' => array(
-					'rule' => array('notempty'),
-					'message' => __("Inrese su documento", true),
-					'last' => true, // Stop validation after this rule
+					'rule' 		=> array('notempty'),
+					'message' 	=> __('Ingrese su documento', true),
+					'last' 		=> true,
+				),
+				'numeric' => array(
+					'rule' 		=> array('numeric'),
+					'message' 	=> __('Sólo números en el documento', true),
+					'last' 		=> true,
+				),
+			),
+			'sex' => array(
+				'notempty' => array(
+					'rule' 		=> array('notempty'),
+					'message' 	=> __('Seleccione el sexo', true),
+					'last' 		=> true,
 				),
 			),
 			'email' => array(
 				'notempty' => array(
-					'rule' => array('email'),
-					'message' => __("Ingrese un email valida", true),
-					'last' => true, // Stop validation after this rule
+					'rule' 		=> array('notempty'),
+					'message' 	=> __('Ingrese su email', true),
+					'last' 		=> true,
+				),
+				'email' 		=> array(
+					'rule' 		=> array('email'),
+					'message' 	=> __('Ingrese un email válido', true),
+					'last' 		=> true,
 				),
 			),
-			'phone_area' => array(
+			'mobile_area' => array(
 				'notempty' => array(
-					'rule' => array('notempty'),
-					'message' => __("Ingrese el codigo de area sin el 0", true),
-					'last' => true, // Stop validation after this rule
+					'rule' 		=> array('notempty'),
+					'message' 	=> __('Ingrese el código de area sin el 0', true),
+					'last' 		=> true,
 				),
-				'numero' => array(
-					'rule' => array('numeric'),
-					'message' => __("Solo datos numericos", true),
-					'last' => true, // Stop validation after this rule
+				'numeric' => array(
+					'rule' 		=> array('numeric'),
+					'message' 	=> __('Ingrese sólo números para el código de area', true),
+					'last' 		=> true,
+				),
+				'not0' => array(
+					'rule' 		=> array('not0'),
+					'message' 	=> __('Ingrese el código de area sin el 0', true),
+					'last' 		=> true,
 				),
 			),
-			'phone_number' => array(
+			'mobile_phone' => array(
 				'notempty' => array(
-					'rule' => array('notempty'),
-					'message' => __("Ingrese su numero de celular sin el 15", true),
-					'last' => true, // Stop validation after this rule
+					'rule' 		=> array('notempty'),
+					'message' 	=> __('Ingrese su número de celular sin el 15', true),
+					'last' 		=> true,
 				),
-				'numero' => array(
-					'rule' => array('numeric'),
-					'message' => __("Solo datos numericos", true),
-					'last' => true, // Stop validation after this rule
+				'numeric' => array(
+					'rule' 		=> array('numeric'),
+					'message' 	=> __('Ingrese sólo números para el celular', true),
+					'last' 		=> true,
+				),
+				'not15' => array(
+					'rule' 		=> array('not15'),
+					'message' 	=> __('Ingrese su número de celular sin el 15', true),
+					'last' 		=> true,
 				),
 			),
-			'birthday' => array(
+			'mobile_company' => array(
 				'notempty' => array(
-					'rule' => array('notempty'),
-					'message' => __("Ingrese su fecha de nacimiento", true),
-					'last' => true, // Stop validation after this rule
+					'rule' 		=> array('notempty'),
+					'message' 	=> __('Seleccione la compañia telefónica', true),
+					'last' 		=> true,
 				),
-				'valid' => array(
-					'rule' => array('date'),
-					'message' => __("Fecha ingresada incorrecta", true),
-					'last' => true, // Stop validation after this rule
-				)
 			),
 		);
 
+    }
+
+
+    function not15($values) {
+        if (preg_match('/^15.*/', $values['mobile_phone'])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function not0($values) {
+        if (preg_match('/^0.*/', $values['mobile_area'])) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     function isSamePassword($values) {
@@ -72,24 +113,6 @@ class User extends AppModel {
         } else {
             return false;
         }
-    }
-
-/**
-* Callback.
-*
-*		1) When a new user is created, generates random codes.
-*
-* @return array. i pos and j pos.
-*/
-    function xbeforeSave($options = array()) {
-
-            if (empty($this->id)) {
-				$this->data[$this->name]['password'] = md5($this->data[$this->name]['password']);
-				$this->data[$this->name]['codes'] = serialize($this->generate_codes());
-				$this->data[$this->name]['last_login'] = null;
-            }
-
-            return parent::beforeSave($options);
     }
 
 
@@ -232,10 +255,10 @@ http://www.pseudocoder.com/archives/2008/10/06/accessing-user-sessions-from-mode
 		return $out;
 	}
 
-	function get_personal_data($document) {
+	function get_personal_data($document, $sex) {
 		$r = $this->xmlrpc_query(
 			array(
-				array('documento' => $document, 'sexo' => 'M')
+				array('documento' => $document, 'sexo' => $sex)
 			)
 		);
 		return $r;
@@ -253,6 +276,7 @@ http://www.pseudocoder.com/archives/2008/10/06/accessing-user-sessions-from-mode
 		
 		// Servicio a ejecutar, para obtener simplemente una identificacion
 		$service = 'riesgoonlineProcess.obtenerIdentificacion';
+		$service = 'riesgoonlineProcess.obtenerValidacion';
 
 		$defaultParams[] = 'consultas'; //user
 		$defaultParams[] = 'consultas21215'; //pass
