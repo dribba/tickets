@@ -12,7 +12,9 @@ class EventsController extends AppController {
 			$this->Session->setFlash(__('Invalid event', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('data', $this->Event->read(null, $id));
+		
+		$data = $this->Event->findById($id);
+		$this->set('data', $data);
 	}
 
 	function admin_add($id = null) {

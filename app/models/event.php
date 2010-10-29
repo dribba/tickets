@@ -7,23 +7,24 @@ class Event extends AppModel {
 		'formated_start' => 'DATE_FORMAT(Event.start, "%d/%m/%Y %H:%i")',
 		'formated_end' => 'DATE_FORMAT(Event.end, "%d/%m/%Y %H:%i")'
 	);
-	var $hasAndBelongsToMany = array(
-		'Sit' => array(
-			'className' => 'Sit',
-			'joinTable' => 'events_sits',
-			'foreignKey' => 'event_id',
-			'associationForeignKey' => 'sit_id',
-			'unique' => true,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
-		)
-	);
+//	var $hasAndBelongsToMany = array(
+//		'Sit' => array(
+//			'className' => 'Sit',
+//			'joinTable' => 'events_sits',
+//			'foreignKey' => 'event_id',
+//			'associationForeignKey' => 'sit_id',
+//			'unique' => true,
+//			'conditions' => '',
+//			'fields' => '',
+//			'order' => '',
+//			'limit' => '',
+//			'offset' => '',
+//			'finderQuery' => '',
+//			'deleteQuery' => '',
+//			'insertQuery' => ''
+//		)
+//	);
+	var $hasMany = array('EventsSit');
 
 	protected function _initialitation() {
 
