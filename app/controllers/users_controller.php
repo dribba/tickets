@@ -64,6 +64,7 @@ class UsersController extends AppController {
 					$this->set('step', 1);
 				}
 			} else if ($this->data['User']['step'] == 2) {
+				
 				$this->set('step', 3);
 			}
 		}

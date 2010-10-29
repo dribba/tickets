@@ -3,6 +3,43 @@ class SitsController extends AppController {
 
 	var $name = 'Sits';
 
+
+	function load() {
+		set_include_path(get_include_path() . PATH_SEPARATOR . APP . 'vendors' . DS . 'PHPExcel' . DS . 'Classes');
+		App::import('Vendor', 'IOFactory', true, array(APP . 'vendors' . DS . 'PHPExcel' . DS . 'Classes' . DS . 'PHPExcel'), 'IOFactory.php');
+
+		$file = '/tmp/PlateaAlta.xls';
+		if (preg_match("/.*\.xls$/", $file)) {
+			$objReader = PHPExcel_IOFactory::createReader('Excel5');
+		} elseif (preg_match("/.*\.xlsx$/", $file)) {
+			$objReader = PHPExcel_IOFactory::createReader('Excel2007');
+		}
+		$objReader->setReadDataOnly(true);
+		$objPHPExcel = $objReader->load($file);
+
+		$highestCol = PHPExcel_Cell::columnIndexFromString(
+			$objPHPExcel->getActiveSheet()->getHighestColumn()
+		);
+		$highestRow = $objPHPExcel->getActiveSheet()->getHighestRow();
+
+
+		$matrix = array();
+
+		for ($row = 1; $row < $highestRow; $row++) {
+			for ($col = 1; $col < $highestCol; $col++) {
+				$v = $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($col, $row)->getValue();
+				$matrix[$row][$col] = $v;
+			}
+		}
+
+		$save
+
+		$this->Sit->saveAll();
+
+		d($matrix);
+
+	}
+
 	function admin_index() {
 		$this->Sit->recursive = 0;
 		$this->set('data', $this->paginate());
