@@ -62,9 +62,8 @@ class MyFormHelper extends FormHelper {
 					unset($options['options'][$k]);
 				}
 			}
-			
+		}
 
-		} 
 		return parent::input($fieldName, $options);
 		
 	}

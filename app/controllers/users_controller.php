@@ -154,6 +154,8 @@ class UsersController extends AppController {
 
     function login() {
 
+		$this->layout = 'login';
+
 		if (!empty($this->data)) {
 
 			if ($user = $this->User->validate($this->data)) {

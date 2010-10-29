@@ -1,0 +1,35 @@
+/* EncoreAdmin - Orange skin */
+
+a { color: #333; }
+body.withSubnav { background: #fff url(../../_i/skin/orange/bgtopopen.gif) repeat-x 0 0; }
+body.withoutSubnav { background: #fff url(../../_i/skin/orange/bgtopclosed.gif) repeat-x 0 0; }
+#top { background: transparent url(../../_i/skin/orange/bgtoplights.jpg) no-repeat 0 0; }
+#title a { color: #fff; }
+#title span { color: #8e3712; }
+.button.tool {
+    background-image: url(../../_i/skin/orange/btntoolbar.gif);
+    color: #eebc22;
+    border-color: #000;   
+}
+p#user a { color: #eebc22; }
+.button.tool:hover { color: #fff; }
+.sidebox h1 {
+    background: #202020 url(../../_i/skin/orange/bgsidebox.gif) repeat-x 0 0;
+    color: #fff; 
+}
+#calendar td.today {
+    background: #444;
+    color: #fff; 
+}
+#calendar td.event { 
+    background: #cb5b1b;
+    color: #fff; 
+}
+.mainForm legend {
+    color: #333;
+    background: transparent url(../../_i/skin/orange/bgfieldset.gif) repeat-x 0 0; 
+}
+#footer { background: #243743 url(../../_i/skin/orange/bgfooter.gif) repeat-x 0 0; }
+#footer a { color: #eebc22; }
+#login h1 span { color: #992d05; }
+#login h2 { background: #202020 url(../../_i/skin/orange/bgsidebox.gif) repeat-x 0 0; }

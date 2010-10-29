@@ -26,7 +26,7 @@ class MyPaginatorHelper extends PaginatorHelper {
  * @return string The formatted div tag element.
  * @access public
  */
-	function getNavigator($counter = true, $options = array()) {
+	function getNavigator($counter = false, $options = array()) {
 
 		if (!empty($options)) {
 			$this->options($options);
@@ -41,25 +41,36 @@ class MyPaginatorHelper extends PaginatorHelper {
 		}
 
 
-		$navigator[] = $this->prev('< ' . __('previous', true),
-			array(),
-			null,
-			array('class'=>'disabled')
+		$navigator[] = $this->MyHtml->tag('li',
+			$this->prev(__('Anterior', true),
+				null
+			),
+			array('class' => 'button small pagePrev')
 		);
 
-		$navigator[] = $this->numbers(array('before' => ' ', 'after' => ' ', 'separator' => ' '));
-		$navigator[] = $this->next(__('next', true) . ' >',
-			array(),
-			null,
-			array('class' => 'disabled')
+		$numbers = explode('|', $this->numbers(array('before' => '', 'after' => '', 'separator' => '|')));
+		
+		foreach ($numbers as $number) { 
+			$navigator[] = $this->MyHtml->tag('li',
+				$number
+			);
+		}
+
+		$navigator[] = $this->MyHtml->tag('li',
+			$this->next(__('Siguiente', true),
+				null
+			),
+			array('class' => 'button small pageNext')
 		);
 
-		$navigatorHtml = $this->MyHtml->tag('div',
-			implode('', $navigator),
-			array('id' => 'nav')
-		);
-
-		return $this->MyHtml->tag('div', $counterHtml . $navigatorHtml, array('id' => 'paginator'));
+		/*$navigatorHtml = $this->MyHtml->tag('li',
+			implode('', $navigator)
+		);*/
+		
+		if (!empty($numbers[1])) {
+			return $this->MyHtml->tag('ul', $navigator, array('class' => 'pagination'));
+		}
+		
 	}
 
 }
