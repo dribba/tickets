@@ -67,6 +67,9 @@ class UsersController extends AppController {
 					$this->set('step', 1);
 				}
 			} else if ($this->data['User']['step'] == 2) {
+				
+				$this->set('step', 3);
+
 				$validData = $this->Session->read('valid_data');
 				if (
 					$this->data['User']['address'] == $validData['address'] &&
