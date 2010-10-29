@@ -69,8 +69,7 @@ class SitsController extends AppController {
 			}
 		}
 		$locations = $this->Sit->Location->find('list');
-		$events = $this->Sit->Event->find('list');
-		$this->set(compact('locations', 'events'));
+		$this->set(compact('locations'));
 	}
 
 	function edit($id = null) {
@@ -105,6 +104,14 @@ class SitsController extends AppController {
 		}
 		$this->Session->setFlash(__('Error al eliminar Butaca', true), 'flash_error');
 		$this->redirect(array('action' => 'index'));
+	}
+
+	function admin_table() {
+		$axis = $this->Sit->query('SELECT MAX(`Sits`.`x`) AS x, MAX(`Sits`.`y`) AS y FROM sits AS Sits');
+		$sits = $this->Sit->find('all', array('recursive' => -1));
+		$data['axis'] = $axis[0][0];
+		$data['sits'] = $sits;
+		$this->set('data', $data);
 	}
 }
 ?>

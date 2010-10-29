@@ -15,7 +15,20 @@
  * @since         CakePHP(tm)
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
+ #load {
+	 display:none;
+}
+body, html, *{
+	 outline: none;
+}
+#grid-sits table tr td {
+	 text-align: center;
+	 width: 22px;
+}
+#grid-sits table{
+	 margin:0 auto;
+	 width:auto;
+}
 #street > div {
 	 padding-left:0px;
 	 

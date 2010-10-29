@@ -34,9 +34,12 @@ $(document).ready(function($) {
 
 	/** Datepicker */
 	$('.datepicker').datepicker({
+		dateFormat: 'yy-mm-dd',
 		showOn: 'button',
-		buttonImage: 'images/calendar.gif',
-		buttonImageOnly: true
+		buttonImage: $.path('img/date_select.jpg'),
+		buttonImageOnly: true,
+		changeMonth: true,
+		changeYear: true
 	});
 
 

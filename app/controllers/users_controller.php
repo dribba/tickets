@@ -35,21 +35,24 @@ class UsersController extends AppController {
 						$valid['address'] = $data['address'][] = $r['domicilio_completo_1_calle'] . ' ' . $r['domicilio_completo_1_numero'];
 						$data['address'][] = $r['dato_falso_domicilio_1'];
 						$data['address'][] = $r['dato_falso_domicilio_2'];
+						shuffle($data['address']);
 
 						$valid['phone'] = $data['phone'][] = $r['telefono_calidad_sugerido'];
 						$data['phone'][] = $r['dato_falso_telefono_1'];
 						$data['phone'][] = $r['dato_falso_telefono_2'];
+						shuffle($data['phone']);
 
-						$valid['know'] = $data['know'][] ='persona_relacionada_1';
+						$valid['know'] = $data['know'][] = $r['persona_relacionada_1'];
 						$data['know'][] = $r['dato_falso_persona_relacionada_1'];
 						$data['know'][] = $r['dato_falso_persona_relacionada_2'];
-
+						shuffle($data['know']);
 						/*
 						$valid['work'] = $data['work'][] ='xxxxxxxxxxx';
 						$data['work'][] = $r['dato_falso_laboral_1'];
 						$data['work'][] = $r['dato_falso_laboral_2'];
 						*/
-
+						$this->data['User']['full_name'] = $r['apellido'] . ' ' . $r['nombre'];
+						$this->Session->write('user_data', $this->data);
 						$this->Session->write('valid_data', $valid);
 						$this->set('validation_data', $data);
 					} else {
@@ -66,6 +69,40 @@ class UsersController extends AppController {
 			} else if ($this->data['User']['step'] == 2) {
 				
 				$this->set('step', 3);
+
+				$validData = $this->Session->read('valid_data');
+				if (
+					$this->data['User']['address'] == $validData['address'] &&
+					$this->data['User']['phone'] == $validData['phone'] &&
+					$this->data['User']['know'] == $validData['know']
+				) {
+					$uuid = uniqid();
+					$user = $this->Session->read('user_data');
+					unset($user['User']['step']);
+					$user['User']['password'] = $uuid;
+					$user['User']['username'] = $user['User']['document'];
+					
+					$this->User->create();
+					if ($this->User->save($user)) {
+
+
+						$params['to'] = $user['User']['mobile_area'] . $user['User']['mobile_phone'];
+						$params['company'] = $user['User']['mobile_company'];
+						$params['message'] = sprintf('
+							DATOS DE ACCESO A TALLERES:
+							Usuario/document %s
+							Contrasena %s',
+							$user['User']['username'],
+							$user['User']['password']
+						);
+						$this->User->send_sms($params);
+
+						$this->Session->setFlash(__('Usuario creado con exito, su contrasena fue enviada a su celular', true), 'flash_success');
+					} else {
+						$this->Session->setFlash(__('Error guardando los datos', true), 'flash_error');
+					}
+				}
+				$this->redirect(array('controller' => 'users', 'action' => 'login'));
 			}
 		}
 	}
@@ -80,26 +117,30 @@ class UsersController extends AppController {
 	function forgot_password() {
 		if (!empty($this->data)) {
 
-			$mobilePhone = $this->data['User']['phone_area'] . $this->data['User']['phone_number'];
+			$params['to'] = $this->data['User']['mobile_area'] . $this->data['User']['mobile_phone'];
+			$params['company'] = $this->data['User']['mobile_company'];
 			$user = $this->User->find('first',
 				array(
 					'conditions' => array(
 						'User.document'		=> $this->data['User']['document'],
-						'User.mobile_phone'	=> $mobilePhone
+						'User.mobile_phone'	=> $this->data['User']['mobile_phone'],
+						'User.mobile_area'	=> $this->data['User']['mobile_area']
 					)
 				)
 			);
 
 			if (!empty($user)) {
 				
-				$message = sprintf(
-					"Nombre de usuario: %s Contraseña: %s",
-					$user['User']['document'],
-					$user['User']['mobile_phone']
+				$params['message'] = sprintf('
+							DATOS DE ACCESO A TALLERES:
+							Usuario/document %s
+							Contrasena %s',
+							$user['User']['username'],
+							$user['User']['password']
 				);
-				$this->User->send_sms($user['User']['mobile_phone'], $message);
+				$this->User->send_sms($params);
 				return $this->Session->setFlash(
-					__('Su usuario y contrasena fueron enviados a su celular', true),
+					__('Sus datos de acceso fueron enviados a su celular', true),
 					'flash_success'
 				);
 

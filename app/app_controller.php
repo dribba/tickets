@@ -87,7 +87,7 @@ class AppController extends Controller {
 		} else if (
 			!in_array(
 				$this->params['action'],
-				array('login', 'logout', 'forgot_password', 'add')))
+				array('login', 'logout', 'forgot_password', 'register')))
 		{
 			$this->redirect(
 				array(

@@ -22,7 +22,9 @@ $header	= null;
 $headers[] = __("Acciones", true);
 $headers[] = __("Codigo", true);
 $headers[] = __("Locacion", true);
-$headers[] = __("Evento", true);
+$headers[] = __("X", true);
+$headers[] = __("Y", true);
+
 
 $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($headers));
 
@@ -58,7 +60,8 @@ foreach ($data as $record) {
 	$td[] = $this->MyHtml->tag('td', $actions);
 	$td[] = $this->MyHtml->tag('td', $record['Sit']['code']);
 	$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
-	$td[] = $this->MyHtml->tag('td', $record['Event']['name']);
+	$td[] = $this->MyHtml->tag('td', $record['Sit']['x']);
+	$td[] = $this->MyHtml->tag('td', $record['Sit']['y']);
 	$body[] = $this->MyHtml->tag('tr', $td);
 
 }

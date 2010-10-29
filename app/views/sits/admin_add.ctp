@@ -19,12 +19,16 @@ $content[] = $this->MyForm->input('Sit.location_id',
 		'label' 	=> __('Locacion', true),
 	)
 );
-$content[] = $this->MyForm->input('Sit.event_id',
+$content[] = $this->MyForm->input('Sit.x',
 	array(
-		'label' 	=> __('Evento', true),
+		'label' 	=> __('Posicion eje X', true),
 	)
 );
-
+$content[] = $this->MyForm->input('Sit.y',
+	array(
+		'label' 	=> __('Posicion eje Y', true),
+	)
+);
 
 $out[] = $this->MyHtml->tag('div', $content, array('id' => 'container'));
 

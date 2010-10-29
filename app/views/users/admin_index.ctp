@@ -1,7 +1,7 @@
 <?php
 
 $out[] = $this->MyHtml->tag('h2',
-	__('Socios', true),
+	__('Usuarios', true),
 	array('id' => 'tasks_title')
 );
 $this->set("title_for_layout", __("Listado de socios", true));

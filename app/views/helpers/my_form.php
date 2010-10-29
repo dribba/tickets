@@ -54,108 +54,19 @@ class MyFormHelper extends FormHelper {
 	function input($fieldName, $options = array()) {
 
 
-		if (!empty($options['alias'])) {
+		if (!empty($options['class'])) {
 
-			static $aliases;
-			if (empty($aliases)) {
-				$aliases = getConf('/App/Aliases/.', 'name');
+			if ($options['class'] == 'validation_data') {
+				foreach ($options['options'] as $k => $value) {
+					$options['options'][$value] = $value;
+					unset($options['options'][$k]);
+				}
 			}
+			
+
+		} 
+		return parent::input($fieldName, $options);
 		
-			$validOptions['type'] = $aliases[$options['alias']]['type'];
-			if (!empty($aliases[$options['alias']]['Values'])) {
-				$validOptions['options'] = Set::combine($aliases[$options['alias']]['Values']['Value'], '{n}.name', '{n}.label');
-			}
-			$options = null;
-			$options = $validOptions;
-		}
-
-
-		if (!empty($options['type'])) {
-
-			if ($options['type'] == 'file') {
-
-
-				$divOptions['class'] = 'file-uploader';
-				if (!empty($options['resolution'])) {
-					$divOptions['resolution'] = $options['resolution'];
-					unset($options['resolution']);
-				}
-				if (!empty($options['extensions'])) {
-					$divOptions['extensions'] = $options['extensions'];
-					unset($options['extensions']);
-				}
-
-
-				$options['type'] = 'hidden';
-				$theHidden = parent::input($fieldName, $options);
-
-				$options['type'] = 'text';
-				$options['readonly'] = true;
-				$tmp = $this->domId($options);
-				$tmp['id'] .= '__';
-				$theInput = parent::input($fieldName . '__', $options);
-
-				$theDiv = $this->Html->tag('div', '', $divOptions);
-				return $this->Html->tag('div', $theHidden . $theInput . $theDiv, array('class' => 'file'));
-
-			} elseif ($options['type'] == 'aux_card') {
-
-				$attributes = $this->_initInputField($fieldName);
-				$attributes['id'] .= uniqid();
-
-				$theHidden = parent::input($fieldName,
-					array(
-						'type' 	=> 'hidden',
-						'id' 	=> $attributes['id']
-					)
-				);
-
-				$options['type'] = 'text';
-				$options['readonly'] = true;
-				$options['div'] = false;
-
-				$theText = parent::input($fieldName . '__',
-					array_merge(
-						array('id' 		=> $attributes['id'] . '__'),
-						$options
-					)
-				);
-
-
-				if (empty($options['title'])) {
-					$options['title'] = __('Search', true);
-				}
-				$wide = 'wide';
-				if (!empty($options['wide'])) {
-					if ($options['wide'] == 'No') {
-						$wide = '';
-					}
-				}
-
-				$theCaller = $this->MyHtml->image('edit.png',
-					array(
-						'class' 	=> 'open_modal multiple_modal ' . $wide,
-						'title' 	=> $options['title'],
-						'return_to' => $attributes['id'],
-						'url' 		=> $options['url']
-					)
-				);
-				$div = $this->Html->tag('div',
-					$theText . $theCaller,
-					array('class' => 'input text')
-				);
-
-				return $this->Html->tag('div',
-					$theHidden . $div,
-					array('class' => 'aux_card')
-				);
-			} else {
-				return parent::input($fieldName, $options);
-			}
-
-		} else {
-			return parent::input($fieldName, $options);
-		}
 	}
 
 }

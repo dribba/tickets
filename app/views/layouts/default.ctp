@@ -1,6 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<script type="text/javascript">
+		var base_url = "<?php echo Router::url('/'); ?>";
+	</script>
 	<?php echo $this->Html->charset(); ?>
 	<title>
 		<?php echo $title_for_layout; ?>
@@ -55,7 +58,7 @@
 						);
 
 						echo $this->MyHtml->link(
-							__('Socios', true),
+							__('Usuarios', true),
 							array('admin' => true, 'controller' => 'users', 'action' => 'index')
 						);
 
@@ -76,7 +79,7 @@
 
 					echo $this->MyHtml->link(
 						__('Registrarse', true),
-						array('admin' => false, 'controller' => 'users', 'action' => 'add')
+						array('admin' => false, 'controller' => 'users', 'action' => 'register')
 					);
 				}
 				?>
