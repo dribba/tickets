@@ -18,18 +18,39 @@ $steps[1][] = $myForm->input('sex',
 		'label' 	=> __('Sex', true)
 	)
 );
+$steps[1][] = $myForm->input('email',
+	array(
+		'label' 	=> __('Email', true)
+	)
+);
+/*
 $after = $myForm->input('mobile_phone',
 	array(
-		'before'	=> '15',
+		'before'	=> $myHtml->tag('span', '15', array('style' => 'float:left;')),
 		'label' 	=> false,
 		'div' 		=> false
 	)
 );
 $steps[1][] = $myForm->input('mobile_area',
 	array(
-		'before'	=> '0',
+		'between'	=> $myHtml->tag('span', '0', array('style' => 'float:left;')),
 		'after'		=> $after,
 		'label' 	=> __('Celular', true)
+	)
+);
+*/
+$steps[1][] = $myForm->input('mobile_area',
+	array(
+		//'between'	=> $myHtml->tag('span', '0', array('style' => 'float:left;')),
+		'label' 	=> __('Celular (area)', true),
+		'after' 	=> __('Sin el 0', true)
+	)
+);
+$steps[1][] = $myForm->input('mobile_phone',
+	array(
+		//'between'	=> $myHtml->tag('span', '15', array('style' => 'float:left;')),
+		'label' 	=> __('Celular (número)', true),
+		'after' 	=> __('Sin el 15', true)
 	)
 );
 $steps[1][] = $myForm->input('mobile_company',

@@ -12,8 +12,9 @@ class UsersController extends AppController {
 
 			if ($this->data['User']['step'] == 1) {
 
+				$this->User->set($this->data);
 
- 				if (!empty($this->data['User']['document'])) {
+				if ($this->User->validates()) {
 
 					$exists = $this->User->find('first',
 						array(
@@ -59,12 +60,13 @@ class UsersController extends AppController {
 						$this->redirect(array('controller' => 'users', 'action' => 'login'));
 					}
 					$this->set('step', 2);
+				} else {
+					$this->set('step', 1);
 				}
 			} else if ($this->data['User']['step'] == 2) {
 				$this->set('step', 3);
 			}
 		}
-		//d($this->User->get_personal_data('27959940'));
 	}
 
 
@@ -109,6 +111,7 @@ class UsersController extends AppController {
 			
 		}
 	}
+
 
     function login() {
 

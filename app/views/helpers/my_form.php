@@ -69,12 +69,6 @@ class MyFormHelper extends FormHelper {
 			$options = $validOptions;
 		}
 
-		if (!empty($options['before'])) {
-			$options['before'] = $this->Html->tag('span','[ '.$options['before'].' ]', array('class' => 'before explanation'));
-		}
-		if (!empty($options['after'])) {
-			$options['after'] = $this->Html->div('after_container',$this->Html->tag('span','[ '.$options['after'].' ]', array('class' => 'after explanation')));
-		}
 
 		if (!empty($options['type'])) {
 
