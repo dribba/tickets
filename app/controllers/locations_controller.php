@@ -12,7 +12,12 @@ class LocationsController extends AppController {
 			$this->Session->setFlash(__('Invalid location', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('data', $this->Location->read(null, $id));
+
+		$this->Location->recursive = -1;
+		$location = $this->Location->read(null, $id);
+
+		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], 2);
+		$this->set('data', $location);
 	}
 
 	function admin_add($id = null) {

@@ -1,6 +1,6 @@
 <?php
 
-	$this->set("title_for_layout", __("Ver ubicacion", true));
+	$this->set('title_for_layout', __('Ver ubicacion', true));
 	$links[] = $this->MyHtml->link(
 		__('Eliminar', true),
 		array(
@@ -45,5 +45,8 @@
 	$fields[__('Nombre', true)] = $data['Location']['name'];
 	
 	echo $this->element('view',
-		array('data' => $fields, 'links' => $links, 'title' => __('Detalle de la ubicacion', true))
+		array('data' => $fields, 'links' => $links, 'title' => __('Detalle de la ubicación', true))
 	);
+
+
+	echo $this->element('table', array('data' => $data));
