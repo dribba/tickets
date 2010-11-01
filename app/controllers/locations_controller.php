@@ -16,6 +16,11 @@ class LocationsController extends AppController {
 	}
 
 	function admin_add($id = null) {
+
+		$this->set('sites',
+			$this->Location->Site->find('list', array('fields' => array('Site.id', 'Site.name')))
+		);
+
 		if (!empty($this->data)) {
 			$this->Location->create();
 			if ($this->Location->save($this->data)) {
