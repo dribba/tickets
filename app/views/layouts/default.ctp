@@ -15,8 +15,11 @@
 		echo $this->Html->css('skin/_sk/bk');
 		echo $this->Html->css('skin/r');
 
+		echo $this->Html->css('app.generic');
+
 		$jsFiles[] = 'jquery/jquery-1.4.3.min';
 		$jsFiles[] = 'jquery/jquery-ui-1.8.1.custom';
+		$jsFiles[] = 'jquery/jquery.maphilight';
 		$jsFiles[] = 'default';
 		echo $this->Html->script($jsFiles);
 
@@ -24,7 +27,7 @@
 
 		$info = json_encode(
 			array(
-				'base_url'				=> Router::url('/'),
+				'base_url'				=> Router::url('/') . $this->params['prefix'] . '/',
 				'current_controller' 	=> $this->params['controller'],
 				'current_action' 		=> $this->params['action']
 			)
@@ -50,8 +53,8 @@
 
 						echo $this->MyHtml->tag('li',
 							$this->MyHtml->link(
-								__('Eventos', true),
-								array('admin' => true, 'controller' => 'events', 'action' => 'index')
+								__('Sitios', true),
+								array('admin' => true, 'controller' => 'sites', 'action' => 'index')
 							)
 						);
 
@@ -64,15 +67,15 @@
 
 						echo $this->MyHtml->tag('li',
 							$this->MyHtml->link(
-								__('Sitios', true),
-								array('admin' => true, 'controller' => 'sites', 'action' => 'index')
+								__('Butacas', true),
+								array('admin' => true, 'controller' => 'sits', 'action' => 'index')
 							)
 						);
 
 						echo $this->MyHtml->tag('li',
 							$this->MyHtml->link(
-								__('Butacas', true),
-								array('admin' => true, 'controller' => 'sits', 'action' => 'index')
+								__('Eventos', true),
+								array('admin' => true, 'controller' => 'events', 'action' => 'index')
 							)
 						);
 

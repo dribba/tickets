@@ -40,14 +40,29 @@
 		)
 	);
 
+	$links[] = $this->MyHtml->link(
+		__('Pantalla Completa', true),
+		array(
+			'controller' 	=> 'locations',
+			'action' 		=> 'full_screen',
+			$data['Location']['id']
+		),
+		array(
+			'target'=> '_BLANK',
+			'title' => __('Pantalla Completa', true),
+			'class'	=> 'button primary'
+		)
+	);
 	
 
 	$fields[__('Nombre', true)] = $data['Location']['name'];
-	$fields[__('Sitio', true)] = $data['Site']['name'];
+	$fields[__('Ubicaciones', true)] = $this->element('table', array('data' => $data));
 	
 	echo $this->element('view',
-		array('data' => $fields, 'links' => $links, 'title' => __('Detalle de la ubicación', true))
+		array(
+			'data' 		=> $fields,
+			'links' 	=> $links,
+			'title' 	=> __('Detalle de la ubicación', true),
+		)
 	);
 
-
-	echo $this->element('table', array('data' => $data));
