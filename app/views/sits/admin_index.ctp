@@ -4,7 +4,7 @@ $out[] = $this->MyHtml->tag('h2',
 	__('Butacas', true),
 	array('id' => 'tasks_title')
 );
-$this->set("title_for_layout", __("Listado de butacas", true));
+$this->set('title_for_layout', __('Listado de butacas', true));
 
 $links = null;
 $links[] = $this->MyHtml->link(
@@ -19,11 +19,11 @@ echo $this->element('actions', array('links' => $links));
 
 /** The grid */
 $header	= null;
-$headers[] = __("Acciones", true);
-$headers[] = __("Codigo", true);
-$headers[] = __("Locacion", true);
-$headers[] = __("X", true);
-$headers[] = __("Y", true);
+$headers[] = __('Acciones', true);
+$headers[] = __('Ubicación', true);
+$headers[] = __('Fila', true);
+$headers[] = __('Columna', true);
+$headers[] = __('Ícono', true);
 
 
 $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($headers));
@@ -36,7 +36,7 @@ foreach ($data as $record) {
 		'view.png',
 		array(
 			'class' => 'open_modal',
-			'title' => __('Ver', true) . ' ' . $record['Sit']['code'],
+			'title' => __('Ver', true) . ' ' . $record['Sit']['id'],
 			'url' => array(
 				'controller' 	=> 'sits',
 				'action' 		=> 'view',
@@ -48,7 +48,7 @@ foreach ($data as $record) {
 		'edit.png',
 		array(
 			'class' => 'open_modal',
-			'title' => __('Editar', true) . ' ' . $record['Sit']['code'],
+			'title' => __('Editar', true) . ' ' . $record['Sit']['id'],
 			'url' => array(
 				'controller' 	=> 'sits',
 				'action' 		=> 'add',
@@ -58,10 +58,10 @@ foreach ($data as $record) {
 	);
 
 	$td[] = $this->MyHtml->tag('td', $actions);
-	$td[] = $this->MyHtml->tag('td', $record['Sit']['code']);
 	$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
-	$td[] = $this->MyHtml->tag('td', $record['Sit']['x']);
-	$td[] = $this->MyHtml->tag('td', $record['Sit']['y']);
+	$td[] = $this->MyHtml->tag('td', $record['Sit']['row']);
+	$td[] = $this->MyHtml->tag('td', $record['Sit']['col']);
+	$td[] = $this->MyHtml->tag('td', $record['Sit']['icon']);
 	$body[] = $this->MyHtml->tag('tr', $td);
 
 }

@@ -2,44 +2,52 @@
 
 /** The grid */
 $header	= null;
-$headers[] = __("Acciones", true);
-$headers[] = __("Codigo", true);
-$headers[] = __("Locacion", true);
-$headers[] = __("Evento", true);
+$headers[] = __('Acciones', true);
+$headers[] = __('Codigo', true);
+$headers[] = __('Locacion', true);
+$headers[] = __('Evento', true);
 
 //$head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($headers));
 
 $body = array();
 $td = array();
-for ($y = $data['axis']['y']; $y >= 1; $y--) {
+//d($data);
+//for ($y = $data['axis']['y']; $y >= 1; $y--) {
+
+
+for ($x = 1; $x <= $data['limits']['lastRow']; $x++) {
 	
-	for ($x = 1; $x <= $data['axis']['x']; $x++) {
-		foreach ($data['sits'] as $sit) {
-			$sitImg = $this->MyHtml->image(
-				'libre.gif',
-				array(
-					'class' => 'sit',
-					'title' => __('Ver', true) . ' ' . $sit['Sit']['code'],
-					'url' => array(
-						'controller' 	=> 'sits',
-						'action' 		=> 'view',
-						$sit['Sit']['id']
-					),
-				)
-			);
-			if ($sit['Sit']['x'] == $x && $sit['Sit']['y'] == $y) {
-				$td[] = $this->MyHtml->tag('td', $sitImg);
-				$encontro = true;
+	$td = null;
+
+	for ($y = 1; $y <= $data['limits']['lastCol']; $y++) {
+
+		if (!empty($data['sits'][$x][$y])) {
+
+			if (!empty($data['sits'][$x][$y]['Sell']['id'])) {
+				$sitImg = $this->MyHtml->image('sit_occupied.gif',
+					array('title' => __('Vendido', true))
+				);
 			} else {
-				$encontro = false;
+				$sitImg = $this->MyHtml->image(
+					$data['sits'][$x][$y]['Sit']['icon'],
+					array(
+						'class' => 'sit',
+						'title' => __('Comprar', true),
+						'url' => array(
+							'controller' 	=> 'sits',
+							'action' 		=> 'view',
+							$data['sits'][$x][$y]['Sit']['id']
+						),
+					)
+				);
 			}
-		}
-		if (!$encontro && sizeof($td) < $x) {
+			$td[] = $this->MyHtml->tag('td', $sitImg);
+
+		} else {
 			$td[] = $this->MyHtml->tag('td', '&nbsp;');
 		}
 	}
 	$body[] = $this->MyHtml->tag('tr', $td);
-	$td = null;
 }
 
 if ($body != null) {
