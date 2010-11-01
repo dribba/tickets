@@ -281,7 +281,7 @@ class UsersController extends AppController {
 
 
 	function admin_index() {
-
+		$this->Filter->process();
 		$this->set('data', $this->paginate());
 
 	}

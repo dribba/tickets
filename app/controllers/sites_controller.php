@@ -4,6 +4,7 @@ class SitesController extends AppController {
 
 	function admin_index() {
 		//$this->Event->recursive = 0;
+		$this->Filter->process();
 		$this->set('data', $this->paginate());
 	}
 

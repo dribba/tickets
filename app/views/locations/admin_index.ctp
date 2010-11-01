@@ -11,6 +11,8 @@
 		),
 		array('class' => 'button primary', 'title' => __('Agregar Ubicacion', true))
 	);
+
+	$filters = array('Location.name');
 	
 
 	/** The grid */
@@ -66,4 +68,4 @@
 		$this->MyHtml->tag('table', $head . $body),
 		array('id' => 'grid')
 	);
-	echo $this->element('content', array('menu' => $menu, 'content' => $content));
+	echo $this->element('content', array('menu' => $menu, 'content' => $content, 'filters' => $filters));

@@ -11,11 +11,13 @@
 		),
 		array('class' => 'button primary', 'title' => __('Agregar Butaca', true))
 	);
-	
+
+	$filters = array('Sit.code', 'Sit.row', 'Sit.col', 'Sit.location_id');
 
 	/** The grid */
 	$header	= null;
 	$headers[] = __('Acciones', true);
+	$headers[] = __('Codigo', true);
 	$headers[] = __('Ubicación', true);
 	$headers[] = __('Fila', true);
 	$headers[] = __('Columna', true);
@@ -54,6 +56,7 @@
 		);
 
 		$td[] = $this->MyHtml->tag('td', $actions);
+		$td[] = $this->MyHtml->tag('td', $record['Sit']['code']);
 		$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Sit']['row']);
 		$td[] = $this->MyHtml->tag('td', $record['Sit']['col']);
@@ -73,4 +76,4 @@
 		array('id' => 'grid')
 	);
 
-	echo $this->element('content', array('menu' => $menu, 'content' => $content));
+	echo $this->element('content', array('menu' => $menu, 'content' => $content, 'filters' => $filters));

@@ -3,17 +3,15 @@
 	$this->set('title_for_layout', __('Ver sitio', true));
 
 	$links[] = $this->MyHtml->link(
-		__('Eliminar', true),
+		__('Agregar', true),
 		array(
 			'controller' 	=> 'sites',
-			'action' 		=> 'delete',
-			$data['Site']['id']
+			'action' 		=> 'add',
 		),
 		array(
-			'title' => __('Eliminar', true),
+			'title' => __('Agregar', true),
 			'class'	=> 'button primary'
-		),
-		__('Eliminar sitio?', true)
+		)
 	);
 
 	$links[] = $this->MyHtml->link(
@@ -30,16 +28,19 @@
 	);
 
 	$links[] = $this->MyHtml->link(
-		__('Agregar', true),
+		__('Eliminar', true),
 		array(
 			'controller' 	=> 'sites',
-			'action' 		=> 'add',
+			'action' 		=> 'delete',
+			$data['Site']['id']
 		),
 		array(
-			'title' => __('Agregar', true),
+			'title' => __('Eliminar', true),
 			'class'	=> 'button primary'
-		)
+		),
+		__('Eliminar sitio?', true)
 	);
+
 
 
 	$fields[__('Nombre', true)] = $data['Site']['name'];

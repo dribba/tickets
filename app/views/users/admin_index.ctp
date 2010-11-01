@@ -5,7 +5,6 @@ $this->set("title_for_layout", __("Listado de usuarios", true));
 
 
 /** The grid */
-
 $headers[] = __("Acciones", true);
 $headers[] = __("Usuario / Documento", true);
 $headers[] = __("Nombre completo", true);
@@ -63,5 +62,7 @@ $content = $this->MyHtml->tag('div',
 		array('id' => 'tableItems')
 	);
 
-echo $this->element('content', array('content' => $content));
+
+$filters = array('User.document', 'User.email', 'User.full_name', 'User.mobile_area', 'User.mobile_phone');
+echo $this->element('content', array('content' => $content, 'filters' => $filters));
 

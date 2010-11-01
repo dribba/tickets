@@ -15,7 +15,7 @@
 
 	echo $this->MyHtml->tag('div', $mainContent, array('id' => 'main', 'class' => 'clear'));
 
-	$sidebarContent[] = $this->MyHtml->tag('div', $this->MyHtml->tag('div', 'xxx', array('class' => 'sidebox clear', 'id' => 'boxFirst')));
+	$sidebarContent[] = $this->MyHtml->tag('div', $this->MyHtml->tag('div', '', array('class' => 'sidebox clear', 'id' => 'boxFirst')));
 
 	echo $this->MyHtml->tag('div', $sidebarContent, array('id' => 'sidebar', 'class' => ''));
           

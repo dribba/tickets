@@ -4,6 +4,7 @@ class LocationsController extends AppController {
 	var $name = 'Locations';
 
 	function admin_index() {
+		$this->Filter->process();
 		$this->set('data', $this->paginate());
 	}
 

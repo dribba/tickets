@@ -4,7 +4,7 @@ $out[] = $this->MyForm->create('User', array('class' => 'mainForm clear', 'id' =
 $content[] = $this->MyHtml->tag('legend', __('Contrasena nueva', true));
 if (empty($id)) {
 	$content[] = $this->MyForm->input(
-			'current', array('label' => __('Current', true), 'type' => 'password')
+			'current', array('label' => __('Contrasena actual', true), 'type' => 'password')
 	);
 } else {
 	$content[] = $this->MyForm->input(
@@ -15,11 +15,11 @@ if (empty($id)) {
 
 $content[] = $this->MyForm->input(
 		'new_password',
-		array('label' => __('New password', true), 'type' => 'password')
+		array('label' => __('Contrasena nueva', true), 'type' => 'password')
 );
 $content[] = $this->MyForm->input(
 		'retype_password',
-		array('label' => __('Retype password', true), 'type' => 'password')
+		array('label' => __('Re ingrese la contrasena', true), 'type' => 'password')
 );
 
 $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));

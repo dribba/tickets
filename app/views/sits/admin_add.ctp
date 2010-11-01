@@ -31,12 +31,12 @@ $content[] = $this->MyForm->input('Sit.location_id',
 		'label' 	=> __('Locacion', true),
 	)
 );
-$content[] = $this->MyForm->input('Sit.x',
+$content[] = $this->MyForm->input('Sit.row',
 	array(
 		'label' 	=> __('Posicion eje X', true),
 	)
 );
-$content[] = $this->MyForm->input('Sit.y',
+$content[] = $this->MyForm->input('Sit.col',
 	array(
 		'label' 	=> __('Posicion eje Y', true),
 	)
