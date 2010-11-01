@@ -1,6 +1,6 @@
 <?php
 
-	$this->set("title_for_layout", __("Ver sitio", true));
+	$this->set('title_for_layout', __('Ver sitio', true));
 
 	$links[] = $this->MyHtml->link(
 		__('Eliminar', true),
@@ -43,14 +43,12 @@
 
 
 	$fields[__('Nombre', true)] = $data['Site']['name'];
+	$fields[__('Plano', true)] = $this->element('plane', array('data' => $data));
 
-	$imageInfo = explode('|', $data['Site']['plane']);
-
-    $fields[__('Plano', true)] = $this->MyHtml->image(
-		'../files/' . $imageInfo[0], array('class' => 'width700')
-	);
-
-	
 	echo $this->element('view',
-		array('data' => $fields, 'links' => $links, 'title' => __('Detalle del sitio', true))
+		array(
+			'data' 		=> $fields,
+			'links' 	=> $links,
+			'title' 	=> __('Detalle del sitio', true),
+		)
 	);

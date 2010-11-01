@@ -57,7 +57,7 @@
 		$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Sit']['row']);
 		$td[] = $this->MyHtml->tag('td', $record['Sit']['col']);
-		$td[] = $this->MyHtml->tag('td', $record['Sit']['icon']);
+		$td[] = $this->MyHtml->tag('td', $myHtml->image($record['Sit']['icon']));
 		$body[] = $this->MyHtml->tag('tr', $td);
 
 	}

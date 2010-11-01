@@ -1,4 +1,5 @@
-<form action='https://argentina.dineromail.com/Shop/Shop_Ingreso.asp' method='post'>
+
+<!--<form action='https://argentina.dineromail.com/Shop/Shop_Ingreso.asp' method='post'>
 <input type='hidden' name='NombreItem' value='Pagar'>
 <input type='hidden' name='TipoMoneda' value='1'>
 <input type='hidden' name='PrecioItem' value='100.00'>
@@ -11,24 +12,12 @@
 <input type='hidden' name='Mensaje' value='1'>
 <input type='image' src='https://argentina.dineromail.com/imagenes/botones/pagar-medios_c.gif' border='0' name='submit' alt='Pagar con DineroMail'>
 </form>
-
+-->
 
 
 <?php
-/** The grid */
-$header	= null;
-$headers[] = __('Acciones', true);
-$headers[] = __('Codigo', true);
-$headers[] = __('Locacion', true);
-$headers[] = __('Evento', true);
-
-//$head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($headers));
 
 $body = array();
-$td = array();
-//d($data);
-//for ($y = $data['axis']['y']; $y >= 1; $y--) {
-
 
 for ($x = 1; $x <= $data['limits']['lastRow']; $x++) {
 	
@@ -65,12 +54,6 @@ for ($x = 1; $x <= $data['limits']['lastRow']; $x++) {
 	$body[] = $this->MyHtml->tag('tr', $td);
 }
 
-if ($body != null) {
-    $body = implode("\n", $body);
-} else {
-    $body = '';
-}
-
 echo $this->MyHtml->tag('div',
 	$this->MyHtml->tag('table', $body),
 	array('id' => 'grid-sits')
@@ -78,7 +61,7 @@ echo $this->MyHtml->tag('div',
 
 echo $this->MyHtml->scriptBlock(
 	'$(document).ready(function($) {
-		alert("xxxcxz");
+/*
 		$(".sit").hover(
 			function() {
 				$(this).attr("src", $.path(base_url + "img/ocupado.gif"));
@@ -89,7 +72,7 @@ echo $this->MyHtml->scriptBlock(
 				}
 			}
 		);
-
+*/
 		$(".sit").click(
 			function() {
 				if($(this).hasClass("clicked")) {

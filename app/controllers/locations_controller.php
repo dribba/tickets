@@ -20,12 +20,23 @@ class LocationsController extends AppController {
 		$this->set('data', $location);
 	}
 
+
+	function admin_full_screen($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid location', true));
+			$this->redirect(array('action' => 'index'));
+		}
+
+		$this->Location->recursive = -1;
+		$location = $this->Location->read(null, $id);
+
+		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], 2);
+		$this->set('data', $location);
+		$this->render('../elements/table', 'print');
+	}
+
+
 	function admin_add($id = null) {
-
-		$this->set('sites',
-			$this->Location->Site->find('list', array('fields' => array('Site.id', 'Site.name')))
-		);
-
 		if (!empty($this->data)) {
 			$this->Location->create();
 			if ($this->Location->save($this->data)) {

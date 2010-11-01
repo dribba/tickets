@@ -61,7 +61,7 @@ class Sit extends AppModel {
 				'order'			=> array(
 					'Sit.row', 'Sit.col'
 				),
-				//'limit' 		=> 10,
+				//'limit' 		=> 100,
 			)
 		);
 //ds($sits);
