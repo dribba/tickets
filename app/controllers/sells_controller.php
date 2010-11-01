@@ -31,7 +31,7 @@ class SellsController extends AppController {
 		$this->set(compact('users'));
 	}
 
-	function sell() {
+	/*function sell() {
 		$this->set('locations', $this->Sell->Location->find('list'));
 		//d($this->Sell->EventsSit->Sit->find('list'));
 
@@ -42,6 +42,40 @@ class SellsController extends AppController {
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The sell could not be saved. Please, try again.', true));
+			}
+		}
+	}
+	 */
+
+	function sell() {
+
+		if (empty($this->data)) {
+			$this->set('locations', $this->Sell->Location->find('list'));
+			$this->set('step', 1);
+		} else {
+
+			if ($this->data['Sell']['step'] == 1) {
+
+				$this->Sell->set($this->data);
+
+				if ($this->Sell->validates()) {
+
+
+						$this->Session->write('user_data', $this->data);
+						$this->Session->write('valid_data', $valid);
+						$this->set('validation_data', $data);
+
+					$this->set('step', 2);
+				} else {
+					$this->set('step', 1);
+				}
+			} else if ($this->data['Sell']['step'] == 2) {
+
+				$this->set('step', 3);
+
+				$validData = $this->Session->read('valid_data');
+
+				$this->redirect(array('controller' => 'sells', 'action' => 'index'));
 			}
 		}
 	}

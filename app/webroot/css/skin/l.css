@@ -10,6 +10,9 @@ a {
     text-decoration: none;
     color: inherit;
 }
+.width700 {
+	width:700px;
+}
 a:hover { text-decoration: none; }
 img { border: 1px solid #ddd; }
 #wrapper {

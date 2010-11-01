@@ -1,86 +1,79 @@
 <?php
 
-$out[] = $this->MyForm->create("Sell", array("class" => "ajax_form"));
+$this->set('title_for_layout', __('Compra de entrada', true));
 
-$content[] = $this->MyForm->input('Sell.location',
+$out[] = $this->MyForm->create('User', array('class' => 'mainForm clear', 'id' => 'formEditor'));
+$out[] = $this->MyHtml->tag(
+	'p',
+	$this->MyHtml->tag('span', '* ', array('class' => 'star')) .
+		__('Los campos marcados con asterisco son obligatorios', true),
+	array('id' => 'asterisk')
+);
+
+$content[] = $this->MyHtml->tag('legend', __('Detalles de la compra', true));
+/**
+############################################################################
+# STEP 1
+############################################################################
+*/
+$steps[1][] = $this->MyForm->input('Sell.location',
 	array(
-		'label' 	=> __('Entrada', true),
-		'default'	=> 3
+		'label' 	=> __('Ubicacion', true),
 	)
 );
-$content[] = $this->MyForm->input('Sell.sit_id',
+$steps[1][] = $this->MyForm->input('Sell.sit_id',
 	array(
 		'label' 	=> __('Butaca', true)
 	)
 );
-$content[] = $this->MyForm->input('Sell.carnet',
+
+/**
+############################################################################
+# STEP 2
+############################################################################
+*/
+if (!empty($validation_data)) {
+
+	$t['address'] = 'Domicilio';
+	$t['phone'] = 'Telefono';
+	$t['know'] = 'Persona conocida';
+	$t['work'] = 'Empleo';
+
+	foreach ($validation_data as $d => $v) {
+
+		$steps[2][] = $this->MyForm->input($d,
+			array(
+				'label' 	=> __($t[$d], true),
+				'type'		=> 'radio',
+				'options'	=> $v,
+				'div'		=> 'No',
+				'class'		=> 'validation_data'
+			)
+		);
+
+	}
+}
+
+
+
+$out[] = $this->MyForm->input('step',
 	array(
-		'options' 	=> array('Y' => __('Si', true), 'N' => __('No', true)),
-		'default' 	=> 'Y',
-		'label' 	=> 'Posee carnet'
+		'type' 		=> 'hidden',
+		'value' 	=> $step,
 	)
 );
-$content[] = $this->MyForm->input('Sell.number', array('label' => __('Numero de carnet', true)));
-
-$street[] = $this->MyHtml->tag('label', __('Costo con envio a domicilio $20', true));
-$street[] = $this->MyHtml->tag('label', __('Costo retirando en sede $15', true));
-$street[] = $this->MyForm->input('Sell.send',
-	array(
-		'options' 	=> array('Y' => __('Si', true), 'N' => __('No', true)),
-		'default'	=> 'Y',
-		'label'		=> 'Enviar a domicilio'
-	)
-);
-$streetDetail[] = $this->MyForm->input('Sell.street', array('label' => __('Direccion de entrega', true)));
-$streetDetail[] = $this->MyForm->input('Sell.horario', array('label' => __('Horario de entrega', true)));
-$street[] = $this->MyHtml->tag('div', $streetDetail, array('id' => 'street-detail'));
-
-$content[] = $this->MyHtml->tag('div', $street, array('id' => 'street'));
-$content[] = $this->MyForm->input('Sell.option',
-	array(
-		'options' 	=> array('rapipago' => __('Rapi Pago', true), 'pagofacil' => __('Pago Facil', true), 'tarjeta' => __('Tarjeta de credito', true)),
-		'default' => 'rapipago',
-		'label' => 'Opciones de pago'
-	)
-);
-
-$out[] = $this->MyHtml->tag('div', $content, array('id' => 'container'));
+foreach ($steps[$step] as $field) {
+	$content[] = $field;
+}
 
 
-$out[] = $this->element("footer", array('controller' => 'sells'));
-$out[] = $this->MyForm->end();
 
-echo $myHtml->out($out);
+$out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
-echo $this->MyHtml->scriptBlock(
-	'$(document).ready(function($) {
-		checkCombo();
-		$("#SellLocation").change(function() {
-			if ($(this).val() == 1) {
-				$("#SellSitId").parent().hide();
-			} else {
-				$("#SellSitId").parent().show();
-			}
-		});
-		$("#SellCarnet").change(function() {
-			checkCombo();
-		});
-		function checkCombo() {
-			if ($("#SellCarnet").val() == "N") {
-				$("#SellNumber").parent().hide();
-				$("#street").show();
-			} else {
-				$("#SellNumber").parent().show();
-				$("#street").hide();
-			}
-		}
-		$("#SellSend").change(function() {
-			if ($(this).val() == "N") {
-				$("#street-detail").hide();
-			} else {
-				$("#street-detail").show();
-			}
-		});
 
-	});', array('inline' => false)
-);
+//$out[] = $this->MyForm->end(__('Siguiente', true));
+$out[] = $this->element("footer", array('link' => 'users/login', 'text' => __('Siguiente', true)));
+
+$mainContent = $this->MyHtml->tag('div', $out);
+
+echo $this->element('add', array('content' => $mainContent));

@@ -1,6 +1,4 @@
-
 <?php
-//<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like></fb:like>
 
 $this->set('title_for_layout', __('Registro de usuario', true));
 
