@@ -55,7 +55,7 @@ class MyFormHelper extends FormHelper {
 
 
 		if (!empty($options['class'])) {
-
+			
 			if ($options['class'] == 'validation_data') {
 				foreach ($options['options'] as $k => $value) {
 					$options['options'][$value] = $value;
@@ -64,8 +64,36 @@ class MyFormHelper extends FormHelper {
 			}
 		}
 
+		$options['div'] = array('class' => 'field clear');
+		$options['error'] = array('class' => 'error clear', 'wrap' => 'p');
+
+		if (!empty($options['help'])) {
+//			 $options['after'] = $this->MyHtml->image(
+//				'ico/icohint.png',
+//				array(
+//					'url'	=> array('a')
+//				)
+//			) . $this->MyHtml->tag('span', $options['help']);
+
+			$options['after'] = $this->MyHtml->tag(
+				'a',
+				$this->MyHtml->image('ico/icohint.png')	. $this->MyHtml->tag('span', $options['help']),
+				array('class' => 'hint')
+			);
+		}
+
+
 		return parent::input($fieldName, $options);
 		
 	}
+
+
+	function label($fieldName = null, $text = null, $options = array()) {
+
+		
+		return parent::label($fieldName, $text, $options);
+	}
+
+	
 
 }

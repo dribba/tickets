@@ -1,6 +1,7 @@
 <?php
-
-$out[] = $this->MyForm->create('User', array('class' => 'ajax_form'));
+$this->set('title_for_layout', __('Cambiar contrasena', true));
+$out[] = $this->MyForm->create('User', array('class' => 'mainForm clear', 'id' => 'formEditor'));
+$content[] = $this->MyHtml->tag('legend', __('Contrasena nueva', true));
 if (empty($id)) {
 	$content[] = $this->MyForm->input(
 			'current', array('label' => __('Current', true), 'type' => 'password')
@@ -21,10 +22,12 @@ $content[] = $this->MyForm->input(
 		array('label' => __('Retype password', true), 'type' => 'password')
 );
 
-$out[] = $this->MyHtml->tag('div', $content, array('id' => 'container'));
+$out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
-$out[] = $this->element('footer', array('controller' => 'passengers'));
+$out[] = $this->element('footer', array('link' => 'admin/users'));
 
 $out[] = $this->MyForm->end();
 
-echo implode("\n", $out);
+$content = $this->MyHtml->tag('div', $out);
+
+echo $this->element('add', array('content' => $content));

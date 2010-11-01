@@ -176,7 +176,7 @@ class User extends AppModel {
 * @return mixed. Hashed password on success, false in other case.
 */
     function updatePassword($id, $password) {
-            $hashedPassword = md5($password);
+            $hashedPassword = $password;
             if ($this->save(array('User' => array(
 				'id' 		=> $id,
 				'password' 	=> $hashedPassword)), array('validate' => false))) {

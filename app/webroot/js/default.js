@@ -15,14 +15,14 @@ $(document).ready(function($) {
         }
 
 
-	/** Bind clear reset button */
+	/** Bind clear reset button 
 	$('.clear').live('click', function() {
 		var clearInput = $('<input/>').attr('type', 'hidden').attr('value', 'clear').attr('name', 'data[Filter][action]');
 		$('.clear').parent().append(clearInput);
 		$('form').submit();
 		return true;
 	});
-
+*/
 
 	/** Change Language */
 	$('#language').change(
@@ -31,6 +31,11 @@ $(document).ready(function($) {
 		}
 	);
 
+	$('#btnCancel').live('click',
+		function() {
+			location.href = base_url + $(this).attr('href');
+		}
+	);
 
 	/** Datepicker */
 	$('.datepicker').datepicker({

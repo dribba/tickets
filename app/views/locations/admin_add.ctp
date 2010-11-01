@@ -1,6 +1,18 @@
 <?php
 
-$out[] = $this->MyForm->create("Location", array("class" => "ajax_form"));
+$this->set('title_for_layout', __('Agregar ubicacion', true));
+
+$out[] = $this->MyForm->create('Location', array('class' => 'mainForm clear', 'id' => 'formEditor'));
+
+$out[] = $this->MyHtml->tag(
+	'p',
+	$this->MyHtml->tag('span', '* ', array('class' => 'star')) .
+		__('Los campos marcados con asterisco son obligatorios', true),
+	array('id' => 'asterisk')
+);
+
+$content[] = $this->MyHtml->tag('legend', __('Detalles de la ubicacion', true));
+
 if (!empty($id)) {
 	$content[] = $this->MyForm->input('Location.id',
 		array(
@@ -14,10 +26,13 @@ $content[] = $this->MyForm->input('Location.name',
 		'label' 	=> __('Nombre', true),
 	)
 );
-$out[] = $this->MyHtml->tag('div', $content, array('id' => 'container'));
+$out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
 
-$out[] = $this->element("footer", array('controller' => 'events'));
+$out[] = $this->element("footer", array('link' => 'admin/locations'));
 $out[] = $this->MyForm->end();
 
-echo implode("\n", $out);
+
+$content = $this->MyHtml->tag('div', $out);
+
+echo $this->element('add', array('content' => $content));

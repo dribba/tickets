@@ -32,7 +32,7 @@ class SitsController extends AppController {
 			}
 		}
 
-		$save
+		
 
 		$this->Sit->saveAll();
 

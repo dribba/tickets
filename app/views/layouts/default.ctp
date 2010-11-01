@@ -37,7 +37,7 @@
     <div id="wrapper">
       <div id="top">
         <div id="title" class="clear">
-          <a href="#"><?php echo __('TALLERES', true); ?></a> <span>| <?php echo __('ADMINISTRACION', true); ?></span>
+          <a><?php echo __('TALLERES', true); ?></a> <span>| <?php echo __('ADMINISTRACION', true); ?></span>
         </div>
         <div id="menu" class="clear">
           <ul>
@@ -57,7 +57,7 @@
 
 						echo $this->MyHtml->tag('li',
 							$this->MyHtml->link(
-								__('Locaciones', true),
+								__('Ubicaciones', true),
 								array('admin' => true, 'controller' => 'locations', 'action' => 'index')
 							)
 						);
@@ -88,9 +88,7 @@
 						$this->MyHtml->link(__('Cambiar contrasena', true), array('admin' => false, 'controller' => 'users', 'action' => 'change_password'))
 					);
 
-					echo $this->MyHtml->tag('li',
-						$this->MyHtml->link(__('Salir', true), array('controller' => 'users', 'action' => 'logout', 'admin' => false))
-					);
+					
 				} else {
 					echo $this->MyHtml->tag('li',
 						$this->MyHtml->link(
@@ -111,7 +109,7 @@
         </div>
         <div id="toolbar" class="clear">
           <p id="user">
-            <?php echo __('Usuario: ', true); ?> <a href="#"><?php echo User::get('/User/full_name');?></a>
+            <?php echo __('Usuario: ', true); ?> <a><?php echo User::get('/User/full_name');?></a>
           </p>
           <div id="buttons">
 			<?php

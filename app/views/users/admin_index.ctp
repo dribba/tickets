@@ -1,10 +1,7 @@
 <?php
 
-$out[] = $this->MyHtml->tag('h2',
-	__('Usuarios', true),
-	array('id' => 'tasks_title')
-);
-$this->set("title_for_layout", __("Listado de socios", true));
+
+$this->set("title_for_layout", __("Listado de usuarios", true));
 
 
 /** The grid */
@@ -61,12 +58,10 @@ if ($body != null) {
     $body = '';
 }
 
-$out[] = $this->MyHtml->tag('div',
-	$this->MyHtml->tag('table', $head . $body),
-	array('id' => 'grid')
-);
+$content = $this->MyHtml->tag('div',
+		$this->MyHtml->tag('table', $head . $body),
+		array('id' => 'tableItems')
+	);
 
-$out[] = $this->MyPaginator->getNavigator(false);
+echo $this->element('content', array('content' => $content));
 
-echo implode("\n", $out);
-echo $this->Js->writeBuffer();

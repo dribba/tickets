@@ -39,7 +39,7 @@
 				'class' => 'open_modal',
 				'title' => __('Editar', true) . ' ' . $record['Event']['name'],
 				'url' => array(
-					'controller' 	=> 'locations',
+					'controller' 	=> 'events',
 					'action' 		=> 'add',
 					$record['Event']['id']
 				),

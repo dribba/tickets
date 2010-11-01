@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, dl, li {
 h1, h2, h3, h4, h5, h6, pre, code { 
 	font-size: 1em; 
 }
-table, thead, tbody, tfoot, tr, th, td, input, select, textarea {	
+table, thead, tbody, tfoot, tr, th, td, input, select, textarea, button {
 	font-size: 1em;	
     font-family: inherit; 
 }

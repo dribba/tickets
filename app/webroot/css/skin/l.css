@@ -40,6 +40,21 @@ dt {
     clear: left;
     font-weight: bold;
 }
+.view{
+	margin-top:15px;
+}
+.view dt{
+	width:250px;
+}
+.view dd, dt{
+	border-bottom: 0px;
+}
+.boxContent .button{
+	margin:5px auto;
+}
+.boxContent{
+	width:85%;
+}
 
 /* Buttons */
 
@@ -308,7 +323,7 @@ p#user a:hover { text-decoration: underline; }
     background-image: url(../../img/ico/icoinfo.png);
     border-color: #408abd;
 }
-#msgConfirm {
+#msgConfirm, #msgSuccess {
     background-color: #d4f28c;
     background-image: url(../../img/ico/icoconfirm.png);
     border-color: #b2c722;
@@ -617,6 +632,15 @@ textarea { font-family: 'Segoe UI', 'Trebuchet MS', Arial, Helvetica, sans-serif
     width: 150px;
     padding: 5px 0 0 0;
 }
+.mainForm .required label:after {
+	color: #F01111;
+	content: ' *';
+	display:inline;
+}
+.mainForm .error label{
+	color: #F01111;
+}
+
 img.calendar {
     display: inline;
     margin-left: 3px;

@@ -1,6 +1,16 @@
 <?php
 
-$out[] = $this->MyForm->create("User", array("class" => "ajax_form"));
+$this->set('title_for_layout', __('Agregar evento', true));
+
+$out[] = $this->MyForm->create('User', array('class' => 'mainForm clear', 'id' => 'formEditor'));
+
+$out[] = $this->MyHtml->tag(
+	'p',
+	$this->MyHtml->tag('span', '* ', array('class' => 'star')) .
+		__('Los campos marcados con asterisco son obligatorios', true),
+	array('id' => 'asterisk')
+);
+$content[] = $this->MyHtml->tag('legend', __('Detalles del usuario', true));
 if (!empty($id)) {
 	$content[] = $this->MyForm->input('User.id',
 		array(
@@ -34,10 +44,13 @@ $content[] = $this->MyForm->input('User.email',
 	)
 );
 
-$out[] = $this->MyHtml->tag('div', $content, array('id' => 'container'));
+$out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
 
-$out[] = $this->element("footer", array('controller' => 'users'));
+$out[] = $this->element("footer", array('link' => 'admin/users'));
 $out[] = $this->MyForm->end();
 
-echo $myHtml->out($out);
+
+$content = $this->MyHtml->tag('div', $out);
+
+echo $this->element('add', array('content' => $content));
