@@ -116,7 +116,11 @@
         </div>
         <div id="toolbar" class="clear">
           <p id="user">
-            <?php echo __('Usuario: ', true); ?> <a><?php echo User::get('/User/full_name');?></a>
+            <?php
+				
+				echo __('Usuario: ', true) . '<a>' . User::get('/User/full_name') . '</a>';
+				
+			?>
           </p>
           <div id="buttons">
 			<?php

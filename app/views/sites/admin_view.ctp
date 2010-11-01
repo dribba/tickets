@@ -46,7 +46,7 @@
 
 	$imageInfo = explode('|', $data['Site']['plane']);
 
-    $fields[__('Pano', true)] = $this->MyHtml->image(
+    $fields[__('Plano', true)] = $this->MyHtml->image(
 		'../files/' . $imageInfo[0], array('width' => '700')
 	);
 

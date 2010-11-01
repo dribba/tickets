@@ -63,8 +63,9 @@ class MyFormHelper extends FormHelper {
 				}
 			}
 		}
-
-		$options['div'] = array('class' => 'field clear');
+		if (empty($options['div'])) {
+			$options['div'] = array('class' => 'field clear');
+		}
 		$options['error'] = array('class' => 'error clear', 'wrap' => 'p');
 
 		if (!empty($options['help'])) {

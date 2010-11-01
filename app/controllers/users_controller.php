@@ -79,7 +79,7 @@ class UsersController extends AppController {
 					$uuid = uniqid();
 					$user = $this->Session->read('user_data');
 					unset($user['User']['step']);
-					$user['User']['password'] = $uuid;
+					$user['User']['password'] = md5($uuid);
 					$user['User']['username'] = $user['User']['document'];
 					
 					$this->User->create();
@@ -93,7 +93,7 @@ class UsersController extends AppController {
 							Usuario/document %s
 							Contrasena %s',
 							$user['User']['username'],
-							$user['User']['password']
+							$uuid
 						);
 						$this->User->send_sms($params);
 
