@@ -64,6 +64,13 @@
 
 						echo $this->MyHtml->tag('li',
 							$this->MyHtml->link(
+								__('Sitios', true),
+								array('admin' => true, 'controller' => 'sites', 'action' => 'index')
+							)
+						);
+
+						echo $this->MyHtml->tag('li',
+							$this->MyHtml->link(
 								__('Butacas', true),
 								array('admin' => true, 'controller' => 'sits', 'action' => 'index')
 							)

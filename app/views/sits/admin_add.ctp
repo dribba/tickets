@@ -1,6 +1,18 @@
 <?php
 
-$out[] = $this->MyForm->create("Sit", array("class" => "ajax_form"));
+$this->set('title_for_layout', __('Agregar butaca', true));
+
+$out[] = $this->MyForm->create('Sit', array('class' => 'mainForm clear', 'id' => 'formEditor'));
+
+$out[] = $this->MyHtml->tag(
+	'p',
+	$this->MyHtml->tag('span', '* ', array('class' => 'star')) .
+		__('Los campos marcados con asterisco son obligatorios', true),
+	array('id' => 'asterisk')
+);
+
+$content[] = $this->MyHtml->tag('legend', __('Detalles del evento', true));
+
 if (!empty($id)) {
 	$content[] = $this->MyForm->input('Sit.id',
 		array(
@@ -30,10 +42,12 @@ $content[] = $this->MyForm->input('Sit.y',
 	)
 );
 
-$out[] = $this->MyHtml->tag('div', $content, array('id' => 'container'));
+$out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
 
-$out[] = $this->element("footer", array('controller' => 'sits'));
+$out[] = $this->element("footer", array('link' => 'admin/sits'));
 $out[] = $this->MyForm->end();
 
-echo $myHtml->out($out);
+$content = $this->MyHtml->tag('div', $out);
+
+echo $this->element('add', array('content' => $content));

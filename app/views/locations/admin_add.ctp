@@ -26,6 +26,13 @@ $content[] = $this->MyForm->input('Location.name',
 		'label' 	=> __('Nombre', true),
 	)
 );
+$content[] = $this->MyForm->input('Location.site_id',
+	array(
+		'label' 	=> __('Sitio', true),
+	)
+);
+
+
 $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
 

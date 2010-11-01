@@ -43,6 +43,7 @@
 	
 
 	$fields[__('Nombre', true)] = $data['Location']['name'];
+	$fields[__('Sitio', true)] = $data['Site']['name'];
 	
 	echo $this->element('view',
 		array('data' => $fields, 'links' => $links, 'title' => __('Detalle de la ubicación', true))

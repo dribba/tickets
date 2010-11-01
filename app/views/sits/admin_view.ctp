@@ -1,5 +1,7 @@
 <?php
 
+	$this->set("title_for_layout", __("Ver butaca", true));
+
 	$links[] = $this->MyHtml->link(
 		__('Eliminar', true),
 		array(
@@ -9,20 +11,42 @@
 		),
 		array(
 			'title' => __('Eliminar', true),
-			'class'	=> 'cancel'
+			'class'	=> 'button primary'
 		),
 		__('Eliminar butaca?', true)
 	);
 
-	$out[] = $this->element('actions',
-		array('links' => $links)
+	$links[] = $this->MyHtml->link(
+		__('Editar', true),
+		array(
+			'controller' 	=> 'sits',
+			'action' 		=> 'add',
+			$data['Sit']['id']
+		),
+		array(
+			'title' => __('Editar', true),
+			'class'	=> 'button primary'
+		)
 	);
+
+	$links[] = $this->MyHtml->link(
+		__('Agregar', true),
+		array(
+			'controller' 	=> 'sits',
+			'action' 		=> 'add',
+		),
+		array(
+			'title' => __('Agregar', true),
+			'class'	=> 'button primary'
+		)
+	);
+
 
 	$fields[__('Ubicación', true)] = $data['Location']['name'];
 	$fields[__('Fila', true)] = $data['Sit']['row'];
 	$fields[__('Columna', true)] = $data['Sit']['col'];
 	$fields[__('Ícono', true)] = $data['Sit']['icon'];
 	
-	$out[] = $this->element('view', array('data' => $fields));
-
-	echo $this->MyHtml->tag('div', $out, array('id' => ''));
+	echo $this->element('view',
+		array('data' => $fields, 'links' => $links, 'title' => __('Detalle de la butaca', true))
+	);
