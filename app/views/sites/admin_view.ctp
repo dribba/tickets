@@ -43,7 +43,13 @@
 
 
 	$fields[__('Nombre', true)] = $data['Site']['name'];
-	
+
+	$imageInfo = explode('|', $data['Site']['plane']);
+
+    $fields[__('Pano', true)] = $this->MyHtml->image(
+		'../files/' . $imageInfo[0], array('width' => '700')
+	);
+
 	
 	echo $this->element('view',
 		array('data' => $fields, 'links' => $links, 'title' => __('Detalle del sitio', true))

@@ -16,10 +16,45 @@ class SitesController extends AppController {
 		$data = $this->Site->findById($id);
 		$this->set('data', $data);
 	}
+	
+	function isUploadedFile($params){
+		$val = array_shift($params);
+		if ((isset($val['error']) && $val['error'] == 0) ||
+		(!empty( $val['tmp_name']) && $val['tmp_name'] != 'none')) {
+			return is_uploaded_file($val['tmp_name']);
+		}
+		return false;
+	}
 
 	function admin_add($id = null) {
 		if (!empty($this->data)) {
 			$this->Site->create();
+
+
+			$allowedExtensions = array('jpg', 'jpeg', 'png');
+			$extension = strtolower(substr($this->data['Site']['plane']['name'], -3));
+			
+			if (!in_array($extension, $allowedExtensions)) {
+				$this->Session->setFlash(__('Solo se permiten archivos del tipo imagen', true), 'flash_error');
+				$this->Site->invalidate('Site.plane');
+			}
+
+			$plane = uniqid();
+
+			$uploaddir = WWW_ROOT . DS . 'files' . DS;
+			$uploadfile = $uploaddir . $plane;
+			
+			if (move_uploaded_file($this->data['Site']['plane']['tmp_name'], $uploadfile)) {
+
+				$this->data['Site']['plane'] = $plane . 
+					'|' .
+					strtolower(basename($this->data['Site']['plane']['name']));
+			} else {
+				$this->Session->setFlash(__('Error subiendo archivo', true), 'flash_error');
+				$this->Site->invalidate('Site.plane');
+			}
+			
+			
 			if ($this->Site->save($this->data)) {
 				$this->Session->setFlash(__('Sitio agregado', true), 'flash_success');
 				$this->redirect(array('action' => 'index'));
