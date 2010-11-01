@@ -131,8 +131,14 @@
       </div>
       <div id="content" class="clear">
         <?php echo $content_for_layout; ?>
-        
+
       </div>
+
+		<script type="text/javascript">
+ 			var info = '<?php echo $info; ?>';
+			<?php echo $this->Js->writeBuffer(); ?>
+		</script>
+
       <div id="push">
 
       </div>
