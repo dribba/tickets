@@ -44,7 +44,15 @@
 
 	$fields[__('Nombre', true)] = $data['Site']['name'];
 	$fields[__('Plano', true)] = $this->element('plane', array('data' => $data));
-	
+/*
+	if (!empty($data['Site']['plane'])) {
+		$imageInfo = explode('|', $data['Site']['plane']);
+		$fields[__('Plano', true)] = $this->MyHtml->image(
+			'../files/' . $imageInfo[0]
+		);
+	}
+*/
+
 	echo $this->element('view',
 		array(
 			'data' 		=> $fields,

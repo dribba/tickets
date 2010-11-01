@@ -2,7 +2,9 @@
 
 $this->set('title_for_layout', __('Agregar sitio', true));
 
-$out[] = $this->MyForm->create('Site', array('class' => 'mainForm clear', 'id' => 'formEditor'));
+$out[] = $this->MyForm->create('Site', 
+	array('class' => 'mainForm clear', 'id' => 'formEditor', 'type' => 'file')
+);
 
 $out[] = $this->MyHtml->tag(
 	'p',
@@ -24,6 +26,13 @@ if (!empty($id)) {
 $content[] = $this->MyForm->input('Site.name',
 	array(
 		'label' 	=> __('Nombre', true),
+	)
+);
+
+$content[] = $this->MyForm->input('Site.plane',
+	array(
+		'label' 	=> __('Plano', true),
+		'type'		=> 'file'
 	)
 );
 

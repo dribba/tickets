@@ -40,6 +40,13 @@ dt {
     clear: left;
     font-weight: bold;
 }
+#load {
+	margin: 15px 0px;
+	display:none;
+}
+#load span > img {
+	border:none;
+}
 .view{
 	margin-top:15px;
 }
