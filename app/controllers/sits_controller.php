@@ -23,20 +23,53 @@ class SitsController extends AppController {
 		$highestRow = $objPHPExcel->getActiveSheet()->getHighestRow();
 
 
-		$matrix = array();
 
+		$locationId = 1;
+		$existingSitsTmp = $this->Sit->find('all',
+			array(
+				'conditions'	=> array('Sit.location_id' => $locationId),
+				'recursive' 	=> -1
+			)
+		);
+		foreach ($existingSitsTmp as $v) {
+			$existingSits[$v['Sit']['row']][$v['Sit']['col']]['id'] = $v['Sit']['id'];
+			$existingSits[$v['Sit']['row']][$v['Sit']['col']]['icon'] = $v['Sit']['icon'];
+		}
+
+		$toDelete = $toSave = array();
 		for ($row = 1; $row < $highestRow; $row++) {
 			for ($col = 1; $col < $highestCol; $col++) {
+
 				$v = $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($col, $row)->getValue();
-				$matrix[$row][$col] = $v;
+
+				$save = null;
+				if (empty($v)) {
+					if (!empty($existingSits[$row][$col])) {
+						$toDelete[] = $existingSits[$row][$col]['id'];
+					}
+				} else {
+					if (!empty($existingSits[$row][$col])) {
+						$save['id'] = $existingSits[$row][$col]['id'];
+					}
+
+					$save['location_id'] = 1;
+					$save['row'] = $row;
+					$save['col'] = $col;
+					$save['icon'] = $v;
+
+					$toSave[] = $save;
+				}
 			}
 		}
 
-		$save
 
-		$this->Sit->saveAll();
+		if (!empty($toDelete)) {
+			$this->Sit->deleteAll(array('Sit.id' => $toDelete));
+		}
 
-		d($matrix);
+		if (!empty($toSave)) {
+			$this->Sit->saveAll($toSave);
+		}
 
 	}
 
@@ -107,11 +140,78 @@ class SitsController extends AppController {
 	}
 
 	function admin_table() {
-		$axis = $this->Sit->query('SELECT MAX(`Sits`.`x`) AS x, MAX(`Sits`.`y`) AS y FROM sits AS Sits');
-		$sits = $this->Sit->find('all', array('recursive' => -1));
-		$data['axis'] = $axis[0][0];
-		$data['sits'] = $sits;
-		$this->set('data', $data);
+
+		$locationId = 1;
+
+$this->Sit->unbindModel(array('hasMany'=>array('EventsSit'), 'belongsTo'=>array('Location')));
+/*
+$this->Sit->bindModel(
+	array('hasOne' =>
+		array(
+			'EventsSit' => array(
+				'foreignKey'=>false,
+				'conditions'=> array(
+					'EventsSit.sit_id' => 'Sit.id',
+					'EventsSit.event_id'=> '2'
+				)
+			)
+		)
+	)
+);
+*/
+
+		$sits = $this->Sit->find('all',
+			array(
+				'fields'		=> array('Sit.*', 'EventsSit.*', 'Sell.*'),
+				'joins' 		=> array(
+					array(
+						'table' => '`events_sits`',
+						'alias' => 'EventsSit',
+						'type' => 'LEFT',
+						'conditions' => array(
+							'EventsSit.sit_id = Sit.id',
+							'EventsSit.event_id = 2',
+						)
+					),
+					array(
+						'table' => '`sells`',
+						'alias' => 'Sell',
+						'type' => 'LEFT',
+						'conditions' => array(
+							'EventsSit.sell_id = Sell.id',
+						)
+					)
+				),
+				'conditions' 	=> array(
+					'Sit.location_id' => $locationId
+				),
+				'order'			=> array(
+					'Sit.row', 'Sit.col'
+				),
+				//'limit' 		=> 10,
+			)
+		);
+//ds($sits);
+
+		$data = array();
+		$lastRow = $lastCol = 0;
+		foreach ($sits as $sit) {
+
+			if ($sit['Sit']['row'] > $lastRow) {
+				$lastRow = $sit['Sit']['row'];
+			}
+			if ($sit['Sit']['col'] > $lastCol) {
+				$lastCol = $sit['Sit']['col'];
+			}
+
+			$data[$sit['Sit']['row']][$sit['Sit']['col']] = $sit;
+		}
+
+		$this->set('data',
+			array(
+				'sits' 		=> $data,
+				'limits' 	=> array('lastRow' => $lastRow, 'lastCol' => $lastCol)
+			)
+		);
 	}
 }
-?>

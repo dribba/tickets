@@ -18,10 +18,10 @@
 		array('links' => $links)
 	);
 
-	$fields[__('Codigo', true)] = $data['Sit']['code'];
-	$fields[__('Locacion', true)] = $data['Location']['name'];
-	$fields[__('X', true)] = $data['Sit']['x'];
-	$fields[__('Y', true)] = $data['Sit']['y'];
+	$fields[__('Ubicación', true)] = $data['Location']['name'];
+	$fields[__('Fila', true)] = $data['Sit']['row'];
+	$fields[__('Columna', true)] = $data['Sit']['col'];
+	$fields[__('Ícono', true)] = $data['Sit']['icon'];
 	
 	$out[] = $this->element('view', array('data' => $fields));
 

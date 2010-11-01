@@ -5,6 +5,9 @@ class Sit extends AppModel {
 
 	var $belongsTo = array('Location');
 
+	var $hasMany = array('EventsSit');
+
+/*
 	protected function _initialitation() {
 
 		$this->validate = array(
@@ -18,5 +21,6 @@ class Sit extends AppModel {
 		);
 
     }
+*/
 
 }

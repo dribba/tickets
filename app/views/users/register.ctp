@@ -1,4 +1,6 @@
+
 <?php
+//<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like></fb:like>
 
 $out[] = $myForm->create('User', array('action' => 'register'));
 
@@ -57,24 +59,15 @@ $steps[1][] = $myForm->input('mobile_company',
 	array(
 		'type'		=> 'radio',
 		'options'	=> array(
-			'3' 		=> 'Claro',
-			'1' 		=> 'Movistar',
-			'4' 		=> 'Personal'
+			'claro' 		=> 'Claro',
+			'movistar' 		=> 'Movistar',
+			'nextel' 		=> 'Nextel',
+			'personal' 		=> 'Personal'
 		),
 		'label' 	=> __('Compañia', true)
 	)
 );
-$load = $this->MyHtml->tag('span', $this->MyHtml->image('load.gif') . __(' Cargando...', true));
-$steps[1][] = $this->MyHtml->tag('div', $load, array('id' => 'load'));
-$steps[1][] = $this->MyHtml->scriptBlock(
-	'$(document).ready(function($) {
-		$("#save").click(
-			function() {
-				$("#load").show();
-			}
-		);
-	});'
-);
+
 
 
 /**
@@ -90,12 +83,12 @@ if (!empty($validation_data)) {
 	$t['work'] = 'Empleo';
 
 	foreach ($validation_data as $d => $v) {
-		$steps[2][] = $this->MyForm->input($d,
+
+		$steps[2][] = $myForm->input($d,
 			array(
 				'label' 	=> __($t[$d], true),
 				'type'		=> 'radio',
-				'options'	=> $v,
-				'class'		=> 'validation_data'
+				'options'	=> $v
 			)
 		);
 
@@ -107,14 +100,13 @@ if (!empty($validation_data)) {
 $out[] = $myForm->input('step',
 	array(
 		'type' 		=> 'hidden',
-		'value' 	=> $step,
+		'value' 	=> '1',
 	)
 );
 foreach ($steps[$step] as $field) {
 	$out[] = $field;
 }
 
-//$out[] = $myForm->end(__('Siguiente', true));
-$out[] = $this->element("footer", array('controller' => 'users', 'text' => __('Siguiente', true)));
+$out[] = $myForm->end(__('Siguiente', true));
 
 echo $myHtml->out($out);
