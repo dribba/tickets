@@ -1,5 +1,9 @@
 /* Layout */
 
+#street {
+	display:none;
+}
+
 html, body { height: 100%; }
 body {
     font: normal 77% 'Segoe UI', 'Trebuchet MS', Arial, Helvetica, sans-serif;
@@ -361,6 +365,9 @@ p#user a:hover { text-decoration: underline; }
 #main {
     width: 700px;
     float: left;
+}
+.wide {
+	width: 940px !important;
 }
 #head {
     padding: 0 0 10px 0;

@@ -23,40 +23,53 @@ $header[] = __('Precio', true);
 
 $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 
-$body = array();
-foreach ($data as $record) {
-	$td = null;
-	$actions = null;
-	$actions[] = $this->MyHtml->image(
-		'view.png',
-		array(
-			'class' => 'open_modal',
-			'title' => __('Ver', true) . ' ' . $record['Location']['name'],
-			'url' => array(
-				'controller' 	=> 'locations',
-				'action' 		=> 'view',
-				$record['Location']['id']
-			),
-		)
-	);
-	$actions[] = $this->MyHtml->image(
-		'edit.png',
-		array(
-			'class' => 'open_modal',
-			'title' => __('Editar', true) . ' ' . $record['Location']['name'],
-			'url' => array(
-				'controller' 	=> 'locations',
-				'action' 		=> 'add',
-				$record['Location']['id']
-			),
-		)
-	);
+	$body = array();
+	foreach ($data as $record) {
+		$td = null;
+		$actions = null;
+		$actions[] = $this->MyHtml->image(
+			'view.png',
+			array(
+				'class' => 'open_modal',
+				'title' => __('Ver', true) . ' ' . $record['Location']['name'],
+				'url' => array(
+					'controller' 	=> 'locations',
+					'action' 		=> 'view',
+					$record['Location']['id']
+				),
+			)
+		);
+		$actions[] = $this->MyHtml->image(
+			'edit.png',
+			array(
+				'class' => 'open_modal',
+				'title' => __('Editar', true) . ' ' . $record['Location']['name'],
+				'url' => array(
+					'controller' 	=> 'locations',
+					'action' 		=> 'add',
+					$record['Location']['id']
+				),
+			)
+		);
+		$actions[] = $this->MyHtml->image(
+			'delete.png',
+			array(
+				'class' => 'open_modal',
+				'title' => __('Eliminar', true) . ' ' . $record['Location']['id'],
+				'url' => array(
+					'controller' 	=> 'locations',
+					'action' 		=> 'delete',
+					$record['Location']['id']
+				),
+			)
+		);
 
-	$td[] = $this->MyHtml->tag('td', $actions);
-	$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
-	$td[] = $this->MyHtml->tag('td', $record['Location']['price']);
 
-	$body[] = $this->MyHtml->tag('tr', $td);
+		$td[] = $this->MyHtml->tag('td', $actions);
+		$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
+		$td[] = $this->MyHtml->tag('td', $record['Location']['price']);
+
+		$body[] = $this->MyHtml->tag('tr', $td);
 
 }
 

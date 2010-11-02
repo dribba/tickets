@@ -30,10 +30,28 @@ $content[] = $this->MyForm->input('User.sex',
 		'label' 	=> __('Sexo', true),
 	)
 );
+$content[] = $this->MyForm->input('User.mobile_area',
+	array(
+		'type'		=> 'text',
+		'label' 	=> __('Codigo de area', true),
+	)
+);
 $content[] = $this->MyForm->input('User.mobile_phone',
 	array(
 		'type'		=> 'text',
 		'label' 	=> __('Celular', true),
+	)
+);
+
+$content[] = $this->MyForm->input('mobile_company',
+	array(
+		'type'		=> 'select',
+		'options'	=> array(
+			'3' 		=> 'Claro',
+			'1' 		=> 'Movistar',
+			'4' 		=> 'Personal',
+		),
+		'label' 	=> __('Compañia', true),
 	)
 );
 

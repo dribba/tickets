@@ -5,7 +5,7 @@ class SellsController extends AppController {
 
 	function index() {
 		//$this->Sell->recursive = 0;
-		$this->paginate['conditions'] = array('Sell.user_id' => 2);
+		$this->paginate['conditions'] = array('Sell.user_id' => User::get('/User/id'));
 		$this->set('data', $this->paginate());
 	}
 
@@ -47,35 +47,47 @@ class SellsController extends AppController {
 	}
 	 */
 
-	function sell() {
+	function sell($step = null, $sit = null) {
 
-		if (empty($this->data)) {
-			$this->set('locations', $this->Sell->Location->find('list'));
-			$this->set('step', 1);
+		if ($step == 2) {
+
+			$this->set('step', 2);
+			$this->set('sit', $sit);
+				
+			
 		} else {
-
-			if ($this->data['Sell']['step'] == 1) {
-
-				$this->Sell->set($this->data);
-
-				if ($this->Sell->validates()) {
-
-
-						$this->Session->write('user_data', $this->data);
-						$this->Session->write('valid_data', $valid);
-						$this->set('validation_data', $data);
-
-					$this->set('step', 2);
-				} else {
-					$this->set('step', 1);
-				}
+			if (empty($this->data)) {
+				$this->set('locations', $this->Sell->Location->find('list'));
+				$this->set('step', 1);
 			} else if ($this->data['Sell']['step'] == 2) {
-
 				$this->set('step', 3);
+				$this->Session->write('sell_data', $this->data);
+			} else if ($this->data['Sell']['step'] == 3) {
+				$this->set('step', 4);
 
-				$validData = $this->Session->read('valid_data');
+				$sellData = $this->Session->read('sell_data');
+				$sellData['Sell']['user_id'] = User::get('/User/id');
 
+				if ($this->Sell->save($sellData)) {
+
+					$eventSit['EventsSit'] = array(
+						'event_id'	=> 2,
+						'sit_id'	=> $sellData['Sell']['sit_id'],
+						'sell_id'	=> $this->Sell->id
+					);
+					$this->Sell->EventsSit->save($eventSit);
+
+					$this->Session->setFlash(
+						__('Compra realizada con exito', true), 'flash_success'
+					);
+				} else {
+					$this->Session->setFlash(
+						__('Se produjo un error al intentar realizar la compra', true), 'flash_error'
+					);
+				}
 				$this->redirect(array('controller' => 'sells', 'action' => 'index'));
+				//d($sellData);
+				
 			}
 		}
 	}

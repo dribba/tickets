@@ -51,6 +51,18 @@ foreach ($data as $record) {
 			),
 		)
 	);
+	$actions[] = $this->MyHtml->image(
+			'delete.png',
+			array(
+				'class' => 'open_modal',
+				'title' => __('Eliminar', true) . ' ' . $record['User']['id'],
+				'url' => array(
+					'controller' 	=> 'users',
+					'action' 		=> 'delete',
+					$record['User']['id']
+				),
+			)
+		);
 
 	$td[] = $this->MyHtml->tag('td', $actions);
 	$td[] = $this->MyHtml->tag('td', $record['User']['username']);
