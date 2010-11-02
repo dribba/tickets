@@ -57,6 +57,7 @@
 
 
 	$fields[__('Nombre', true)] = $data['Location']['name'];
+	$fields[__('Precio', true)] = $data['Location']['price'];
 	$fields[__('Ubicaciones', true)] = $this->element('table', array('data' => $data));
 	
 	echo $this->element('view',

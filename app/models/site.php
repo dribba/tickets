@@ -3,6 +3,8 @@ class Site extends AppModel {
 	var $name = 'Site';
 	
 
+	var $hasMany = array('Location');
+
 	protected function _initialitation() {
 
 		$this->validate = array(

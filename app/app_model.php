@@ -2,7 +2,7 @@
 
 class AppModel extends Model {
 
-	var $actAs = array('containable');
+	var $actsAs = array('containable');
 
 	/** Overwrite constructor to do "mostly" translations */
     public function __construct($id = false, $table = null, $ds = null) {

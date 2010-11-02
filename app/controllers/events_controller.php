@@ -36,26 +36,7 @@ class EventsController extends AppController {
 				$this->set('id', $this->data['Event']['id']);
 			}
 		}
-	}
-
-	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid event', true));
-			$this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->Event->save($this->data)) {
-				$this->Session->setFlash(__('The event has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The event could not be saved. Please, try again.', true));
-			}
-		}
-		if (empty($this->data)) {
-			$this->data = $this->Event->read(null, $id);
-		}
-		$sits = $this->Event->Sit->find('list');
-		$this->set(compact('sits'));
+		$this->set('sites', $this->Event->Site->find('list'));
 	}
 
 	function admin_delete($id = null) {
@@ -71,4 +52,3 @@ class EventsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 }
-?>

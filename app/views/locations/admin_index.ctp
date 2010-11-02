@@ -19,9 +19,9 @@ $filters = array('Location.name');
 $header	= null;
 $header[] = __('Acciones', true);
 $header[] = __('Nombre', true);
+$header[] = __('Precio', true);
 
 $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
-
 
 	$body = array();
 	foreach ($data as $record) {
@@ -67,6 +67,7 @@ $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 
 		$td[] = $this->MyHtml->tag('td', $actions);
 		$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
+		$td[] = $this->MyHtml->tag('td', $record['Location']['price']);
 
 		$body[] = $this->MyHtml->tag('tr', $td);
 
