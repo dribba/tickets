@@ -11,7 +11,7 @@
 	$headers[] = __("Butaca", true);
 
 	$head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($headers));
-	d($data);
+	
 	$body = array();
 	foreach ($data as $record) {
 		$td = null;
