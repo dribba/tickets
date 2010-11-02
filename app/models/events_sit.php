@@ -26,5 +26,21 @@ class EventsSit extends AppModel {
 		)
 	);
 
+
+
+	function findStats($eventId, $locationId = null) {
+
+		ds($this->find('all',
+			array(
+				'contain'		=> array('Sit'),
+				'fields' 		=> array('Sit.location_id', 'COUNT(EventsSit.id) AS count'),
+				'conditions'	=> array('EventsSit.event_id' => $eventId),
+				'group'			=> array('Sit.location_id'),
+			)
+		));
+
+	}
+
+
 	
 }

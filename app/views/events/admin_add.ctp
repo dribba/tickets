@@ -39,7 +39,7 @@ $content[] = $this->MyForm->input('Event.start',
 		'type'		=> 'text',
 		'label' 	=> __('Fecha de inicio', true),
 		'class'		=> 'datepicker',
-		'help'		=> __('Fecha del evento<br /> Formato yyyy/mm/dd', true)
+		'help'		=> __('Fecha del evento<br /> Formato yyyy-mm-dd hh:mm:ss', true)
 	)
 );
 $content[] = $this->MyForm->input('Event.end',
