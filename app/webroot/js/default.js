@@ -37,7 +37,7 @@ $(document).ready(function($) {
 		}
 	);
 
-	/** Datepicker */
+	/** Datepicker 
 	$('.datepicker').datepicker({
 		dateFormat: 'yy-mm-dd',
 		showOn: 'button',
@@ -45,7 +45,15 @@ $(document).ready(function($) {
 		buttonImageOnly: true,
 		changeMonth: true,
 		changeYear: true
+	});*/
+
+	$(".datepicker").AnyTime_picker({
+		format: "%Y-%m-%d %H:%i",
+		labelTitle: "Hora",
+		labelHour: "Hora",
+		labelMinute: "Minuto"
 	});
+
 
 
 	/** Menu actions */

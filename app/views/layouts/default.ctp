@@ -14,12 +14,14 @@
 		echo $this->Html->css('skin/l');
 		echo $this->Html->css('skin/_sk/bk');
 		echo $this->Html->css('skin/r');
-
-		echo $this->Html->css('app.generic');
+		//echo $this->Html->css('smoothness/jquery-ui-1.8.1.custom');
+		echo $this->Html->css('anytime/anytimec');
+		//echo $this->Html->css('app.generic');
 
 		$jsFiles[] = 'jquery/jquery-1.4.3.min';
-		$jsFiles[] = 'jquery/jquery-ui-1.8.1.custom';
+		//$jsFiles[] = 'jquery/jquery-ui-1.8.1.custom';
 		$jsFiles[] = 'jquery/jquery.maphilight';
+		$jsFiles[] = 'anytime/anytimec';
 		$jsFiles[] = 'default';
 		echo $this->Html->script($jsFiles);
 
@@ -33,6 +35,15 @@
 				'current_action' 		=> $this->params['action']
 			)
 		);
+		/*
+		<script type='text/javascript'>
+var loader= new Loader("#img-encabezado", {showProgress:true, showProgressText:true, textSize:15});
+	loader.Start();
+AnyTime.picker( "fecha",
+      { format: "%d/%m/%Z", dayAbbreviations:["Dom","Lun","Mar","Mie","Jue","Vie","Sab"],labelDayOfMonth:"Dia",labelMonth:"Mes",firstDOW: 0,labelTitle: "Seleccionar fecha",monthAbbreviations:["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"] } );
+  $("#hora").AnyTime_picker(
+      { format: "%H:%i", labelTitle: "Hora",
+        labelHour: "Hora", labelMinute: "Minuto" } );/*
 
 	?>
     <meta charset="UTF-8" />
