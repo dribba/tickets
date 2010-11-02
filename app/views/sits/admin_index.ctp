@@ -54,6 +54,18 @@
 				),
 			)
 		);
+		$actions[] = $this->MyHtml->image(
+			'delete.png',
+			array(
+				'class' => 'open_modal',
+				'title' => __('Eliminar', true) . ' ' . $record['Sit']['id'],
+				'url' => array(
+					'controller' 	=> 'sits',
+					'action' 		=> 'delete',
+					$record['Sit']['id']
+				),
+			)
+		);
 
 		$td[] = $this->MyHtml->tag('td', $actions);
 		$td[] = $this->MyHtml->tag('td', $record['Sit']['code']);

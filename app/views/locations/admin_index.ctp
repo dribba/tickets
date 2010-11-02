@@ -50,6 +50,18 @@
 				),
 			)
 		);
+		$actions[] = $this->MyHtml->image(
+			'delete.png',
+			array(
+				'class' => 'open_modal',
+				'title' => __('Eliminar', true) . ' ' . $record['Location']['id'],
+				'url' => array(
+					'controller' 	=> 'locations',
+					'action' 		=> 'delete',
+					$record['Location']['id']
+				),
+			)
+		);
 
 		$td[] = $this->MyHtml->tag('td', $actions);
 		$td[] = $this->MyHtml->tag('td', $record['Location']['name']);

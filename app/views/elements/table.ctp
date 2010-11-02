@@ -38,8 +38,9 @@ for ($x = 1; $x <= $data['limits']['lastRow']; $x++) {
 						'class' => 'sit',
 						'title' => __('Comprar', true),
 						'url' => array(
-							'controller' 	=> 'sits',
-							'action' 		=> 'view',
+							'controller' 	=> 'sells',
+							'action' 		=> 'sell',
+							2,
 							$data['sits'][$x][$y]['Sit']['id']
 						),
 					)
@@ -53,10 +54,10 @@ for ($x = 1; $x <= $data['limits']['lastRow']; $x++) {
 	}
 	$body[] = $this->MyHtml->tag('tr', $td);
 }
-
+$wide = ((!empty($wide)) ? 'wide' : '');
 echo $this->MyHtml->tag('div',
 	$this->MyHtml->tag('table', $body),
-	array('id' => 'grid-sits')
+	array('id' => 'grid-sits', 'class' => $wide)
 );
 
 echo $this->MyHtml->scriptBlock(
@@ -75,14 +76,8 @@ echo $this->MyHtml->scriptBlock(
 */
 		$(".sit").click(
 			function() {
-				if($(this).hasClass("clicked")) {
-					$(this).attr("src", $.path(base_url + "img/libre.gif"));
-					$(this).removeClass("clicked");
-				} else {
-					$(this).attr("src", $.path(base_url + "img/ocupado.gif"));
-					$(this).addClass("clicked");
-				}
-				return false;
+				
+				location.href = $(this).attr("src", $.path(base_url + "img/libre.gif"));
 			}
 		);
 	});', array('inline' => false)

@@ -8,7 +8,7 @@ class LocationsController extends AppController {
 		$this->set('data', $this->paginate());
 	}
 
-	function admin_view($id = null) {
+	private function __view($id = null, $wizard = false) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid location', true));
 			$this->redirect(array('action' => 'index'));
@@ -19,6 +19,19 @@ class LocationsController extends AppController {
 
 		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], 2);
 		$this->set('data', $location);
+		if (!$wizard) {
+			$this->render('admin_view');
+		} else {
+			$this->render('view');
+		}
+	}
+
+	function view($id = null) {
+		$this->__view($id, true);
+	}
+
+	function admin_view($id) {
+		$this->__view($id);
 	}
 
 

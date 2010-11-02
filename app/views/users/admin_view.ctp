@@ -47,7 +47,12 @@
 	$fields[__('Sexo', true)] = $data['User']['sex'];
 	$fields[__('Estado', true)] = $data['User']['state'];
 	$fields[__('Email', true)] = $data['User']['email'];
+	$fields[__('Codigo de area', true)] = $data['User']['mobile_area'];
 	$fields[__('Celular', true)] = $data['User']['mobile_phone'];
+	
+	$companias = array(1 => 'Movistar', 3 => 'Claro', 4 => 'Personal');
+	$fields[__('Compañia', true)] = $companias[$data['User']['mobile_company']];
+		
 	$fields[__('Fecha de alta', true)] = $data['User']['formated_created'];
 
 	$out[] = $this->element('view', array('data' => $fields));
