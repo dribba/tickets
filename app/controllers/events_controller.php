@@ -8,11 +8,15 @@ class EventsController extends AppController {
 	}
 
 	function admin_view($id = null) {
+
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid event', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		
+
+		d($this->Event->EventsSit->findStats($id));
+		//d($this->Event->EventsSit->Sit->findSits($id));
+		$this->Event->recursive = -1;
 		$data = $this->Event->findById($id);
 		$this->set('data', $data);
 	}

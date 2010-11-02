@@ -8,7 +8,7 @@ class SitsController extends AppController {
 		set_include_path(get_include_path() . PATH_SEPARATOR . APP . 'vendors' . DS . 'PHPExcel' . DS . 'Classes');
 		App::import('Vendor', 'IOFactory', true, array(APP . 'vendors' . DS . 'PHPExcel' . DS . 'Classes' . DS . 'PHPExcel'), 'IOFactory.php');
 
-		$file = '/tmp/PlateaAlta.xls';
+		$file = '/tmp/CodosLawson1-2.xls';
 		if (preg_match("/.*\.xls$/", $file)) {
 			$objReader = PHPExcel_IOFactory::createReader('Excel5');
 		} elseif (preg_match("/.*\.xlsx$/", $file)) {

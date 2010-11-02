@@ -24,6 +24,50 @@ class Sit extends AppModel {
 */
 
 
+
+	function findSits($eventId, $locationId = null) {
+
+		$this->unbindModel(
+			array(
+				'hasMany'	=> array('EventsSit'),
+			)
+		);
+
+		$options = array(
+			'fields'		=> array('Sit.*', 'EventsSit.*', 'Location.*', 'Sell.*'),
+			'joins' 		=> array(
+				array(
+					'table' => '`events_sits`',
+					'alias' => 'EventsSit',
+					'type' => 'LEFT',
+					'conditions' => array(
+						'EventsSit.sit_id = Sit.id',
+						'EventsSit.event_id = ' . $eventId,
+					)
+				),
+				array(
+					'table' => '`sells`',
+					'alias' => 'Sell',
+					'type' => 'LEFT',
+					'conditions' => array(
+						'EventsSit.sell_id = Sell.id',
+					)
+				)
+			),
+			'order'			=> array(
+				'Sit.row', 'Sit.col'
+			),
+			//'limit' 		=> 100,
+		);
+
+		if (!empty($locationId)) {
+			$options['conditions'] = array('Sit.location_id' => $locationId);
+		}
+
+		return $this->find('all', $options);
+	}
+
+
 	function getSitsByLocationAndEvent($locationId, $eventId) {
 
 		$this->unbindModel(
