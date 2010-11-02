@@ -25,6 +25,7 @@ class Event extends AppModel {
 //		)
 //	);
 	var $hasMany = array('EventsSit');
+	var $belongsTo = array('Site');
 
 	protected function _initialitation() {
 

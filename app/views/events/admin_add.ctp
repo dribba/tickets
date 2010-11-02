@@ -22,16 +22,14 @@ if (!empty($id)) {
 		)
 	);
 }
-$content[] = $this->MyForm->input('Event.name',
+$content[] = $this->MyForm->input('Event.site_id',
 	array(
-		'label' 	=> __('Nombre del evento', true),
+		'label' 	=> __('Sitio', true),
 	)
 );
-
-$content[] = $this->MyForm->input('Event.comments',
+$content[] = $this->MyForm->input('Event.name',
 	array(
-		'label' 	=> __('Comentario', true),
-		'class'		=> 'area longest'
+		'label' 	=> __('Nombre', true),
 	)
 );
 $content[] = $this->MyForm->input('Event.start',
@@ -39,14 +37,21 @@ $content[] = $this->MyForm->input('Event.start',
 		'type'		=> 'text',
 		'label' 	=> __('Fecha de inicio', true),
 		'class'		=> 'datepicker',
-		'help'		=> __('Fecha del evento<br /> Formato yyyy-mm-dd hh:mm:ss', true)
+		'help'		=> __('Fecha de inicio del evento<br /> Formato yyyy-mm-dd hh:mm:ss', true)
 	)
 );
 $content[] = $this->MyForm->input('Event.end',
 	array(
 		'type'		=> 'text',
 		'label' 	=> __('Fecha de cierre', true),
-		'class'		=> 'datepicker'
+		'class'		=> 'datepicker',
+		'help'		=> __('Fecha de finalización del evento<br /> Formato yyyy-mm-dd hh:mm:ss', true)
+	)
+);
+$content[] = $this->MyForm->input('Event.comments',
+	array(
+		'label' 	=> __('Observaciones', true),
+		'class'		=> 'area longest'
 	)
 );
 

@@ -1,6 +1,6 @@
 <?php
 	
-	$this->set("title_for_layout", __("Listado de eventos", true));
+	$this->set('title_for_layout', __('Listado de eventos', true));
 
 	$menu[] = $this->MyHtml->link(
 		__('Agregar Evento', true),
@@ -12,6 +12,7 @@
 	$header	= null;
 	$header[] = __('Acciones', true);
 	$header[] = __('Nombre', true);
+	$header[] = __('Sitio', true);
 	$header[] = __('Fecha de Inicio', true);
 	$header[] = __('Fecha de Fin', true);
 
@@ -47,6 +48,7 @@
 		);
 
 		$td[] = $this->MyHtml->tag('td', $actions);
+		$td[] = $this->MyHtml->tag('td', $record['Site']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Event']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Event']['formated_start']);
 		$td[] = $this->MyHtml->tag('td', $record['Event']['formated_end']);
