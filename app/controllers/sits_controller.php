@@ -74,7 +74,8 @@ class SitsController extends AppController {
 	}
 
 	function admin_index() {
-		$this->Sit->recursive = 0;
+		$this->Filter->process();
+		$this->set('locations', $this->Sit->Location->find('list'));
 		$this->set('data', $this->paginate());
 	}
 

@@ -1,29 +1,17 @@
 <?php
 
 	$this->set('title_for_layout', __('Ver ubicacion', true));
-	$links[] = $this->MyHtml->link(
-		__('Eliminar', true),
-		array(
-			'controller' 	=> 'locations',
-			'action' 		=> 'delete',
-			$data['Location']['id']
-		),
-		array(
-			'title' => __('Eliminar', true),
-			'class'	=> 'button primary'
-		),
-		__('Eliminar Locacion?', true)
-	);
 
 	$links[] = $this->MyHtml->link(
-		__('Editar', true),
+		__('Pantalla Completa', true),
 		array(
 			'controller' 	=> 'locations',
-			'action' 		=> 'add',
+			'action' 		=> 'full_screen',
 			$data['Location']['id']
 		),
 		array(
-			'title' => __('Editar', true),
+			'target'=> '_BLANK',
+			'title' => __('Pantalla Completa', true),
 			'class'	=> 'button primary'
 		)
 	);
@@ -41,19 +29,32 @@
 	);
 
 	$links[] = $this->MyHtml->link(
-		__('Pantalla Completa', true),
+		__('Editar', true),
 		array(
 			'controller' 	=> 'locations',
-			'action' 		=> 'full_screen',
+			'action' 		=> 'add',
 			$data['Location']['id']
 		),
 		array(
-			'target'=> '_BLANK',
-			'title' => __('Pantalla Completa', true),
+			'title' => __('Editar', true),
 			'class'	=> 'button primary'
 		)
 	);
-	
+
+	$links[] = $this->MyHtml->link(
+		__('Eliminar', true),
+		array(
+			'controller' 	=> 'locations',
+			'action' 		=> 'delete',
+			$data['Location']['id']
+		),
+		array(
+			'title' => __('Eliminar', true),
+			'class'	=> 'button primary'
+		),
+		__('Eliminar Locacion?', true)
+	);
+
 
 	$fields[__('Nombre', true)] = $data['Location']['name'];
 	$fields[__('Ubicaciones', true)] = $this->element('table', array('data' => $data));

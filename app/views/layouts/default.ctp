@@ -25,9 +25,10 @@
 
 		echo $scripts_for_layout;
 
+		$prefix = ((!empty($this->params['prefix'])) ? $this->params['prefix'] . '/' : '');
 		$info = json_encode(
 			array(
-				'base_url'				=> Router::url('/') . $this->params['prefix'] . '/',
+				'base_url'				=> Router::url('/') . $prefix,
 				'current_controller' 	=> $this->params['controller'],
 				'current_action' 		=> $this->params['action']
 			)
@@ -160,5 +161,7 @@
         </p>
       </div>
     </div>
+	<?php echo $this->element('sql_dump'); ?>
   </body>
 </html>
+

@@ -5,7 +5,7 @@ class AppController extends Controller {
 	var $helpers = array('MyHtml', 'MyPaginator', 'MyForm', 'Session');
 	//var $components = array('RequestHandler', 'Session', 'Cookie', 'Filter', 'Uploader');
 	//var $components = array('RequestHandler', 'Session');
-
+	var $components = array('Filter', 'Session');
 	function delete($id) {
 
 		if ($this->{$this->modelClass}->delete($id)) {

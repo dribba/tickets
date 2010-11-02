@@ -3,33 +3,6 @@
 	$this->set("title_for_layout", __("Ver usuario", true));
 
 	$links[] = $this->MyHtml->link(
-		__('Eliminar', true),
-		array(
-			'controller' 	=> 'users',
-			'action' 		=> 'delete',
-			$data['User']['id']
-		),
-		array(
-			'title' => __('Eliminar', true),
-			'class'	=> 'button primary'
-		),
-		__('Eliminar socio?', true)
-	);
-
-	$links[] = $this->MyHtml->link(
-		__('Editar', true),
-		array(
-			'controller' 	=> 'users',
-			'action' 		=> 'add',
-			$data['User']['id']
-		),
-		array(
-			'title' => __('Eliminar', true),
-			'class'	=> 'button primary'
-		)
-	);
-
-	$links[] = $this->MyHtml->link(
 		__('Cambiar contrasena', true),
 		array(
 			'controller' 	=> 'users',
@@ -42,7 +15,32 @@
 		)
 	);
 
-	
+	$links[] = $this->MyHtml->link(
+		__('Editar', true),
+		array(
+			'controller' 	=> 'users',
+			'action' 		=> 'add',
+			$data['User']['id']
+		),
+		array(
+			'title' => __('Editar', true),
+			'class'	=> 'button primary'
+		)
+	);
+
+	$links[] = $this->MyHtml->link(
+		__('Eliminar', true),
+		array(
+			'controller' 	=> 'users',
+			'action' 		=> 'delete',
+			$data['User']['id']
+		),
+		array(
+			'title' => __('Eliminar', true),
+			'class'	=> 'button primary'
+		),
+		__('Eliminar socio?', true)
+	);
 
 	$fields[__('Usuario / Documento', true)] = $data['User']['username'];
 	$fields[__('Nombre completo', true)] = $data['User']['full_name'];

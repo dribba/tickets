@@ -3,17 +3,15 @@
 	$this->set("title_for_layout", __("Ver butaca", true));
 
 	$links[] = $this->MyHtml->link(
-		__('Eliminar', true),
+		__('Agregar', true),
 		array(
 			'controller' 	=> 'sits',
-			'action' 		=> 'delete',
-			$data['Sit']['id']
+			'action' 		=> 'add',
 		),
 		array(
-			'title' => __('Eliminar', true),
+			'title' => __('Agregar', true),
 			'class'	=> 'button primary'
-		),
-		__('Eliminar butaca?', true)
+		)
 	);
 
 	$links[] = $this->MyHtml->link(
@@ -30,18 +28,21 @@
 	);
 
 	$links[] = $this->MyHtml->link(
-		__('Agregar', true),
+		__('Eliminar', true),
 		array(
 			'controller' 	=> 'sits',
-			'action' 		=> 'add',
+			'action' 		=> 'delete',
+			$data['Sit']['id']
 		),
 		array(
-			'title' => __('Agregar', true),
+			'title' => __('Eliminar', true),
 			'class'	=> 'button primary'
-		)
+		),
+		__('Eliminar butaca?', true)
 	);
 
-
+	
+	$fields[__('Codigo', true)] = $data['Sit']['code'];
 	$fields[__('Ubicación', true)] = $data['Location']['name'];
 	$fields[__('Fila', true)] = $data['Sit']['row'];
 	$fields[__('Columna', true)] = $data['Sit']['col'];

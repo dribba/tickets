@@ -15,14 +15,14 @@ $(document).ready(function($) {
         }
 
 
-	/** Bind clear reset button 
-	$('.clear').live('click', function() {
+	// Bind clear reset button
+	$('.clearFilter').live('click', function() {
 		var clearInput = $('<input/>').attr('type', 'hidden').attr('value', 'clear').attr('name', 'data[Filter][action]');
 		$('.clear').parent().append(clearInput);
 		$('form').submit();
 		return true;
 	});
-*/
+
 
 	/** Change Language */
 	$('#language').change(
@@ -41,7 +41,7 @@ $(document).ready(function($) {
 	$('.datepicker').datepicker({
 		dateFormat: 'yy-mm-dd',
 		showOn: 'button',
-		buttonImage: $.path('img/date_select.jpg'),
+		buttonImage: $.path(base_url + 'img/ico/icocalendar.png'),
 		buttonImageOnly: true,
 		changeMonth: true,
 		changeYear: true

@@ -10,6 +10,14 @@ a {
     text-decoration: none;
     color: inherit;
 }
+#filters .field > label {
+	display:block;
+	float:none;
+}
+img.ui-datepicker-trigger{
+	border: none;
+}
+
 .width700 {
 	width:700px;
 }

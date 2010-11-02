@@ -12,7 +12,8 @@
 		array('class' => 'button primary', 'title' => __('Agregar Sitio', true))
 	);
 	
-
+	$filters = array('Site.name');
+	
 	/** The grid */
 	$header	= null;
 	$headers[] = __('Acciones', true);
@@ -66,4 +67,4 @@
 		array('id' => 'grid')
 	);
 
-	echo $this->element('content', array('menu' => $menu, 'content' => $content));
+	echo $this->element('content', array('menu' => $menu, 'content' => $content, 'filters' => $filters));
