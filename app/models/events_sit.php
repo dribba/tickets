@@ -30,15 +30,35 @@ class EventsSit extends AppModel {
 
 	function findStats($eventId, $locationId = null) {
 
-		ds($this->find('all',
+		$r = $this->find('all',
 			array(
 				'contain'		=> array('Sit'),
-				'fields' 		=> array('Sit.location_id', 'COUNT(EventsSit.id) AS count'),
+				'fields' 		=> array(
+					'Sit.location_id',
+					'COUNT(`EventsSit`.`id`) AS total_sits',
+					'SUM(IF(`EventsSit`.`sell_id`>0, 1, 0)) AS total_selled_sits',
+					'COUNT(`EventsSit`.`id`) - SUM(IF(`EventsSit`.`sell_id`>0, 1, 0)) AS total_free_sits'
+				),
 				'conditions'	=> array('EventsSit.event_id' => $eventId),
 				'group'			=> array('Sit.location_id'),
 			)
-		));
+		);
 
+		if (!empty($r)) {
+			$locationIds = Set::extract('/Sit/location_id', $r);
+			$r = Set::combine($r, '{n}.Sit.location_id', '{n}.0');
+
+			$data = $this->Sit->Location->find('all',
+				array(
+					'contain'		=> array('Site'),
+					'conditions'	=> array('Location.id' => $locationIds)
+				)
+			);
+			foreach ($data as $k => $v) {
+				$data[$k]['Location'] += $r[$data[$k]['Location']['id']];
+			}
+			d($data);
+		}
 	}
 
 
