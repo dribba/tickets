@@ -1,10 +1,10 @@
 <?php
-$this->set('title_for_layout', __('Cambiar contrasena', true));
+$this->set('title_for_layout', __('Cambiar Contraseña', true));
 $out[] = $this->MyForm->create('User', array('class' => 'mainForm clear', 'id' => 'formEditor'));
-$content[] = $this->MyHtml->tag('legend', __('Contrasena nueva', true));
+$content[] = $this->MyHtml->tag('legend', __('Nueva Contraseña', true));
 if (empty($id)) {
 	$content[] = $this->MyForm->input(
-			'current', array('label' => __('Contrasena actual', true), 'type' => 'password')
+			'current', array('label' => __('Actual Contraseña', true), 'type' => 'password')
 	);
 } else {
 	$content[] = $this->MyForm->input(
@@ -15,11 +15,11 @@ if (empty($id)) {
 
 $content[] = $this->MyForm->input(
 		'new_password',
-		array('label' => __('Contrasena nueva', true), 'type' => 'password')
+		array('label' => __('Nueva Contraseña', true), 'type' => 'password')
 );
 $content[] = $this->MyForm->input(
 		'retype_password',
-		array('label' => __('Re ingrese la contrasena', true), 'type' => 'password')
+		array('label' => __('Re-ingrese', true), 'type' => 'password')
 );
 
 $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));

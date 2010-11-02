@@ -96,7 +96,7 @@
 					}
 
 					echo $this->MyHtml->tag('li',
-						$this->MyHtml->link(__('Cambiar contrasena', true), array('admin' => false, 'controller' => 'users', 'action' => 'change_password'))
+						$this->MyHtml->link(__('Cambiar Contraseña', true), array('admin' => false, 'controller' => 'users', 'action' => 'change_password'))
 					);
 
 					
@@ -121,9 +121,7 @@
         <div id="toolbar" class="clear">
           <p id="user">
             <?php
-				
 				echo __('Usuario: ', true) . '<a>' . User::get('/User/full_name') . '</a>';
-				
 			?>
           </p>
           <div id="buttons">

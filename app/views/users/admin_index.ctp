@@ -1,15 +1,25 @@
 <?php
 
 
-$this->set("title_for_layout", __("Listado de usuarios", true));
+$this->set('title_for_layout', __('Listado de usuarios', true));
+
+$menu[] = $this->MyHtml->link(
+	__('Agregar Usuario', true),
+	array(
+		'controller'	=> 'users',
+		'action'		=> 'add',
+	),
+	array('class' => 'button primary', 'title' => __('Agregar Usuario', true))
+);
 
 
 /** The grid */
-$headers[] = __("Acciones", true);
-$headers[] = __("Usuario / Documento", true);
-$headers[] = __("Nombre completo", true);
-$headers[] = __("Sexo", true);
-$headers[] = __("Estado", true);
+$headers[] = __('Acciones', true);
+$headers[] = __('Usuario / Documento', true);
+$headers[] = __('Nombre completo', true);
+$headers[] = __('Sexo', true);
+$headers[] = __('Tipo', true);
+$headers[] = __('Estado', true);
 
 $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($headers));
 
@@ -46,6 +56,7 @@ foreach ($data as $record) {
 	$td[] = $this->MyHtml->tag('td', $record['User']['username']);
 	$td[] = $this->MyHtml->tag('td', $record['User']['full_name']);
 	$td[] = $this->MyHtml->tag('td', $record['User']['sex']);
+	$td[] = $this->MyHtml->tag('td', $record['User']['type']);
 	$td[] = $this->MyHtml->tag('td', $record['User']['state']);
 	$body[] = $this->MyHtml->tag('tr', $td);
 
@@ -63,6 +74,12 @@ $content = $this->MyHtml->tag('div',
 	);
 
 
-$filters = array('User.document', 'User.email', 'User.full_name', 'User.mobile_area', 'User.mobile_phone');
-echo $this->element('content', array('content' => $content, 'filters' => $filters));
+$filters = array(
+	'User.document',
+	'User.email',
+	'User.full_name',
+	'User.mobile_area',
+	'User.mobile_phone'
+);
+echo $this->element('content', array('menu' => $menu, 'content' => $content, 'filters' => $filters));
 
