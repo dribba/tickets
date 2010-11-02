@@ -41,7 +41,7 @@
     <div id="wrapper">
       <div id="top">
         <div id="title" class="clear">
-          <a><?php echo __('TALLERES', true); ?></a> <span>| <?php echo __('ADMINISTRACION', true); ?></span>
+          <span class="name">TALLERES</span> | <span><?php echo __('ADMINISTRACIÓN', true); ?></span>
         </div>
         <div id="menu" class="clear">
           <ul>
