@@ -116,6 +116,9 @@ AnyTime.picker( "fecha",
 						echo $this->MyHtml->tag('li',
 							$this->MyHtml->link(__('Comprar entrada', true), array('controller' => 'sells', 'action' => 'sell'))
 						);
+						echo $this->MyHtml->tag('li',
+							$this->MyHtml->link(__('Historial de compras', true), array('controller' => 'sells', 'action' => 'index'))
+						);
 
 					}
 /*

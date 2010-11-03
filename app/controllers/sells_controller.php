@@ -63,33 +63,76 @@ class SellsController extends AppController {
 
 	function sell($step = null, $sit = null) {
 
-		if ($step == 2) {
+		if ($step == 3) {
 
-			$this->set('step', 2);
+			$this->set('step', 3);
 			$this->set('sit', $sit);
-				
-			
+
 		} else {
 			if (empty($this->data)) {
-				$this->set('locations', $this->Sell->Location->find('list'));
+				$this->set('events', 
+					$this->Sell->EventsSit->Event->find(
+						'list', array('conditions' => array('Event.state' => 'active'))
+					)
+				);
 				$this->set('step', 1);
+			} else if ($this->data['Sell']['step'] == 1) {
+
+				$this->set('step', 2);
+				$sell['Sell']['event_id'] = $this->data['Sell']['event_id'];
+				$this->Session->write('sellData', $sell);
+
+
 			} else if ($this->data['Sell']['step'] == 2) {
+				//Sell resume
+				$ids = explode(',', $this->data['Sell']['sits_ids']);
+				$sits = $this->Sell->EventsSit->Sit->find('all',
+					array(
+						'conditions' => array(
+							'Sit.id' => $ids
+						)
+					)
+				);
+				$this->set('data', $sits);
 				$this->set('step', 3);
-				$this->Session->write('sell_data', $this->data);
+
+				$sellData = $this->Session->read('sellData');
+				$sellData['Sell']['sits_ids'] = $this->data['Sell']['sits_ids'];
+				$this->Session->write('sellData', $sellData);
+				
 			} else if ($this->data['Sell']['step'] == 3) {
 				$this->set('step', 4);
 
-				$sellData = $this->Session->read('sell_data');
-				$sellData['Sell']['user_id'] = User::get('/User/id');
 				
+			} else if ($this->data['Sell']['step'] == 4) {
+				$this->set('step', 5);
+				
+				$sellData = $this->Session->read('sellData');
+				
+				$this->Session->write('sellData', array_merge($sellData['Sell'], $this->data['Sell']));
+				
+			} else if ($this->data['Sell']['step'] == 5) {
+				$this->set('step', 5);
+
+				$sellData = $this->Session->read('sellData');
+				$sellData['user_id'] = User::get('/User/id');
+				unset($sellData['tos']);
+				$sits_ids = explode(',', $sellData['sits_ids']);
+				unset($sellData['sits_ids']);
+				unset($sellData['step']);
+				$event_id = $sellData['event_id'];
+				unset($sellData['event_id']);
+
 				if ($this->Sell->save($sellData)) {
 
-					$eventSit['EventsSit'] = array(
-						'event_id'	=> 2,
-						'sit_id'	=> $sellData['Sell']['sit_id'],
-						'sell_id'	=> $this->Sell->id
-					);
-					$this->Sell->EventsSit->save($eventSit);
+					foreach ($sits_ids as $sit) {
+						$eventSits[]['EventsSit'] = array(
+							'event_id'	=> $event_id,
+							'sit_id'	=> $sit,
+							'sell_id'	=> $this->Sell->id
+						);
+					}
+					$this->Sell->EventsSit->saveAll($eventSits);
 
 					$this->Session->setFlash(
 						__('Compra realizada con exito', true), 'flash_success'
@@ -101,7 +144,7 @@ class SellsController extends AppController {
 				}
 				$this->redirect(array('controller' => 'sells', 'action' => 'index'));
 				//d($sellData);
-				
+
 			}
 		}
 	}

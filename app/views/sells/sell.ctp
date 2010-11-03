@@ -3,21 +3,18 @@
 $this->set('title_for_layout', __('Compra de entrada', true));
 
 $out[] = $this->MyForm->create('Sell', array('class' => 'mainForm clear', 'id' => 'formEditor'));
-//$out[] = $this->MyHtml->tag(
-//	'p',
-//	$this->MyHtml->tag('span', '* ', array('class' => 'star')) .
-//		__('Los campos marcados con asterisco son obligatorios', true),
-//	array('id' => 'asterisk')
-//);
 
-//$content[] = $this->MyHtml->tag('legend', __('Seleccione ubicacion', true));
 /**
 ############################################################################
 # STEP 1
 ############################################################################
 */
-$steps[1][] = $this->MyHtml->tag('legend', __('Seleccione ubicacion', true));
-$steps[1][] = $this->element('plane', array('wizard' => 'Yes'));
+$steps[1][] = $this->MyHtml->tag('legend', __('Seleccione un evento', true));
+$steps[1][] = $this->MyForm->input('Sell.event_id',
+	array(
+		'label' 	=> __('Evento', true)
+	)
+);
 
 
 /**
@@ -25,22 +22,81 @@ $steps[1][] = $this->element('plane', array('wizard' => 'Yes'));
 # STEP 2
 ############################################################################
 */
-if ($step == 2) {
 
-	$steps[2][] = $this->MyHtml->tag('legend', __('Detalles de la compra', true));
-	$steps[2][] = $this->MyForm->input('Sell.sit_id',
-		array(
-			'type' 		=> 'hidden',
-			'value' 	=> $sit,
-		)
+
+$steps[2][] = $this->MyHtml->tag('legend', __('Seleccione ubicacion', true));
+$steps[2][] = $this->element('plane', array('wizard' => 'Yes', 'event_id' => (!empty($event_id) ? $event_id : '')));
+
+
+
+
+/**
+############################################################################
+# STEP 3
+############################################################################
+*/
+if ($step == 3) {
+
+	$steps[3][] = $this->MyHtml->tag('legend', __('Resumen de la compra', true));
+	$resume[] = $this->MyHtml->tag('dt',
+		__('Ubicacion', true),
+		array('class' => '')
 	);
-	$steps[2][] = $this->MyForm->input('Sell.license_available',
+	$resume[] = $this->MyHtml->tag('dd',
+		$data[0]['Location']['name'],
+		array('class' => '')
+	);
+	$resume[] = $this->MyHtml->tag('dt',
+		__('Precio unitario', true),
+		array('class' => '')
+	);
+	$resume[] = $this->MyHtml->tag('dd',
+		$data[0]['Location']['price'],
+		array('class' => '')
+	);
+	$resume[] = $this->MyHtml->tag('dt',
+		__('Precio total', true),
+		array('class' => '')
+	);
+	$resume[] = $this->MyHtml->tag('dd',
+		$data[0]['Location']['price'] * sizeof($data),
+		array('class' => '')
+	);
+
+	foreach ($data as $sit) {
+		$resume[] = $this->MyHtml->tag('dt',
+			__('Butaca numero', true),
+			array('class' => '')
+		);
+		$resume[] = $this->MyHtml->tag('dd',
+			$sit['Sit']['code'],
+			array('class' => '')
+		);
+	}
+
+	$steps[3][] = $this->MyHtml->tag('dl', $resume, array('class' => 'view'));
+	$steps[3][] = $this->MyHtml->tag('div',
+		__('Costo total a pagar: ', true) . $data[0]['Location']['price'] * sizeof($data),
+		array('class' => 'clear field alert')
+	);
+}
+
+
+/**
+############################################################################
+# STEP 4
+############################################################################
+*/
+if ($step == 4) {
+
+	$steps[4][] = $this->MyHtml->tag('legend', __('Detalles de la compra', true));
+	$steps[4][] = $this->MyForm->input('Sell.license_available',
 		array(
 			'options' 	=> array('Y' => __('Si', true), 'N' => __('No', true)),
 			'label' 	=> __('Dispone de carnet', true)
 		)
 	);
-	$steps[2][] = $this->MyForm->input('Sell.license_number',
+	$steps[4][] = $this->MyForm->input('Sell.license_number',
 		array(
 			'label' 	=> __('Numero de carnet', true)
 		)
@@ -70,13 +126,13 @@ if ($step == 2) {
 			'label' 	=> __('Horario de envio', true)
 		)
 	);
-	$steps[2][] = $this->MyHtml->tag('div',
+	$steps[4][] = $this->MyHtml->tag('div',
 		$street,
 		array('id' => 'street')
 	);
 
 
-	$steps[2][] = $this->MyHtml->scriptBlock(
+	$steps[4][] = $this->MyHtml->scriptBlock(
 		'$(document).ready(function($) {
 			$("#SellLicenseAvailable").click(
 				function() {
@@ -89,19 +145,56 @@ if ($step == 2) {
 					}
 				}
 			);
+			$("#btnSubmit").click(
+				function() {
+					
+					if (!$("#SellTos").is(":checked")) {
+						alert("Para continuar, debe aceptar los terminos y condiciones de compra");
+						return false;
+					}
+				}
+			);
 		});'
+	);
+	$steps[4][] = $this->MyHtml->tag('legend', __('Terminos y condiciones de compra', true));
+	$steps[4][] = $this->MyHtml->tag('div', __('Acepto los Terminosd y Condiciones de compra de …..........
+
+
+Las Entradas son vendidas por "…................" (Empresa) en su carácter de mandatario, en nombre y representación de la Sala Teatral (Vendedor). El Vendedor es responsable del servicio, función o espectáculo o evento a realizarse, y define las condiciones de venta en todos los casos.
+
+
+La Empresa no se responsabiliza por la suspensión o cancelación de la función, espectáculo o evento a realizarse, por cualquier causa, incluso las que respondan a caso fortuito o fuerza mayor. Si la fecha de un evento variara por alguna circunstancia las Entradas serán válidas para la fecha definitiva que fije el Vendedor. La Empresa no realiza ningún tipo de cambio, reintegro o devolución, las entradas adquiridas en boletería serán devueltas por el Vendedor. En tal caso el Vendedor, tendrá un plazo de 90 días desde la fecha estipulada del evento para la devolución del importe. La restitución será efectuada por el Vendedor en las condiciones, plazos y por las vías que él fije. Cada Entrada adquirida por ….......... a través de cualquiera de sus canales de venta está sujeta a un cargo por servicio, adicional al precio de la Entrada. La concreción de la compra está sujeta a la autorización de Empresa emisora de la Tarjeta de Crédito. El sistema de venta online ofrece localidades con el criterio del mejor lugar disponible al momento de realizar su compra y de acuerdo al sector seleccionado, entendiendo por tal a la ubicación más cercana al escenario y al pasillo central.
+
+
+
+El Vendedor se reserva el derecho de agregar, quitar o sustituir artistas, variando los programas, precios y ubicaciones, así como la capacidad del auditorio. El Vendedor se reserva el derecho de admisión. En caso de llegar a la sala luego de comenzada la función, el espectador deberá aguardar al intervalo para poder ocupar su ubicación. Al ingresar a la sala el público estará sujeto a ser registrado conforme las disposiciones en vigor. En caso de negarse a dicho registro, no se admitirá la entrada al recinto. No será permitido el ingreso de cámaras de fotografía, grabadores, filmadoras, y cualesquiera otros dispositivos electrónicos digitales, ópticos y/o analógicos que permitan registrar imágenes y/o sonidos sobre cualquier soporte, pudiendo las mismas ser retiradas del lugar y destruido su contenido. El Vendedor solicita apagar todo equipo de radio llamada o teléfono celular antes del acceso a la sala.
+
+
+
+El servicio de envío a domicilio es opcional y tiene un cargo adicional al del servicio de venta. Las Entradas son entregadas al titular de la tarjeta de crédito con la que se realizó la compra, quien deberá acreditarse mediante la presentación de su DNI, o bien al portador del email de confirmación de compra quien deberá presentar una fotocopia del DNI del titular de la tarjeta de crédito que realizó la compra. En caso de recibir sus Entradas en su domicilio recuerde guardarlas en un lugar seguro lejos del calor, humedad o de la luz solar. Plateanet no se responsabiliza por la integridad física de las Entradas ni realiza su reposición en caso de pérdida, robo o daño. Las Entradas no podrán ser utilizadas en ningún caso para su reventa y/o aplicación comercial o de promoción alguna sin previa autorización por escrito del Vendedor. Adopte los recaudos necesarios a fin asegurarse que su entrada sea auténtica, ya que de lo contrario podrá ser objeto de una acción judicial. Al momento de registrarse en nuestro sitio web, el usuario acepta que …......... envíe a su casilla de correo electrónico newsletters con promociones periódicas, hasta que el usuario indique lo contrario desuscribiéndose desde dicho email o destildando la opción en la pestaña “MIS DATOS” del panel de control del usuario.
+
+
+
+La Empresa se encuentra inscripta dentro del régimen especial de emisión y almacenamiento electrónico de comprobantes en los términos provistos por las resoluciones generales Nº1361, sus modificatorias y complementarias, y Nº2177, con fecha de inscripción en el registro 01/10/2009. ', true), array('class' => 'tos'));
+
+	$steps[4][] = $this->MyForm->input('Sell.tos',
+		array(
+			'label' => __('Acepto los terminos y condiciones de compra', true),
+			'type'	=> 'checkbox',
+			'div'	=> 'checkTos clear field'
+		)
 	);
 }
 
 /**
 ############################################################################
-# STEP 3
+# STEP 4
 ############################################################################
 */
-if ($step == 3) {
+if ($step == 5) {
 
-	$steps[3][] = $this->MyHtml->tag('legend', __('Opciones de pago', true));
-	$steps[3][] = "<form action='https://argentina.dineromail.com/Shop/Shop_Ingreso.asp' method='post'>
+	$steps[5][] = $this->MyHtml->tag('legend', __('Opciones de pago', true));
+	$steps[5][] = "<form action='https://argentina.dineromail.com/Shop/Shop_Ingreso.asp' method='post'>
 					<input type='hidden' name='NombreItem' value='Pagar'>
 					<input type='hidden' name='TipoMoneda' value='1'>
 					<input type='hidden' name='PrecioItem' value='100.00'>
@@ -134,9 +227,9 @@ $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
 
 //$out[] = $this->MyForm->end(__('Siguiente', true));
-if ($step == 2) {
-	$out[] = $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true)));
-}
+
+$out[] = $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true)));
+
 $mainContent = $this->MyHtml->tag('div', $out);
 
 echo $this->element('add', array('content' => $mainContent));
