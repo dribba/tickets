@@ -5,6 +5,19 @@ td > img{
 #street {
 	display:none;
 }
+.alert{
+	font-size:200%;
+	padding-left: 0px !important;
+	color: red;
+}
+.tos{
+	height: 180px;
+	overflow-y: scroll;
+	border:1px solid #ccc;
+}
+.checkTos > label{
+	width: 250px !important;
+}
 .datepicker, .datepicker-onlydate{
 	background: #FFFFFF url('../../img/ico/icocalendar.png') no-repeat left;
 	padding-left: 17px;
