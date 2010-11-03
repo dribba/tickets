@@ -4,6 +4,7 @@ class LocationsController extends AppController {
 	var $name = 'Locations';
 
 	function admin_index() {
+		$this->set('sites', $this->Location->Site->find('list'));
 		$this->Filter->process();
 		$this->set('data', $this->paginate());
 	}
@@ -51,6 +52,7 @@ class LocationsController extends AppController {
 
 
 	function admin_add($id = null) {
+		$this->set('sites', $this->Location->Site->find('list'));
 		if (!empty($this->data)) {
 			$this->Location->create();
 			if ($this->Location->save($this->data)) {
@@ -64,24 +66,6 @@ class LocationsController extends AppController {
 				$this->data = $this->Location->read(null, $id);
 				$this->set('id', $this->data['Location']['id']);
 			}
-		}
-	}
-
-	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid location', true));
-			$this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->Location->save($this->data)) {
-				$this->Session->setFlash(__('The location has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The location could not be saved. Please, try again.', true));
-			}
-		}
-		if (empty($this->data)) {
-			$this->data = $this->Location->read(null, $id);
 		}
 	}
 

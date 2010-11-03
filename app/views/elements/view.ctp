@@ -20,6 +20,9 @@
 
 	$mainContent[] = $this->MyHtml->tag('fieldset', '<legend><span>' . $title . '</span></legend>' . $this->MyHtml->tag('dl', $fields, array('class' => 'view')), array('class' => 'clear mainForm'));
 
+	$extraContent = ((!empty($extraContent)) ? $extraContent : array());
+	
+	$mainContent = array_merge($mainContent, $extraContent);
 
 	echo $this->MyHtml->tag('div', $mainContent, array('id' => 'main', 'class' => 'clear'));
 

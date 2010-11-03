@@ -4,31 +4,45 @@ class SellsController extends AppController {
 	var $name = 'Sells';
 
 	function index() {
-		//$this->Sell->recursive = 0;
 		$this->paginate['conditions'] = array('Sell.user_id' => User::get('/User/id'));
+		$this->__index();
+	}
+
+	function admin_index() {
+		$this->__index();
+	}
+
+	function __index() {
+		$this->Filter->process();
 		$this->set('data', $this->paginate());
 	}
 
-	function view($id = null) {
+	function admin_view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid sell', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('sell', $this->Sell->read(null, $id));
+
+		$data = $this->Sell->findById($id);
+		$this->set('data', $data);
 	}
 
-	function add() {
+	function admin_add($id = null) {
 		if (!empty($this->data)) {
 			$this->Sell->create();
 			if ($this->Sell->save($this->data)) {
-				$this->Session->setFlash(__('The sell has been saved', true));
+				$this->Session->setFlash(__('Venta guardada', true), 'flash_success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The sell could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('La venta no se pudo guardar', true), 'flash_error');
+			}
+		} else {
+			if (!empty($id)) {
+				$this->data = $this->Sell->read(null, $id);
+				$this->set('id', $this->data['Sell']['id']);
 			}
 		}
-		$users = $this->Sell->User->find('list');
-		$this->set(compact('users'));
+		//$this->set('sites', $this->Sell->Site->find('list'));
 	}
 
 	/*function sell() {
@@ -67,7 +81,7 @@ class SellsController extends AppController {
 
 				$sellData = $this->Session->read('sell_data');
 				$sellData['Sell']['user_id'] = User::get('/User/id');
-
+				
 				if ($this->Sell->save($sellData)) {
 
 					$eventSit['EventsSit'] = array(
@@ -92,36 +106,16 @@ class SellsController extends AppController {
 		}
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid sell', true));
-			$this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->Sell->save($this->data)) {
-				$this->Session->setFlash(__('The sell has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The sell could not be saved. Please, try again.', true));
-			}
-		}
-		if (empty($this->data)) {
-			$this->data = $this->Sell->read(null, $id);
-		}
-		$users = $this->Sell->User->find('list');
-		$this->set(compact('users'));
-	}
-
-	function delete($id = null) {
+	function admin_delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for sell', true));
+			$this->Session->setFlash(__('Invalid id for site', true));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Sell->delete($id)) {
-			$this->Session->setFlash(__('Sell deleted', true));
+			$this->Session->setFlash(__('Venta eliminada', true), 'flash_success');
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Sell was not deleted', true));
+		$this->Session->setFlash(__('Error al eliminar venta', true), 'flash_error');
 		$this->redirect(array('action' => 'index'));
 	}
 }

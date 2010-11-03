@@ -46,13 +46,24 @@
 				),
 			)
 		);
+		$actions[] = $this->MyHtml->image(
+			'delete.png',
+			array(
+				'class' => 'open_modal',
+				'title' => __('Eliminar', true) . ' ' . $record['Event']['name'],
+				'url' => array(
+					'controller' 	=> 'events',
+					'action' 		=> 'delete',
+					$record['Event']['id']
+				),
+			)
+		);
 
 		$td[] = $this->MyHtml->tag('td', $actions);
-		$td[] = $this->MyHtml->tag('td', $record['Site']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Event']['name']);
+		$td[] = $this->MyHtml->tag('td', $record['Site']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Event']['formated_start']);
 		$td[] = $this->MyHtml->tag('td', $record['Event']['formated_end']);
-
 		$body[] = $this->MyHtml->tag('tr', $td);
 
 	}
@@ -68,5 +79,11 @@
 		array('id' => 'tableItems')
 	);
 
-	echo $this->element('content', array('menu' => $menu, 'content' => $content));
+	$filters = array(
+		'Event.name'	=> array('label' => __('Nombre', true)),
+		'Event.site_id' => array('label' => __('Sitio', true)),
+		'Event.start'	=> array('label' => __('Fecha de inicio', true), 'type' => 'text', 'class' => 'datepicker-onlydate'),
+		'Event.end'		=> array('label' => __('Fecha de fin', true), 'type' => 'text', 'class' => 'datepicker-onlydate'),
+	);
+	echo $this->element('content', array('menu' => $menu, 'content' => $content, 'filters' => $filters));
           

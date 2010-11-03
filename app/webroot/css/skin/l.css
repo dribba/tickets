@@ -1,9 +1,16 @@
 /* Layout */
-
+td > img{
+	border:none;
+}
 #street {
 	display:none;
 }
-
+.datepicker, .datepicker-onlydate{
+	background: #FFFFFF url('../../img/ico/icocalendar.png') no-repeat left;
+	padding-left: 17px;
+	padding-bottom:4px;
+	border: 1px solid #7F9DB9;
+}
 html, body { height: 100%; }
 body {
     font: normal 77% 'Segoe UI', 'Trebuchet MS', Arial, Helvetica, sans-serif;
@@ -241,7 +248,7 @@ body.withoutSubnav #top { height: 110px; }
 #menu {
     float: left;
     height: 40px;
-    width: 690px;
+    width: 720px;
 }
 #menu ul {
     position: relative;

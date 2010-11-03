@@ -29,7 +29,7 @@ class EventsSit extends AppModel {
 
 
 	function findStats($eventId, $locationId = null) {
-
+		$data = null;
 		$r = $this->find('all',
 			array(
 				'contain'		=> array('Sit'),
@@ -57,7 +57,7 @@ class EventsSit extends AppModel {
 			foreach ($data as $k => $v) {
 				$data[$k]['Location'] += $r[$data[$k]['Location']['id']];
 			}
-			d($data);
+			return $data;
 		}
 	}
 
