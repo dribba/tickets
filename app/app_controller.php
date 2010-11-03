@@ -6,6 +6,22 @@ class AppController extends Controller {
 	//var $components = array('RequestHandler', 'Session', 'Cookie', 'Filter', 'Uploader');
 	//var $components = array('RequestHandler', 'Session');
 	var $components = array('Filter', 'Session');
+
+/**
+ * Simplify application messages
+ *
+ * @param <string> $msg
+ * @param <string> $type
+ *		error
+ *		success
+ * @return void
+ */
+	function setFlash($msg, $type = 'error') {
+		$this->Session->setFlash(
+			$msg, 'default', array('class' => $type, 'id' => 'message')
+		);
+	}
+
 	function delete($id) {
 
 		if ($this->{$this->modelClass}->delete($id)) {

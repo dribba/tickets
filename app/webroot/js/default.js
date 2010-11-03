@@ -1,5 +1,20 @@
+$.fn.delay = function(time, callback){
+	jQuery.fx.step.delay = function(){};
+	return this.animate({delay:1}, time, callback);
+}
+
+
 /** Dom ready "binding" common to all layouts */
 $(document).ready(function($) {
+
+
+	if ($('#message')){
+		$('#message').delay(3000).fadeTo("slow",0.01,function(){
+			$(this).slideUp("fast", function(){
+				$(this).remove();
+			});
+		});
+	}
 
 
 	$('#actions ul li a').live('click',
