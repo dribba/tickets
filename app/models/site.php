@@ -11,7 +11,7 @@ class Site extends AppModel {
 			'name' => array(
 				'notempty' => array(
 					'rule' => array('notempty'),
-					'message' => __("Ingrese el nombre del sitio", true),
+					'message' => __('Ingrese el nombre del sitio', true),
 					'last' => true, // Stop validation after this rule
 				),
 			)

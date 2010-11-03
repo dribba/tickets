@@ -12,12 +12,17 @@
 		array('class' => 'button primary', 'title' => __('Agregar Butaca', true))
 	);
 
-	$filters = array('Sit.code', 'Sit.row', 'Sit.col', 'Sit.location_id');
+	$filters = array(
+		'Sit.code' 			=> array('label' => __('Código', true)),
+		'Sit.row' 			=> array('label' => __('Fila', true)),
+		'Sit.col' 			=> array('label' => __('Columna', true)),
+		'Sit.location_id' 	=> array('label' => __('Ubicación', true))
+	);
 
 	/** The grid */
 	$header	= null;
 	$headers[] = __('Acciones', true);
-	$headers[] = __('Codigo', true);
+	$headers[] = __('Código', true);
 	$headers[] = __('Ubicación', true);
 	$headers[] = __('Fila', true);
 	$headers[] = __('Columna', true);

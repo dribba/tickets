@@ -37,13 +37,12 @@
 		);
 		/*
 		<script type='text/javascript'>
-var loader= new Loader("#img-encabezado", {showProgress:true, showProgressText:true, textSize:15});
-	loader.Start();
+
 AnyTime.picker( "fecha",
       { format: "%d/%m/%Z", dayAbbreviations:["Dom","Lun","Mar","Mie","Jue","Vie","Sab"],labelDayOfMonth:"Dia",labelMonth:"Mes",firstDOW: 0,labelTitle: "Seleccionar fecha",monthAbbreviations:["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"] } );
   $("#hora").AnyTime_picker(
       { format: "%H:%i", labelTitle: "Hora",
-        labelHour: "Hora", labelMinute: "Minuto" } );/*
+        labelHour: "Hora", labelMinute: "Minuto" } );*/
 
 	?>
     <meta charset="UTF-8" />

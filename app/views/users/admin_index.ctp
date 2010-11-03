@@ -87,11 +87,11 @@ $content = $this->MyHtml->tag('div',
 
 
 $filters = array(
-	'User.document',
-	'User.email',
-	'User.full_name',
-	'User.mobile_area',
-	'User.mobile_phone'
+	'User.document' 	=> array('label' => __('Documento', true)),
+	'User.email' 		=> array('label' => __('Nombre', true)),
+	'User.full_name'	=> array('label' => __('Nombre', true)),
+	'User.mobile_area'	=> array('label' => __('Cód. Area', true)),
+	'User.mobile_phone'	=> array('label' => __('Celular', true))
 );
-echo $this->element('content', array('menu' => $menu, 'content' => $content, 'filters' => $filters));
+echo $this->element('content', array('content' => $content, 'filters' => $filters));
 

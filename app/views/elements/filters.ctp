@@ -1,9 +1,10 @@
 <?php 
 
 
-$filters[] = $this->MyForm->create(Inflector::Classify($this->name));
+$filters[] = $this->MyForm->create(Inflector::Classify($this->name), array('class' => 'sideForm'));
 
 foreach ($fields as $k => $v) {
+	$v['class'] = 'full';
 	if (is_array($v)) {
 		$filters[] = $this->MyForm->input($k, $v);
 	} else {

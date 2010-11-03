@@ -3,14 +3,14 @@
 	$this->set("title_for_layout", __("Ver usuario", true));
 
 	$links[] = $this->MyHtml->link(
-		__('Cambiar contrasena', true),
+		__('Cambiar contraseña', true),
 		array(
 			'controller' 	=> 'users',
 			'action' 		=> 'change_password',
 			$data['User']['id']
 		),
 		array(
-			'title' => __('Cambiar contrasena', true),
+			'title' => __('Cambiar contraseña', true),
 			'class'	=> 'button primary'
 		)
 	);

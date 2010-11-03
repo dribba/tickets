@@ -12,7 +12,7 @@
 		array('class' => 'button primary', 'title' => __('Agregar Sitio', true))
 	);
 	
-	$filters = array('Site.name');
+	$filters = array('Site.name' => array('label' => __('Nombre', true)));
 	
 	/** The grid */
 	$header	= null;

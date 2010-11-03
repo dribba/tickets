@@ -47,11 +47,17 @@ $(document).ready(function($) {
 		changeYear: true
 	});*/
 
-	$(".datepicker").AnyTime_picker({
-		format: "%Y-%m-%d %H:%i",
-		labelTitle: "Hora",
-		labelHour: "Hora",
-		labelMinute: "Minuto"
+	$('.datepicker').AnyTime_picker({
+		format: '%Y-%m-%d %H:%i',
+		labelTitle: 'Hora',
+		labelHour: 'Hora',
+		labelMinute: 'Minuto',
+		dayAbbreviations: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+		labelDayOfMonth: 'Dia',
+		labelMonth: 'Mes',
+		firstDOW: 0,
+		labelTitle: 'Seleccionarfecha',
+		monthAbbreviations: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 	});
 
 

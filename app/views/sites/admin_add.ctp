@@ -32,7 +32,8 @@ $content[] = $this->MyForm->input('Site.name',
 $content[] = $this->MyForm->input('Site.plane',
 	array(
 		'label' 	=> __('Plano', true),
-		'type'		=> 'file'
+		'type'		=> 'file',
+		'help'		=> __('Solo archivos del tipo imagen<br>(jpg, jpeg, png)', true)
 	)
 );
 

@@ -4,8 +4,8 @@ class Event extends AppModel {
 	var $displayField = 'name';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $virtualFields = array(
-		'formated_start' => 'DATE_FORMAT(Event.start, "%d/%m/%Y %H:%i")',
-		'formated_end' => 'DATE_FORMAT(Event.end, "%d/%m/%Y %H:%i")'
+		'formated_start' => 'DATE_FORMAT(Event.start, "%d-%m-%Y %H:%i")',
+		'formated_end' => 'DATE_FORMAT(Event.end, "%d-%m-%Y %H:%i")'
 	);
 //	var $hasAndBelongsToMany = array(
 //		'Sit' => array(
@@ -33,7 +33,7 @@ class Event extends AppModel {
 			'name' => array(
 				'notempty' => array(
 					'rule' => array('notempty'),
-					'message' => __("Ingrese el nombre del evento", true),
+					'message' => __('Ingrese el nombre del evento', true),
 					'last' => true, // Stop validation after this rule
 				),
 			)

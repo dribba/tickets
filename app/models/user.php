@@ -8,7 +8,7 @@ App::import('Vendor', 'xmlrpc', true,
 class User extends AppModel {
 
 	var $virtualFields = array(
-		'formated_created' => 'DATE_FORMAT(User.created, "%d/%m/%Y")'
+		'formated_created' => 'DATE_FORMAT(User.created, "%d-%m-%Y")'
 	);
 
 	protected function _initialitation() {
@@ -133,11 +133,7 @@ class User extends AppModel {
 					),
 				)
             );
-			//$user['User']['environment'] = getConf('/App/environment');
-			//$user['User']['show_closed_matters'] = getConf('/App/show_closed_matters');
-			//return $user;
-
-            if (!empty($user)) {
+			if (!empty($user)) {
 				return $user;
             } else {
 				return false;

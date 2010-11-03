@@ -3,7 +3,7 @@ class Sell extends AppModel {
 	var $name = 'Sell';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 	var $virtualFields = array(
-		'formated_date' => 'DATE_FORMAT(Sell.created, "%d/%m/%Y")'
+		'formated_date' => 'DATE_FORMAT(Sell.created, "%d-%m-%Y %H:%i")'
 	);
 	var $belongsTo = array(
 		'User' => array(

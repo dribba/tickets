@@ -12,7 +12,7 @@ $menu[] = $this->MyHtml->link(
 	array('class' => 'button primary', 'title' => __('Agregar Ubicación', true))
 );
 
-$filters = array('Location.name');
+$filters = array('Location.name' => array('label' => __('Nombre', true)));
 
 
 /** The grid */
