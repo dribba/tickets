@@ -4,6 +4,8 @@ class EventsController extends AppController {
 
 	function admin_index() {
 		//$this->Event->recursive = 0;
+		$this->set('sites', $this->Event->Site->find('list'));
+		$this->Filter->process();
 		$this->set('data', $this->paginate());
 	}
 
@@ -14,11 +16,18 @@ class EventsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		d($this->Event->EventsSit->findStats($id));
+		$stats = $this->Event->EventsSit->findStats($id);
 		//d($this->Event->EventsSit->Sit->findSits($id));
 		$this->Event->recursive = -1;
 		$data = $this->Event->findById($id);
+		$data['stats'] = $stats;
 		$this->set('data', $data);
+	}
+
+	function admin_stat($data = null) {
+		$this->layout = '';
+		$this->set('data', array(10, 90));
+		$this->render('graphs/pie');
 	}
 
 	function admin_add($id = null) {

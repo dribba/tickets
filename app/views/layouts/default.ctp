@@ -92,6 +92,13 @@ AnyTime.picker( "fecha",
 
 						echo $this->MyHtml->tag('li',
 							$this->MyHtml->link(
+								__('Ventas', true),
+								array('admin' => true, 'controller' => 'sells', 'action' => 'index')
+							)
+						);
+
+						echo $this->MyHtml->tag('li',
+							$this->MyHtml->link(
 								__('Usuarios', true),
 								array('admin' => true, 'controller' => 'users', 'action' => 'index')
 							)

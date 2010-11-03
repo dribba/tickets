@@ -12,7 +12,10 @@ $menu[] = $this->MyHtml->link(
 	array('class' => 'button primary', 'title' => __('Agregar Ubicación', true))
 );
 
-$filters = array('Location.name' => array('label' => __('Nombre', true)));
+$filters = array(
+	'Location.name'		=> array('label' => __('Nombre', true)),
+	'Location.site_id'	=> array('label' => __('Sitio', true))
+);
 
 
 /** The grid */
@@ -20,6 +23,7 @@ $header	= null;
 $header[] = __('Acciones', true);
 $header[] = __('Nombre', true);
 $header[] = __('Precio', true);
+$header[] = __('Sitio', true);
 
 $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 
@@ -68,6 +72,7 @@ $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 		$td[] = $this->MyHtml->tag('td', $actions);
 		$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Location']['price']);
+		$td[] = $this->MyHtml->tag('td', $record['Site']['name']);
 
 		$body[] = $this->MyHtml->tag('tr', $td);
 

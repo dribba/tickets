@@ -33,9 +33,11 @@ class FilterComponent extends Object {
  * Fields which will replace the regular syntax in where i.e. field = 'value'
  */
     var $fieldFormatting    = array(
-		'string'	=> array('key' => '%s.%s LIKE', 'value' => '%%%s%%'),
+		'string'		=> array('key' => '%s.%s LIKE', 'value' => '%%%s%%'),
 		//'string'	=> array('key' => '%s.%s LIKE', 'value' => '%s'),
-		'date'		=> array('key' => '%s.%s')
+		//'date'		=> array('key' => '%s.%s')
+		'date'			=> array('key' => '%s.%s LIKE', 'value' => '%%%s%%'),
+		'datetime'		=> array('key' => '%s.%s LIKE', 'value' => '%%%s%%')
 	);
 
 

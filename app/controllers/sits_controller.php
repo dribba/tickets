@@ -106,27 +106,6 @@ class SitsController extends AppController {
 		$this->set(compact('locations'));
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid sit', true));
-			$this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->Sit->save($this->data)) {
-				$this->Session->setFlash(__('The sit has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The sit could not be saved. Please, try again.', true));
-			}
-		}
-		if (empty($this->data)) {
-			$this->data = $this->Sit->read(null, $id);
-		}
-		$locations = $this->Sit->Location->find('list');
-		$events = $this->Sit->Event->find('list');
-		$this->set(compact('locations', 'events'));
-	}
-
 	function admin_delete($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid id for sit', true));
