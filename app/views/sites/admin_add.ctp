@@ -33,14 +33,14 @@ $content[] = $this->MyForm->input('Site.plane',
 	array(
 		'label' 	=> __('Plano', true),
 		'type'		=> 'file',
-		'help'		=> __('Solo archivos del tipo imagen<br>(jpg, jpeg, png)', true)
+		'help'		=> __('Sólo archivos de tipo imagen<br/>(jpg, gif, png)', true)
 	)
 );
 
 $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
 
-$out[] = $this->element("footer", array('link' => 'admin/sites'));
+$out[] = $this->element('footer', array('link' => 'admin/sites'));
 $out[] = $this->MyForm->end();
 
 $content = $this->MyHtml->tag('div', $out);
