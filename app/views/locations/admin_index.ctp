@@ -1,7 +1,7 @@
 
 <?php
 
-$this->set('title_for_layout', __('Listado de ubicaciones', true));
+$this->set('title_for_layout', __('Listado de Ubicaciones', true));
 
 $menu[] = $this->MyHtml->link(
 	__('Agregar Ubicación', true),
@@ -22,7 +22,6 @@ $filters = array(
 $header	= null;
 $header[] = __('Acciones', true);
 $header[] = __('Nombre', true);
-$header[] = __('Precio', true);
 $header[] = __('Sitio', true);
 
 $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
@@ -71,7 +70,6 @@ $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 
 		$td[] = $this->MyHtml->tag('td', $actions);
 		$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
-		$td[] = $this->MyHtml->tag('td', $record['Location']['price']);
 		$td[] = $this->MyHtml->tag('td', $record['Site']['name']);
 
 		$body[] = $this->MyHtml->tag('tr', $td);

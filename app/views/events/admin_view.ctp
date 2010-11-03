@@ -1,6 +1,6 @@
 <?php
 
-	$this->set("title_for_layout", __("Ver evento", true));
+	$this->set('title_for_layout', __('Ver evento', true));
 
 	$links[] = $this->MyHtml->link(
 		__('Agregar', true),
@@ -44,19 +44,27 @@
 	
 
 	$fields[__('Nombre del evento', true)] = $data['Event']['name'];
-	$fields[__('Observaciones', true)] = $data['Event']['comments'];
 	$fields[__('Fecha de inicio', true)] = $data['Event']['formated_start'];
-	$fields[__('Nombre de cierre', true)] = $data['Event']['formated_end'];
+	$fields[__('Fecha de cierre', true)] = $data['Event']['formated_end'];
+	$fields[__('Sitio', true)] = $data['Site']['name'];
+	$fields[__('Observaciones', true)] = $data['Event']['comments'];
 
-	$fields[__('Sitio', true)] = $data['stats'][0]['Site']['name'];
-	
-	foreach ($data['stats'] as $stat) {
+
+	foreach ($data['Site']['Location'] as $location) {
+
 		$statContent = null;
-		$statContent[] = $this->MyHtml->tag('legend', $stat['Location']['name']);
+		$statContent[] = $this->MyHtml->tag('legend', $location['name']);
 
-		$percentSelled = ($stat['Location']['total_selled_sits'] * 100) / $stat['Location']['total_sits'];
-		$percentFree = ($stat['Location']['total_free_sits'] * 100) / $stat['Location']['total_sits'];
-		$statContent[] = $this->MyHtml->tag('img', '', array('src' => Router::url('stat')));
+//		$percentSelled = ($stat['Location']['total_selled_sits'] * 100) / $stat['Location']['total_sits'];
+//		$percentFree = ($stat['Location']['total_free_sits'] * 100) / $stat['Location']['total_sits'];
+		$statContent[] = $this->MyHtml->image(
+			array(
+				'controller' 	=> 'events',
+				'action' 		=> 'stat',
+				$data['Event']['id'],
+				$location['id']
+			)
+		);
 		$extra[] = $this->MyHtml->tag('fieldset', $statContent, array('class' => 'clear mainForm'));
 	}
 

@@ -1,29 +1,13 @@
 <?php
 class Event extends AppModel {
-	var $name = 'Event';
+
 	var $displayField = 'name';
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+
 	var $virtualFields = array(
-		'formated_start' => 'DATE_FORMAT(Event.start, "%d-%m-%Y %H:%i")',
-		'formated_end' => 'DATE_FORMAT(Event.end, "%d-%m-%Y %H:%i")'
+		'formated_start' 	=> 'DATE_FORMAT(Event.start, "%Y-%m-%d %H:%i")',
+		'formated_end' 		=> 'DATE_FORMAT(Event.end, "%Y-%m-%d %H:%i")'
 	);
-//	var $hasAndBelongsToMany = array(
-//		'Sit' => array(
-//			'className' => 'Sit',
-//			'joinTable' => 'events_sits',
-//			'foreignKey' => 'event_id',
-//			'associationForeignKey' => 'sit_id',
-//			'unique' => true,
-//			'conditions' => '',
-//			'fields' => '',
-//			'order' => '',
-//			'limit' => '',
-//			'offset' => '',
-//			'finderQuery' => '',
-//			'deleteQuery' => '',
-//			'insertQuery' => ''
-//		)
-//	);
+
 	var $hasMany = array('EventsSit');
 	var $belongsTo = array('Site');
 
@@ -34,11 +18,57 @@ class Event extends AppModel {
 				'notempty' => array(
 					'rule' => array('notempty'),
 					'message' => __('Ingrese el nombre del evento', true),
-					'last' => true, // Stop validation after this rule
+					'last' => true,
 				),
 			)
 		);
 
     }
+
+
+	function findStats($eventId, $locationId = null) {
+
+		$data = null;
+
+		$conditions['EventsSit.event_id'] = $eventId;
+		if (!empty($locationId)) {
+			$conditions['Sit.location_id'] = $locationId;
+		}
+
+		$r = $this->EventsSit->find('all',
+			array(
+				'contain'		=> array('Sit'),
+				'fields' 		=> array(
+					'Sit.location_id',
+					'COUNT(`EventsSit`.`id`) AS total_sits',
+					'SUM(IF(`EventsSit`.`sell_id`>0, 1, 0)) AS total_selled_sits',
+					'COUNT(`EventsSit`.`id`) - SUM(IF(`EventsSit`.`sell_id`>0, 1, 0)) AS total_free_sits'
+				),
+				'conditions'	=> $conditions,
+				'group'			=> array('Sit.location_id'),
+			)
+		);
+
+		if (!empty($r)) {
+			$locationIds = Set::extract('/Sit/location_id', $r);
+			$r = Set::combine($r, '{n}.Sit.location_id', '{n}.0');
+
+			$data = $this->EventsSit->Sit->Location->find('all',
+				array(
+					'contain'		=> array('Site'),
+					'conditions'	=> array('Location.id' => $locationIds)
+				)
+			);
+			foreach ($data as $k => $v) {
+				$data[$k]['Location'] += $r[$data[$k]['Location']['id']];
+			}
+
+			if (!empty($locationId) && !empty($data[0])) {
+				return $data[0];
+			} else {
+				return $data;
+			}
+		}
+	}
 
 }

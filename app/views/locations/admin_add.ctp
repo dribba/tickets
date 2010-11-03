@@ -1,6 +1,6 @@
 <?php
 
-$this->set('title_for_layout', __('Agregar ubicacion', true));
+$this->set('title_for_layout', __('Agregar Ubicación', true));
 
 $out[] = $this->MyForm->create('Location', array('class' => 'mainForm clear', 'id' => 'formEditor'));
 
@@ -11,7 +11,7 @@ $out[] = $this->MyHtml->tag(
 	array('id' => 'asterisk')
 );
 
-$content[] = $this->MyHtml->tag('legend', __('Detalles de la ubicacion', true));
+$content[] = $this->MyHtml->tag('legend', __('Detalles de la Ubicación', true));
 
 if (!empty($id)) {
 	$content[] = $this->MyForm->input('Location.id',
@@ -24,11 +24,6 @@ if (!empty($id)) {
 $content[] = $this->MyForm->input('Location.name',
 	array(
 		'label' 	=> __('Nombre', true),
-	)
-);
-$content[] = $this->MyForm->input('Location.price',
-	array(
-		'label' 	=> __('Precio', true),
 	)
 );
 $content[] = $this->MyForm->input('Location.site_id',
