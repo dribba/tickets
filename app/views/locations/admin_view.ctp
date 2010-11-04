@@ -57,8 +57,36 @@
 
 
 	$fields[__('Nombre', true)] = $data['Location']['name'];
-d($data);
-	$fields[__('Precios', true)] = $data['Location']['name'];
+	foreach ($data['Price'] as $price) {
+		$edit = $this->MyHtml->image(
+			'edit.png',
+			array(
+				'class' => 'open_modal',
+				'title' => __('Editar', true),
+				'url' => array(
+					'controller' 	=> 'prices',
+					'action' 		=> 'add',
+					$price['id']
+				),
+			)
+		);
+		$delete = $this->MyHtml->image(
+			'delete.png',
+			array(
+				'class' => 'open_modal',
+				'title' => __('Eliminar', true),
+				'url' => array(
+					'controller' 	=> 'prices',
+					'action' 		=> 'delete',
+					$price['id']
+				),
+			)
+		);
+		$prices[] = $this->MyHtml->tag('div',
+			sprintf('%s: %s %s %s', $price['type'], $price['price'], $edit, $delete)
+		);
+	}
+	$fields[__('Precios', true)] = $this->MyHtml->tag('div', $prices);
 	$fields[__('Ubicaciones', true)] = $this->element('table', array('data' => $data));
 	
 	echo $this->element('view',
