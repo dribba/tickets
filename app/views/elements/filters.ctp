@@ -6,6 +6,7 @@ $filters[] = $this->MyForm->create(Inflector::Classify($this->name), array('clas
 foreach ($fields as $k => $v) {
 	$v['class'] = ((!empty($v['class'])) ? $v['class'] : '') . ' full';
 	if (is_array($v)) {
+		$v['empty'] = true;
 		$filters[] = $this->MyForm->input($k, $v);
 	} else {
 		$filters[] = $this->MyForm->input($v);

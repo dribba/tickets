@@ -1,6 +1,6 @@
 <?php
 
-	$this->set('title_for_layout', __('Ver ubicacion', true));
+	$this->set('title_for_layout', __('Ver Ubicación', true));
 
 	$links[] = $this->MyHtml->link(
 		__('Pantalla Completa', true),
@@ -52,7 +52,7 @@
 			'title' => __('Eliminar', true),
 			'class'	=> 'button primary'
 		),
-		__('Eliminar Locacion?', true)
+		__('Eliminar ubicación?', true)
 	);
 
 
