@@ -5,7 +5,7 @@ class UsersController extends AppController {
 
 
 	function register() {
-
+		$this->layout = 'talleres';
 		if (empty($this->data)) {
 			$this->set('step', 1);
 		} else {
@@ -115,6 +115,7 @@ class UsersController extends AppController {
 
 
 	function forgot_password() {
+		$this->layout = 'talleres';
 		if (!empty($this->data)) {
 
 			$params['to'] = $this->data['User']['mobile_area'] . $this->data['User']['mobile_phone'];
@@ -157,7 +158,7 @@ class UsersController extends AppController {
 
     function login() {
 
-		$this->layout = 'login';
+		$this->layout = 'talleres';
 
 		if (!empty($this->data)) {
 

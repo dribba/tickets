@@ -62,7 +62,7 @@ class SellsController extends AppController {
 	 */
 
 	function sell($step = null, $sit = null) {
-
+		$this->layout = 'talleres';
 		if ($step == 3) {
 
 			$this->set('step', 3);

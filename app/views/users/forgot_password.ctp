@@ -21,14 +21,13 @@ $content[] = $myForm->input('mobile_phone',
 );
 $content[] = $myForm->input('mobile_company',
 	array(
-		'type'		=> 'radio',
+		'type'		=> 'select',
 		'options'	=> array(
 			'3' 		=> 'Claro',
 			'1' 		=> 'Movistar',
 			'4' 		=> 'Personal'
 		),
 		'label' 	=> __('Compañia', true),
-		'div'		=> 'No'
 	)
 );
 

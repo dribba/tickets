@@ -24,7 +24,7 @@ $steps[1][] = $this->MyForm->input('document',
 $steps[1][] = $this->MyForm->input('sex',
 	array(
 		'options' 	=> array('M' => __('Masculino', true), 'F' => __('Femenino', true)),
-		'label' 	=> __('Sex', true)
+		'label' 	=> __('Sexo', true)
 	)
 );
 $steps[1][] = $this->MyForm->input('email',
@@ -64,13 +64,12 @@ $steps[1][] = $this->MyForm->input('mobile_phone',
 );
 $steps[1][] = $this->MyForm->input('mobile_company',
 	array(
-		'type'		=> 'radio',
+		'type'		=> 'select',
 		'options'	=> array(
 			'3' 		=> 'Claro',
 			'1' 		=> 'Movistar',
 			'4' 		=> 'Personal',
 		),
-		'div'		=> 'No',
 		'label' 	=> __('Compañia', true),
 	)
 );
@@ -94,13 +93,12 @@ $steps[1][] = $this->MyHtml->scriptBlock(
 */
 if (!empty($validation_data)) {
 
-	$t['address'] = 'Domicilio';
-	$t['phone'] = 'Telefono';
-	$t['know'] = 'Persona conocida';
-	$t['work'] = 'Empleo';
+	$t['address'] = __('Domicilio', true);
+	$t['phone'] = __('Telefono', true);
+	$t['know'] = __('Persona conocida', true);
+	$t['work'] = __('Empleo', true);
 
 	foreach ($validation_data as $d => $v) {
-
 		$steps[2][] = $this->MyForm->input($d,
 			array(
 				'label' 	=> __($t[$d], true),

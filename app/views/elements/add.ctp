@@ -1,10 +1,5 @@
 <?php
 
-	$message = explode('|', $this->Session->flash());
-	if (!empty($message[0])) {
-		$headerContent[] = $this->MyHtml->tag('div', $message[1], array('class' => 'message', 'id' => 'msg' . ucwords($message[0])));
-	}
-	
 	$headerContent[] = $this->MyHtml->tag('h1', $title_for_layout);
 
 	$mainContent[] = $this->MyHtml->tag('div', $headerContent, array('class' => 'clear', 'id' => 'head'));
