@@ -1,28 +1,30 @@
 
 <?php
 
-$this->set('title_for_layout', __('Listado de Ubicaciones', true));
+$this->set('title_for_layout', __('Listado de Precios', true));
 
 $menu[] = $this->MyHtml->link(
-	__('Agregar Ubicación', true),
+	__('Agregar Precio', true),
 	array(
-		'controller'	=> 'locations',
+		'controller'	=> 'prices',
 		'action'		=> 'add',
 	),
-	array('class' => 'button primary', 'title' => __('Agregar Ubicación', true))
+	array('class' => 'button primary', 'title' => __('Agregar Precio', true))
 );
 
 $filters = array(
-	'Location.name'		=> array('label' => __('Nombre', true)),
-	'Location.site_id'	=> array('label' => __('Sitio', true))
+	'Price.type'		=> array('label' => __('Tipo', true)),
+	'Price.location_id'	=> array('label' => __('Ubicación', true))
 );
 
 
 /** The grid */
 $header	= null;
 $header[] = __('Acciones', true);
-$header[] = __('Nombre', true);
-$header[] = __('Sitio', true);
+$header[] = __('Evento', true);
+$header[] = __('Ubicacion', true);
+$header[] = __('Tipo', true);
+$header[] = __('Precio', true);
 
 $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 
@@ -34,11 +36,11 @@ $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 			'view.png',
 			array(
 				'class' => 'open_modal',
-				'title' => __('Ver', true) . ' ' . $record['Location']['name'],
+				'title' => __('Ver', true),
 				'url' => array(
-					'controller' 	=> 'locations',
+					'controller' 	=> 'prices',
 					'action' 		=> 'view',
-					$record['Location']['id']
+					$record['Price']['id']
 				),
 			)
 		);
@@ -46,11 +48,11 @@ $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 			'edit.png',
 			array(
 				'class' => 'open_modal',
-				'title' => __('Editar', true) . ' ' . $record['Location']['name'],
+				'title' => __('Editar', true),
 				'url' => array(
-					'controller' 	=> 'locations',
+					'controller' 	=> 'prices',
 					'action' 		=> 'add',
-					$record['Location']['id']
+					$record['Price']['id']
 				),
 			)
 		);
@@ -58,19 +60,21 @@ $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 			'delete.png',
 			array(
 				'class' => 'open_modal',
-				'title' => __('Eliminar', true) . ' ' . $record['Location']['id'],
+				'title' => __('Eliminar', true),
 				'url' => array(
-					'controller' 	=> 'locations',
+					'controller' 	=> 'prices',
 					'action' 		=> 'delete',
-					$record['Location']['id']
+					$record['Price']['id']
 				),
 			)
 		);
 
 
 		$td[] = $this->MyHtml->tag('td', $actions);
+		$td[] = $this->MyHtml->tag('td', $record['Event']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
-		$td[] = $this->MyHtml->tag('td', $record['Site']['name']);
+		$td[] = $this->MyHtml->tag('td', $record['Price']['type']);
+		$td[] = $this->MyHtml->tag('td', $record['Price']['price']);
 
 		$body[] = $this->MyHtml->tag('tr', $td);
 

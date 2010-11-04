@@ -78,6 +78,13 @@ AnyTime.picker( "fecha",
 
 						echo $this->MyHtml->tag('li',
 							$this->MyHtml->link(
+								__('Precios', true),
+								array('admin' => true, 'controller' => 'prices', 'action' => 'index')
+							)
+						);
+
+						echo $this->MyHtml->tag('li',
+							$this->MyHtml->link(
 								__('Butacas', true),
 								array('admin' => true, 'controller' => 'sits', 'action' => 'index')
 							)
@@ -114,11 +121,11 @@ AnyTime.picker( "fecha",
 						);
 
 					}
-
+/*
 					echo $this->MyHtml->tag('li',
 						$this->MyHtml->link(__('Cambiar Contraseña', true), array('admin' => false, 'controller' => 'users', 'action' => 'change_password'))
 					);
-
+*/
 					
 				} else {
 					echo $this->MyHtml->tag('li',

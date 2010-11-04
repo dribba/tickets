@@ -2,6 +2,23 @@
 class EventsController extends AppController {
 
 
+	function admin_stat($eventId, $locationId) {
+
+
+		$data['width'] = 250;
+		$data['height'] = 150;
+		$data['title'] = __('Estadistica de ventas', true);
+		$data['legends'] = array('Libres (%1.1f%%)', 'Vendidas (%1.1f%%)');
+		$r = $this->Event->findStats($eventId, $locationId);
+
+		$data['data'] = array($r['Location']['total_free_sits'], $r['Location']['total_selled_sits']);
+
+		$this->set('data', $data);
+		$this->render('../elements/charts/pie', 'ajax');
+	}
+
+
+
 	function admin_index() {
 		//$this->Event->recursive = 0;
 		$this->set('sites', $this->Event->Site->find('list'));
@@ -16,18 +33,12 @@ class EventsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$stats = $this->Event->EventsSit->findStats($id);
+		
+		//$stats = $this->Event->EventsSit->findStats($id);
 		//d($this->Event->EventsSit->Sit->findSits($id));
-		$this->Event->recursive = -1;
+		$this->Event->contain('Site.Location');
 		$data = $this->Event->findById($id);
-		$data['stats'] = $stats;
 		$this->set('data', $data);
-	}
-
-	function admin_stat($data = null) {
-		$this->layout = '';
-		$this->set('data', array(10, 90));
-		$this->render('graphs/pie');
 	}
 
 	function admin_add($id = null) {

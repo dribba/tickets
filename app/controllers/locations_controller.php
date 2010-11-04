@@ -1,8 +1,6 @@
 <?php
 class LocationsController extends AppController {
 
-	var $name = 'Locations';
-
 	function admin_index() {
 		$this->set('sites', $this->Location->Site->find('list'));
 		$this->Filter->process();
@@ -15,7 +13,7 @@ class LocationsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->Location->recursive = -1;
+		$this->Location->contain(array('Price.Event'));
 		$location = $this->Location->read(null, $id);
 
 		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], 2);
@@ -82,4 +80,3 @@ class LocationsController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 }
-?>
