@@ -17,6 +17,7 @@ td > img{
 }
 #grid-sits{
 	overflow-x:scroll;
+	width:700px;
 }
 #grid-sits table {
 	border-bottom: 0px !important;

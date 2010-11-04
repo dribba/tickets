@@ -64,12 +64,12 @@ echo $this->MyHtml->tag('div',
 	array('id' => 'grid-sits', 'class' => $wide)
 );
 
-
-echo $this->MyForm->create('Sell', array('action' => 'sell', 'class' => 'mainForm clear', 'id' => 'formEditor'));
-echo $this->MyForm->input('sits_ids', array('id' => 'sits_ids', 'type' => 'hidden'));
-echo $this->MyForm->input('step', array('type' => 'hidden', 'value' => 2));
-echo $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true)));
-
+if (!empty($wide)) {
+	echo $this->MyForm->create('Sell', array('action' => 'sell', 'class' => 'mainForm clear', 'id' => 'formEditor'));
+	echo $this->MyForm->input('sits_ids', array('id' => 'sits_ids', 'type' => 'hidden'));
+	echo $this->MyForm->input('step', array('type' => 'hidden', 'value' => 2));
+	echo $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true)));
+}
 echo $this->MyHtml->scriptBlock(
 	'$(document).ready(function($) {
 		$(".sit").click(
