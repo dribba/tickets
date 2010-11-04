@@ -37,77 +37,25 @@ $steps[2][] = $this->element('plane', array('wizard' => 'Yes', 'event_id' => (!e
 */
 if ($step == 3) {
 
-	$steps[3][] = $this->MyHtml->tag('legend', __('Resumen de la compra', true));
-	$resume[] = $this->MyHtml->tag('dt',
-		__('Ubicacion', true),
-		array('class' => '')
-	);
-	$resume[] = $this->MyHtml->tag('dd',
-		$data[0]['Location']['name'],
-		array('class' => '')
-	);
-	$resume[] = $this->MyHtml->tag('dt',
-		__('Precio unitario', true),
-		array('class' => '')
-	);
-	$resume[] = $this->MyHtml->tag('dd',
-		$data[0]['Location']['price'],
-		array('class' => '')
-	);
-	$resume[] = $this->MyHtml->tag('dt',
-		__('Precio total', true),
-		array('class' => '')
-	);
-	$resume[] = $this->MyHtml->tag('dd',
-		$data[0]['Location']['price'] * sizeof($data),
-		array('class' => '')
-	);
-
-	foreach ($data as $sit) {
-		$resume[] = $this->MyHtml->tag('dt',
-			__('Butaca numero', true),
-			array('class' => '')
-		);
-		$resume[] = $this->MyHtml->tag('dd',
-			$sit['Sit']['code'],
-			array('class' => '')
-		);
-	}
-
-	$steps[3][] = $this->MyHtml->tag('dl', $resume, array('class' => 'view'));
-	$steps[3][] = $this->MyHtml->tag('div',
-		__('Costo total a pagar: ', true) . $data[0]['Location']['price'] * sizeof($data),
-		array('class' => 'clear field alert')
-	);
-}
-
-
-/**
-############################################################################
-# STEP 4
-############################################################################
-*/
-if ($step == 4) {
-
-	$steps[4][] = $this->MyHtml->tag('legend', __('Detalles de la compra', true));
-	$steps[4][] = $this->MyForm->input('Sell.license_available',
+	$steps[3][] = $this->MyHtml->tag('legend', __('Detalles de la compra', true));
+	$steps[3][] = $this->MyForm->input('Sell.license_available',
 		array(
 			'options' 	=> array('Y' => __('Si', true), 'N' => __('No', true)),
 			'label' 	=> __('Dispone de carnet', true)
 		)
 	);
-	$steps[4][] = $this->MyForm->input('Sell.license_number',
+	$steps[3][] = $this->MyForm->input('Sell.license_number',
 		array(
 			'label' 	=> __('Numero de carnet', true)
 		)
 	);
 	
 	$street[] = $this->MyHtml->tag('div',
-		'Envio a domicilio, costo $20',
+		__('Envio a domicilio, costo $20', true),
 		array('class' => 'clear field')
 	);
 	$street[] = $this->MyHtml->tag('div',
-		'Retirar en sede, costo $15',
+		__('Retirar en sede, costo $15', true),
 		array('class' => 'clear field')
 	);
 	$street[] = $this->MyForm->input('Sell.send',
@@ -126,13 +74,13 @@ if ($step == 4) {
 			'label' 	=> __('Horario de envio', true)
 		)
 	);
-	$steps[4][] = $this->MyHtml->tag('div',
+	$steps[3][] = $this->MyHtml->tag('div',
 		$street,
 		array('id' => 'street')
 	);
 
 
-	$steps[4][] = $this->MyHtml->scriptBlock(
+	$steps[3][] = $this->MyHtml->scriptBlock(
 		'$(document).ready(function($) {
 			$("#SellLicenseAvailable").click(
 				function() {
@@ -154,10 +102,17 @@ if ($step == 4) {
 					}
 				}
 			);
+			$("#SellSend").change(
+				function() {
+					$("#SellStreet").parent().toggle();
+					$("#SellHorary").parent().toggle();
+				}
+			);
+
 		});'
 	);
-	$steps[4][] = $this->MyHtml->tag('legend', __('Terminos y condiciones de compra', true));
-	$steps[4][] = $this->MyHtml->tag('div', __('Acepto los Terminosd y Condiciones de compra de …..........
+	$steps[3][] = $this->MyHtml->tag('legend', __('Terminos y condiciones de compra', true));
+	$steps[3][] = $this->MyHtml->tag('div', __('Acepto los Terminosd y Condiciones de compra de …..........
 
 
 Las Entradas son vendidas por "…................" (Empresa) en su carácter de mandatario, en nombre y representación de la Sala Teatral (Vendedor). El Vendedor es responsable del servicio, función o espectáculo o evento a realizarse, y define las condiciones de venta en todos los casos.
@@ -177,18 +132,86 @@ El servicio de envío a domicilio es opcional y tiene un cargo adicional al del 
 
 La Empresa se encuentra inscripta dentro del régimen especial de emisión y almacenamiento electrónico de comprobantes en los términos provistos por las resoluciones generales Nº1361, sus modificatorias y complementarias, y Nº2177, con fecha de inscripción en el registro 01/10/2009. ', true), array('class' => 'tos'));
 
-	$steps[4][] = $this->MyForm->input('Sell.tos',
+	$steps[3][] = $this->MyForm->input('Sell.tos',
 		array(
 			'label' => __('Acepto los terminos y condiciones de compra', true),
 			'type'	=> 'checkbox',
 			'div'	=> 'checkTos clear field'
 		)
 	);
+
+
 }
+
 
 /**
 ############################################################################
 # STEP 4
+############################################################################
+*/
+if ($step == 4) {
+
+	$steps[4][] = $this->MyHtml->tag('legend', __('Resumen de la compra', true));
+	$resume[] = $this->MyHtml->tag('dt',
+		__('Ubicacion', true),
+		array('class' => '')
+	);
+	$resume[] = $this->MyHtml->tag('dd',
+		$data[0]['Location']['name'],
+		array('class' => '')
+	);
+	
+	foreach ($data as $sit) {
+		$resume[] = $this->MyHtml->tag('dt',
+			__('Butaca numero', true),
+			array('class' => '')
+		);
+		$resume[] = $this->MyHtml->tag('dd',
+			$sit['Sit']['code'],
+			array('class' => '')
+		);
+	}
+
+	$resume[] = $this->MyHtml->tag('dt',
+		__('Precio unitario', true),
+		array('class' => '')
+	);
+	$resume[] = $this->MyHtml->tag('dd',
+		__('$', true) . $data[0]['Location']['price'],
+		array('class' => '')
+	);
+	$resume[] = $this->MyHtml->tag('dt',
+		__('Precio total', true),
+		array('class' => '')
+	);
+	$resume[] = $this->MyHtml->tag('dd',
+		__('$', true) . $data[0]['Location']['price'] * sizeof($data),
+		array('class' => '')
+	);
+	$sellData = $this->Session->read('sellData');
+	$priceLicense = (($sellData['send'] == 'S') ? '20' : '15');
+	if ($sellData['license_available'] == 'N') {
+		$resume[] = $this->MyHtml->tag('dt',
+			__('Costo del carnet', true),
+			array('class' => '')
+		);
+		$resume[] = $this->MyHtml->tag('dd',
+			__('$', true) . $priceLicense,
+			array('class' => '')
+		);
+	}
+
+	$total = ($data[0]['Location']['price'] * sizeof($data)) + $priceLicense;
+	$steps[4][] = $this->MyHtml->tag('dl', $resume, array('class' => 'view'));
+	$steps[4][] = $this->MyHtml->tag('div',
+		__('Costo total a pagar: $', true) . $total,
+		array('class' => 'clear field alert')
+	);
+}
+
+/**
+############################################################################
+# STEP 5
 ############################################################################
 */
 if ($step == 5) {

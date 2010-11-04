@@ -84,8 +84,22 @@ class SellsController extends AppController {
 
 
 			} else if ($this->data['Sell']['step'] == 2) {
+				
+				$this->set('step', 3);
+
+				$sellData = $this->Session->read('sellData');
+				$sellData['Sell']['sits_ids'] = $this->data['Sell']['sits_ids'];
+				$this->Session->write('sellData', $sellData);
+				
+			} else if ($this->data['Sell']['step'] == 3) {
+
+				$sellData = $this->Session->read('sellData');
+
+				$this->Session->write('sellData', array_merge($sellData['Sell'], $this->data['Sell']));
+
 				//Sell resume
-				$ids = explode(',', $this->data['Sell']['sits_ids']);
+				$sellData = $this->Session->read('sellData');
+				$ids = explode(',', $sellData['sits_ids']);
 				$sits = $this->Sell->EventsSit->Sit->find('all',
 					array(
 						'conditions' => array(
@@ -94,22 +108,14 @@ class SellsController extends AppController {
 					)
 				);
 				$this->set('data', $sits);
-				$this->set('step', 3);
 
-				$sellData = $this->Session->read('sellData');
-				$sellData['Sell']['sits_ids'] = $this->data['Sell']['sits_ids'];
-				$this->Session->write('sellData', $sellData);
-				
-			} else if ($this->data['Sell']['step'] == 3) {
 				$this->set('step', 4);
 
 				
 			} else if ($this->data['Sell']['step'] == 4) {
 				$this->set('step', 5);
 				
-				$sellData = $this->Session->read('sellData');
 				
-				$this->Session->write('sellData', array_merge($sellData['Sell'], $this->data['Sell']));
 				
 			} else if ($this->data['Sell']['step'] == 5) {
 				$this->set('step', 5);

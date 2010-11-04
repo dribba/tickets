@@ -15,6 +15,17 @@ td > img{
 	overflow-y: scroll;
 	border:1px solid #ccc;
 }
+#grid-sits{
+	overflow-x:scroll;
+}
+#grid-sits table {
+	border-bottom: 0px !important;
+}
+#grid-sits table tr td {
+	padding:0 2px;
+	height: 20px;
+	line-height: 20px;
+}
 .checkTos > label{
 	width: 250px !important;
 }

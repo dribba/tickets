@@ -22,14 +22,20 @@ if (!empty($id)) {
 		)
 	);
 }
+$content[] = $this->MyForm->input('Event.name',
+	array(
+		'label' 	=> __('Nombre', true),
+	)
+);
 $content[] = $this->MyForm->input('Event.site_id',
 	array(
 		'label' 	=> __('Sitio', true),
 	)
 );
-$content[] = $this->MyForm->input('Event.name',
+$content[] = $this->MyForm->input('Event.state',
 	array(
-		'label' 	=> __('Nombre', true),
+		'label' 	=> __('Estado', true),
+		'options'	=> array('active' => __('Activo', true), 'closed' => __('Cerrado', true))
 	)
 );
 $content[] = $this->MyForm->input('Event.start',
