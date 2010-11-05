@@ -18,25 +18,16 @@ class SitesController extends AppController {
 		$this->set('data', $data);
 	}
 	
-	function isUploadedFile($params){
-		$val = array_shift($params);
-		if ((isset($val['error']) && $val['error'] == 0) ||
-		(!empty( $val['tmp_name']) && $val['tmp_name'] != 'none')) {
-			return is_uploaded_file($val['tmp_name']);
-		}
-		return false;
-	}
-
 	function admin_add($id = null) {
 		if (!empty($this->data)) {
 			$this->Site->create();
 
 
-			$allowedExtensions = array('jpg', 'jpeg', 'png');
-			$extension = strtolower(substr($this->data['Site']['plane']['name'], -3));
+			$allowedExtensions = array('jpg', 'gif', 'png');
+			$extension = array_pop(explode('.', $this->data['Site']['plane']['name']));
 			
 			if (!in_array($extension, $allowedExtensions)) {
-				$this->Session->setFlash(__('Solo se permiten archivos del tipo imagen', true), 'flash_error');
+				$this->Session->setFlash(__('Sólo se permiten archivos del tipo imagen', true), 'flash_error');
 				$this->Site->invalidate('Site.plane');
 			}
 

@@ -11,6 +11,14 @@
 		),
 		array('class' => 'button primary', 'title' => __('Agregar Butaca', true))
 	);
+	$menu[] = $this->MyHtml->link(
+		__('Importar desde Excel', true),
+		array(
+			'controller'	=> 'sits',
+			'action'		=> 'load',
+		),
+		array('class' => 'button primary', 'title' => __('Agregar Butaca', true))
+	);
 
 	$filters = array(
 		'Sit.code' 			=> array('label' => __('Código', true)),

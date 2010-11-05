@@ -25,10 +25,11 @@
 	/** The grid */
 	$header	= null;
 	$headers[] = __('Acciones', true);
-	$headers[] = __('Fecha de compra', true);
+	$headers[] = __('Fecha', true);
 	$headers[] = __('Usuario', true);
 	$headers[] = __('Carnet', true);
 	$headers[] = __('Enviar', true);
+	$headers[] = __('Total', true);
 
 	$head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($headers));
 
@@ -78,6 +79,7 @@
 		$td[] = $this->MyHtml->tag('td', $record['User']['full_name']);
 		$td[] = $this->MyHtml->tag('td', $record['Sell']['license_available']);
 		$td[] = $this->MyHtml->tag('td', $record['Sell']['send']);
+		$td[] = $this->MyHtml->tag('td', $record['Sell']['total']);
 		$body[] = $this->MyHtml->tag('tr', $td);
 
 	}

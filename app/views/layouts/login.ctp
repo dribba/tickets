@@ -33,6 +33,8 @@
 			if (!empty($message[0])) {
 				echo $this->MyHtml->tag('div', $message[1], array('class' => 'message clear', 'id' => 'msg' . ucwords($message[0])));
 			}
+			echo $this->MyHtml->link('Registrate', array('controller' => 'users', 'action' => 'register'));
+			echo $this->MyHtml->link('Olvide mi contraseña', array('controller' => 'users', 'action' => 'register'));
 			echo $content_for_layout;
 		?>
 		

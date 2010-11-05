@@ -22,7 +22,7 @@ $filters = array(
 $header	= null;
 $header[] = __('Acciones', true);
 $header[] = __('Evento', true);
-$header[] = __('Ubicacion', true);
+$header[] = __('Ubicación', true);
 $header[] = __('Tipo', true);
 $header[] = __('Precio', true);
 

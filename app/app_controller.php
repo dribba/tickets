@@ -7,6 +7,23 @@ class AppController extends Controller {
 	//var $components = array('RequestHandler', 'Session');
 	var $components = array('Filter', 'Session');
 
+
+/**
+ * Check is an uploaded file was correctly uploaded
+ *
+ * @param <string> $msg
+ * @return bool
+ */
+	function isUploadedFile($params){
+		$val = array_shift($params);
+		if ((isset($val['error']) && $val['error'] == 0) ||
+		(!empty( $val['tmp_name']) && $val['tmp_name'] != 'none')) {
+			return is_uploaded_file($val['tmp_name']);
+		}
+		return false;
+	}
+
+
 /**
  * Simplify application messages
  *
