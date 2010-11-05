@@ -5,6 +5,7 @@ class SellsController extends AppController {
 
 	function index() {
 		$this->layout = 'talleres';
+		$this->paginate['contain'] = array('EventsSit.Sit.Location', 'EventsSit.Event');
 		$this->paginate['conditions'] = array('Sell.user_id' => User::get('/User/id'));
 		$this->__index();
 	}
@@ -103,11 +104,15 @@ class SellsController extends AppController {
 				$ids = explode(',', $sellData['sits_ids']);
 				$sits = $this->Sell->EventsSit->Sit->find('all',
 					array(
-						'conditions' => array(
+						'contain'		=> array('Location.Price'),
+						'conditions'	=> array(
 							'Sit.id' => $ids
 						)
 					)
 				);
+
+				$price = Set::combine($sits[0]['Location']['Price'], '{n}.type', '{n}');
+				$this->set('price', $price[User::get('/User/type')]['price']);
 				$this->set('data', $sits);
 
 				$this->set('step', 4);

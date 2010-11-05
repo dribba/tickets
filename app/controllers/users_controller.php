@@ -46,11 +46,7 @@ class UsersController extends AppController {
 						$data['know'][] = $r['dato_falso_persona_relacionada_1'];
 						$data['know'][] = $r['dato_falso_persona_relacionada_2'];
 						shuffle($data['know']);
-						/*
-						$valid['work'] = $data['work'][] ='xxxxxxxxxxx';
-						$data['work'][] = $r['dato_falso_laboral_1'];
-						$data['work'][] = $r['dato_falso_laboral_2'];
-						*/
+						
 						$this->data['User']['full_name'] = $r['apellido'] . ' ' . $r['nombre'];
 						$this->Session->write('user_data', $this->data);
 						$this->Session->write('valid_data', $valid);
@@ -76,7 +72,7 @@ class UsersController extends AppController {
 					$this->data['User']['phone'] == $validData['phone'] &&
 					$this->data['User']['know'] == $validData['know']
 				) {
-					$uuid = uniqid();
+					$uuid = rand(1000, 9999);
 					$user = $this->Session->read('user_data');
 					unset($user['User']['step']);
 					$user['User']['password'] = md5($uuid);
@@ -211,14 +207,18 @@ class UsersController extends AppController {
 
 				$user = $this->User->findById($this->data['User']['id']);
 			} else {
+				
 				$user = $this->Session->read('User');
 				$current_password = $this->data['User']['current'];
 
 				if (md5($current_password) != $user['User']['password']) {
-
 					$this->Session->setFlash(
 						__('Contrasena actual incorrecta.', true),
 						'flash_error'
+					);
+					$prefix = ((User::get('/User/type') == 'admin') ? true : false);
+					$this->redirect(
+						array('admin' => $prefix, 'controller' => 'users', 'action' => 'change_password')
 					);
 				}
 			}

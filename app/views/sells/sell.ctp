@@ -177,7 +177,7 @@ if ($step == 4) {
 		array('class' => '')
 	);
 	$resume[] = $this->MyHtml->tag('dd',
-		__('$', true) . $data[0]['Location']['price'],
+		__('$', true) . $price,
 		array('class' => '')
 	);
 	$resume[] = $this->MyHtml->tag('dt',
@@ -185,11 +185,14 @@ if ($step == 4) {
 		array('class' => '')
 	);
 	$resume[] = $this->MyHtml->tag('dd',
-		__('$', true) . $data[0]['Location']['price'] * sizeof($data),
+		__('$', true) . $price * sizeof($data),
 		array('class' => '')
 	);
 	$sellData = $this->Session->read('sellData');
-	$priceLicense = (($sellData['send'] == 'S') ? '20' : '15');
+	$priceLicense = 0;
+	if ($sellData['license_available'] == 'N') {
+		$priceLicense = (($sellData['send'] == 'S') ? '20' : '15');
+	}
 	if ($sellData['license_available'] == 'N') {
 		$resume[] = $this->MyHtml->tag('dt',
 			__('Costo del carnet', true),
@@ -201,7 +204,7 @@ if ($step == 4) {
 		);
 	}
 
-	$total = ($data[0]['Location']['price'] * sizeof($data)) + $priceLicense;
+	$total = ($price * sizeof($data)) + $priceLicense;
 	$steps[4][] = $this->MyHtml->tag('dl', $resume, array('class' => 'view'));
 	$steps[4][] = $this->MyHtml->tag('div',
 		__('Costo total a pagar: $', true) . $total,

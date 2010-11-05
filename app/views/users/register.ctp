@@ -27,6 +27,18 @@ $steps[1][] = $this->MyForm->input('sex',
 		'label' 	=> __('Sexo', true)
 	)
 );
+$steps[1][] = $this->MyForm->input('type',
+	array(
+		'label' 	=> __('Tipo', true),
+		'options'	=> array(
+			'Mayor' 		=> 'Mayor',
+			'Dama' 			=> 'Dama',
+			'Jubilado' 		=> 'Jubilado',
+			'Cadete Mayor' 	=> 'Cadete Mayor',
+			'Cadete Menor' 	=> 'Cadete Menor',
+		)
+	)
+);
 $steps[1][] = $this->MyForm->input('email',
 	array(
 		'label' 	=> __('Email', true)
