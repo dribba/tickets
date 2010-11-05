@@ -14,6 +14,7 @@ class SellsController extends AppController {
 
 	function __index() {
 		$this->Filter->process();
+		$this->paginate['order'] = array('Sell.date' => 'DESC');
 		$this->set('data', $this->paginate());
 	}
 

@@ -28,7 +28,7 @@ $content[] = $this->MyForm->input('Sit.code',
 );
 $content[] = $this->MyForm->input('Sit.location_id',
 	array(
-		'label' 	=> __('Locacion', true),
+		'label' 	=> __('Ubicación', true),
 	)
 );
 $content[] = $this->MyForm->input('Sit.row',

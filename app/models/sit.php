@@ -7,21 +7,20 @@ class Sit extends AppModel {
 
 	var $hasMany = array('EventsSit');
 
-/*
+
 	protected function _initialitation() {
 
 		$this->validate = array(
-			'code' => array(
+			'location_id' => array(
 				'notempty' => array(
 					'rule' => array('notempty'),
-					'message' => __("Ingrese el nombre del evento", true),
-					'last' => true, // Stop validation after this rule
+					'message' => __('Seleccione la Ubicación', true),
+					'last' => true,
 				),
 			)
 		);
 
     }
-*/
 
 
 
