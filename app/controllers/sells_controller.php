@@ -4,6 +4,7 @@ class SellsController extends AppController {
 	var $name = 'Sells';
 
 	function index() {
+		$this->layout = 'talleres';
 		$this->paginate['conditions'] = array('Sell.user_id' => User::get('/User/id'));
 		$this->__index();
 	}

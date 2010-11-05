@@ -2,7 +2,10 @@
   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head profile="http://gmpg.org/xfn/11">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript">
+		var base_url = "<?php echo Router::url('/'); ?>";
+	</script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>
       <?php echo $title_for_layout; ?>
     </title>
@@ -126,6 +129,10 @@
             <p class="postmetadata"></p>
           </div>-->
 		  <?php echo $content_for_layout; ?>
+		  <script type="text/javascript">
+			var info = '<?php echo $info; ?>';
+			<?php echo $this->Js->writeBuffer(); ?>
+		  </script>
           <div class="navigation"></div>
         </div>
         <div class="in" id="sidebar2">

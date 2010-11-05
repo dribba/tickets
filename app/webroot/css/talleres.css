@@ -611,3 +611,46 @@ input {
 .field > label{
 	text-align:left;
 }
+
+#UserLoginForm{
+	width:400px !important;
+	margin: 0 auto;
+	padding:15px;
+	background-color: #F0F0F0;
+	-moz-border-radius: 0 0 5px 5px;
+}
+#login {
+	margin: 0 !important;
+}
+.users h2
+{
+	width: 420px;
+	margin-left: 255px;
+}
+.users #msgInfo {
+	margin-top: 0px;
+}
+#UserLoginForm fieldset div input{
+	width:200px;
+}
+#UserLoginForm fieldset div {
+	width:auto !important;
+}
+#UserLoginForm fieldset{
+	width:220px !important;
+	margin:0 auto;
+}
+#UserLoginForm fieldset div .button{
+	width:90px !important;
+	margin-top:15px;
+}
+.maphilighted {
+	background-repeat: no-repeat !important;
+}
+
+#contentwrap #main fieldset legend {
+	width: 920px !important;
+}
+#grid > table {
+	width:100%;
+}

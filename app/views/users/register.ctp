@@ -124,10 +124,7 @@ foreach ($steps[$step] as $field) {
 	$content[] = $field;
 }
 
-
-
 $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
-
 
 //$out[] = $this->MyForm->end(__('Siguiente', true));
 $out[] = $this->element("footer", array('link' => 'users/login', 'text' => __('Siguiente', true)));

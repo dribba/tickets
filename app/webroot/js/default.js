@@ -8,8 +8,8 @@ $.fn.delay = function(time, callback){
 $(document).ready(function($) {
 
 
-	if ($('#message')){
-		$('#message').delay(3000).fadeTo("slow",0.01,function(){
+	if ($('.message')){
+		$('.message').delay(3000).fadeTo("slow",0.01,function(){
 			$(this).slideUp("fast", function(){
 				$(this).remove();
 			});

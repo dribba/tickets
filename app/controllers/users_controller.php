@@ -217,7 +217,7 @@ class UsersController extends AppController {
 				if (md5($current_password) != $user['User']['password']) {
 
 					$this->Session->setFlash(
-						__('Current password error.', true),
+						__('Contrasena actual incorrecta.', true),
 						'flash_error'
 					);
 				}
@@ -230,7 +230,7 @@ class UsersController extends AppController {
 			if(empty($new_password) || empty($retype_password)) {
 
 				$this->Session->setFlash(
-					__('Please type new password.', true),
+					__('Ingrese una contrasena.', true),
 					'flash_error'
 				);
 				
@@ -243,20 +243,20 @@ class UsersController extends AppController {
 
 					if (!empty($updatedPassword)) {
 						$this->Session->setFlash(
-							__('The password was changed succesfully.', true),
+							__('La contrasena fue actualizada.', true),
 							'flash_success'
 						);
 						
 					} else {
 						$this->Session->setFlash(
-							__('There was a problem updating the password.', true),
+							__('Ocurrio un error al actualizar la contrasena.', true),
 							'flash_error'
 						);
 						
 					}
 				} else {
 					$this->Session->setFlash(
-						__('The new password and the retype fields must be equals.', true),
+						__('La contrasena nueva no coincide.', true),
 						'flash_error'
 					);
 					
@@ -275,7 +275,8 @@ class UsersController extends AppController {
 	}
 
 	function change_password() {
-		$this->__change_password(User::get('/User/id'));
+		$this->layout = 'talleres';
+		$this->__change_password();
 	}
 
 
@@ -421,5 +422,33 @@ class UsersController extends AppController {
 
 		$this->redirect(array('action' => 'index'));
 	}
+
+	private function __check_company($code_area, $number, $chars = 2) {
+
+		$Company = ClassRegistry::init('Company');
+		$block = substr($number, 0, $chars);
+		$data = $Company->find('first',
+			array(
+				'conditions' => array(
+					'Company.code_area'	=> $code_area,
+					'Company.block'		=> $block
+				)
+			)
+		);
+		if (!empty($data)) {
+			return $data;
+		} else {
+			if ($chars <= 6) {
+				return $this->__check_company($code_area, $number, $chars + 1);
+			} else {
+				return null;
+			}
+		}
+	}
+
+	function check_company($code_area, $number) {
+		d($this->__check_company($code_area, $number));
+	}
+
 
 }

@@ -26,6 +26,7 @@ class LocationsController extends AppController {
 	}
 
 	function view($id = null) {
+		$this->layout = 'talleres';
 		$this->__view($id, true);
 	}
 
