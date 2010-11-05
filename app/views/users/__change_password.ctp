@@ -4,18 +4,20 @@ $out[] = $this->MyForm->create('User', array('class' => 'mainForm clear', 'id' =
 $content[] = $this->MyHtml->tag('legend', __('Nueva Contraseña', true));
 if (empty($id)) {
 	$content[] = $this->MyForm->input(
-			'current', array('label' => __('Actual Contraseña', true), 'type' => 'password')
+			'current', array('label' => __('Contraseña Actual', true), 'type' => 'password')
 	);
+	$link = 'sells/index';
 } else {
 	$content[] = $this->MyForm->input(
 		'id',
 		array('type' => 'hidden', 'value' => $id)
 	);
+	$link = 'admin/users';
 }
 
 $content[] = $this->MyForm->input(
 		'new_password',
-		array('label' => __('Nueva Contraseña', true), 'type' => 'password')
+		array('label' => __('Contraseña Nueva', true), 'type' => 'password')
 );
 $content[] = $this->MyForm->input(
 		'retype_password',
@@ -24,7 +26,7 @@ $content[] = $this->MyForm->input(
 
 $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
-$out[] = $this->element('footer', array('link' => 'admin/users'));
+$out[] = $this->element('footer', array('link' => $link));
 
 $out[] = $this->MyForm->end();
 

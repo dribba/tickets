@@ -15,7 +15,7 @@ $_jpg_messages = array(
 /*
 ** Headers already sent error. This is formatted as HTML different since this will be sent back directly as text
 */
-10  => array('<table border="1"><tr><td style="color:darkred; font-size:1.2em;"><b>JpGraph Error:</b>
+10  => array('<table border="1"><tr><td style="color:darkred; font-size:1.2em;"><b>Error:</b>
 HTTP headers have already been sent.<br>Caused by output from file <b>%s</b> at line <b>%d</b>.</td></tr><tr><td><b>Explanation:</b><br>HTTP headers have already been sent back to the browser indicating the data as text before the library got a chance to send it\'s image HTTP header to this browser. This makes it impossible for the library to send back image data to the browser (since that would be interpretated as text by the browser and show up as junk text).<p>Most likely you have some text in your script before the call to <i>Graph::Stroke()</i>. If this texts gets sent back to the browser the browser will assume that all data is plain text. Look for any text, even spaces and newlines, that might have been sent back to the browser. <p>For example it is a common mistake to leave a blank line before the opening "<b>&lt;?php</b>".</td></tr></table>',2),
 
 /*
@@ -184,7 +184,7 @@ HTTP headers have already been sent.<br>Caused by output from file <b>%s</b> at 
 15006 => array('PiePlot::SetSize() Radius for pie must either be specified as a fraction [0, 0.5] of the size of the image or as an absolute size in pixels  in the range [10, 1000]',0),
 15007 => array('PiePlot::SetFontColor() is deprecated. Use PiePlot->value->SetColor() instead.',0),
 15008 => array('PiePlot::SetLabelType() Type for pie plots must be 0 or 1 (not %d).',1),
-15009 => array('Illegal pie plot. Sum of all data is zero for Pie Plot',0),
+15009 => array('Estadistica no disponible por falta de datos',0),
 15010 => array('Sum of all data is 0 for Pie.',0),
 15011 => array('In order to use image transformation you must include the file jpgraph_imgtrans.php in your script.',0),
 15012 => array('PiePlot::SetTheme() is no longer supported. Use PieGraph::SetTheme()',0),

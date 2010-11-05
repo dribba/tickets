@@ -4,6 +4,7 @@ class SellsController extends AppController {
 	var $name = 'Sells';
 
 	function index() {
+		$this->layout = 'talleres';
 		$this->paginate['conditions'] = array('Sell.user_id' => User::get('/User/id'));
 		$this->__index();
 	}
@@ -63,7 +64,7 @@ class SellsController extends AppController {
 	 */
 
 	function sell($step = null, $sit = null) {
-
+		$this->layout = 'talleres';
 		if ($step == 3) {
 
 			$this->set('step', 3);
