@@ -16,7 +16,7 @@ class LocationsController extends AppController {
 		$this->Location->contain(array('Price.Event'));
 		$location = $this->Location->read(null, $id);
 
-		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], 2);
+		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], 1);
 
 		$this->set('data', $location);
 		if (!$wizard) {
@@ -42,10 +42,10 @@ class LocationsController extends AppController {
 		if (!empty($this->data)) {
 			$this->Location->create();
 			if ($this->Location->save($this->data)) {
-				$this->Session->setFlash(__('Locacion agregada', true), 'flash_success');
+				$this->Session->setFlash(__('Ubicación agregada', true), 'flash_success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('La locacion no se pudo agregar', true), 'flash_error');
+				$this->Session->setFlash(__('La ubicación no se pudo agregar', true), 'flash_error');
 			}
 		} else {
 			if (!empty($id)) {
@@ -61,10 +61,10 @@ class LocationsController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Location->delete($id)) {
-			$this->Session->setFlash(__('Locacion eliminada', true), 'flash_success');
+			$this->Session->setFlash(__('Ubicación eliminada', true), 'flash_success');
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Error al eliminar locacion', true), 'flash_error');
+		$this->Session->setFlash(__('Error al eliminar ubicación', true), 'flash_error');
 		$this->redirect(array('action' => 'index'));
 	}
 }

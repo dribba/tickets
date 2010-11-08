@@ -3,7 +3,45 @@
 
 	$this->set('title_for_layout', __('Listado de ventas', true));
 
-	
+
+	$menu[] = $this->MyHtml->link(
+		__('Ventas del Dia', true),
+		array(
+			'controller'	=> 'sells',
+			'action'		=> 'stats',
+			'today'
+		),
+		array('class' => 'button primary', 'title' => __('Ventas del Dia', true))
+	);
+	$menu[] = $this->MyHtml->link(
+		__('Ventas de la Semana', true),
+		array(
+			'controller'	=> 'sells',
+			'action'		=> 'stats',
+			'week'
+		),
+		array('class' => 'button primary', 'title' => __('Ventas de la Semana', true))
+	);
+	$menu[] = $this->MyHtml->link(
+		__('Ventas del Mes', true),
+		array(
+			'controller'	=> 'sells',
+			'action'		=> 'stats',
+			'month'
+		),
+		array('class' => 'button primary', 'title' => __('Ventas del Mes', true))
+	);
+	$menu[] = $this->MyHtml->link(
+		__('Todas las Ventas', true),
+		array(
+			'controller'	=> 'sells',
+			'action'		=> 'stats',
+			'all'
+		),
+		array('class' => 'button primary', 'title' => __('Todas las Ventas', true))
+	);
+
+
 	$filters = array(
 		'User.full_name'			=> array('label' => __('Nombre', true)),
 		'Sell.created'				=> array(
@@ -98,6 +136,7 @@
 
 	echo $this->element('content',
 		array(
+			'menu' 				=> $menu,
 			'content'			=> $content,
 			'filters'			=> $filters,
 		)

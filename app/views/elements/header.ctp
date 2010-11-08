@@ -11,6 +11,7 @@
 		<div id="login_info">
 			<?php
 				echo $this->MyHtml->tag('div', User::get('/User/full_name'), 'top');
+				echo $this->MyHtml->image('change_password.png');
 				echo $this->MyHtml->tag('div', __('Last Login', true) . ': ' . User::get('/User/last_login'), 'bottom');
 			?>
 		</div>

@@ -114,12 +114,7 @@
 						);
 
 					}
-/*
-					echo $this->MyHtml->tag('li',
-						$this->MyHtml->link(__('Cambiar Contraseña', true), array('admin' => false, 'controller' => 'users', 'action' => 'change_password'))
-					);
-*/
-					
+
 				} else {
 					echo $this->MyHtml->tag('li',
 						$this->MyHtml->link(
@@ -142,6 +137,15 @@
           <p id="user">
             <?php
 				echo __('Usuario: ', true) . '<a>' . User::get('/User/full_name') . '</a>';
+				echo $this->MyHtml->image('change_password.png',
+					array(
+						'title'	=> __('Cambiar Contraseña', true),
+						'url' 	=> array(
+							'controller' 	=> 'users',
+							'action' 		=> 'change_password'
+						)
+					)
+				);
 			?>
           </p>
           <div id="buttons">

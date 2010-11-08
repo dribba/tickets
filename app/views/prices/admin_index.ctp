@@ -1,4 +1,3 @@
-
 <?php
 
 $this->set('title_for_layout', __('Listado de Precios', true));

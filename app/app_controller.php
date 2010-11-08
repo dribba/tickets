@@ -120,10 +120,11 @@ class AppController extends Controller {
 		} else if (
 			!in_array(
 				$this->params['action'],
-				array('login', 'logout', 'forgot_password', 'register')))
+				array('login', 'login', 'logout', 'forgot_password', 'register')))
 		{
 			$this->redirect(
 				array(
+					'admin'			=> false,
 					'controller' 	=> 'users',
 					'action' 		=> 'login'
 				)

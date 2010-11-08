@@ -1,7 +1,34 @@
 <?php
 class SellsController extends AppController {
 
-	var $name = 'Sells';
+
+	function admin_stats($period) {
+
+
+		$conditions['date <='] = date('Y-m-d');
+		switch($period) {
+			case 'today':
+				$conditions['date >='] = date('Y-m-d');
+			break;
+			case 'week':
+				$conditions['date >='] = date('Y-m-d', strtotime('-1 week'));
+			break;
+			case 'month':
+				$conditions['date >='] = date('Y-m-d', strtotime('-1 month'));
+			break;
+			case 'all':
+			break;
+		}
+
+
+		return $this->Sell->find('all',
+			array(
+				'recursive'		=> -1,
+				'conditions'	=> $conditions
+			)
+		);
+	}
+	
 
 	function index() {
 		$this->layout = 'talleres';
