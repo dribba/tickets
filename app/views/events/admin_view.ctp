@@ -68,12 +68,23 @@
 
 		$extra[] = $this->MyHtml->tag('fieldset', $statContent, array('class' => 'clear mainForm'));
 	}
+	
+	$side[] = $this->MyHtml->tag('dt', __('Total de ventas', true));
+	$side[] = $this->MyHtml->tag('dd', $stat['total_sells']);
+	$side[] = $this->MyHtml->tag('dt', __('Cant. Butacas', true));
+	$side[] = $this->MyHtml->tag('dd', $stat['amount_stis_selled']);
+	$side[] = $this->MyHtml->tag('dt', __('Recaudacion', true));
+	$side[] = $this->MyHtml->tag('dd', $stat['total']);
+
+	$extraSideContent['title'] = __('Estadisticas diarias', true);
+	$extraSideContent['data'] = $this->MyHtml->tag('dl', $side, array('class' => 'clear'));
 
 	echo $this->element('view', 
 		array(
-			'extraContent'	=> $extra,
-			'data'			=> $fields,
-			'links'			=> $links,
-			'title'			=> __('Detalle del evento', true)
+			'extraContent'		=> $extra,
+			'data'				=> $fields,
+			'links'				=> $links,
+			'title'				=> __('Detalle del evento', true),
+			'extraSideContent'	=> $extraSideContent
 		)
 	);

@@ -95,4 +95,10 @@
 		array('id' => 'grid')
 	);
 
-	echo $this->element('content', array('content' => $content, 'filters' => $filters));
+
+	echo $this->element('content',
+		array(
+			'content'			=> $content,
+			'filters'			=> $filters,
+		)
+	);

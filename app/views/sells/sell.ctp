@@ -205,6 +205,18 @@ if ($step == 4) {
 	}
 
 	$total = ($price * sizeof($data)) + $priceLicense;
+	$steps[4][] = $this->MyForm->input('Sell.total',
+		array(
+			'type' 		=> 'hidden',
+			'value' 	=> $total,
+		)
+	);
+	$steps[4][] = $this->MyForm->input('Sell.price',
+		array(
+			'type' 		=> 'hidden',
+			'value' 	=> $price,
+		)
+	);
 	$steps[4][] = $this->MyHtml->tag('dl', $resume, array('class' => 'view'));
 	$steps[4][] = $this->MyHtml->tag('div',
 		__('Costo total a pagar: $', true) . $total,
@@ -256,6 +268,9 @@ $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
 $out[] = $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true)));
 
-$mainContent = $this->MyHtml->tag('div', $out);
+if ($step != 2) {
+	$out[] = $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'stepsNavigation'));
+}
+$mainContent = $this->MyHtml->tag('div', $out, array('class' => 'position-relative'));
 
 echo $this->element('add', array('content' => $mainContent));

@@ -7,7 +7,7 @@ class LocationsController extends AppController {
 		$this->set('data', $this->paginate());
 	}
 
-	private function __view($id = null, $wizard = false) {
+	private function __view($id = null, $wizard = false, $full_screen = false) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid location', true));
 			$this->redirect(array('action' => 'index'));
@@ -17,38 +17,25 @@ class LocationsController extends AppController {
 		$location = $this->Location->read(null, $id);
 
 		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], 2);
+
 		$this->set('data', $location);
 		if (!$wizard) {
 			$this->render('admin_view');
+		} else if($full_screen) {
+			$this->render('../elements/table', 'print');
 		} else {
 			$this->render('view');
 		}
 	}
 
-	function view($id = null) {
+	function view($id = null, $full_screen = false) {
 		$this->layout = 'talleres';
-		$this->__view($id, true);
+		$this->__view($id, true, $full_screen);
 	}
 
 	function admin_view($id) {
 		$this->__view($id);
 	}
-
-
-	function admin_full_screen($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid location', true));
-			$this->redirect(array('action' => 'index'));
-		}
-
-		$this->Location->recursive = -1;
-		$location = $this->Location->read(null, $id);
-
-		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], 2);
-		$this->set('data', $location);
-		$this->render('../elements/table', 'print');
-	}
-
 
 	function admin_add($id = null) {
 		$this->set('sites', $this->Location->Site->find('list'));

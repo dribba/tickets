@@ -5,7 +5,11 @@ class SellsController extends AppController {
 
 	function index() {
 		$this->layout = 'talleres';
-		$this->paginate['contain'] = array('EventsSit.Sit.Location', 'EventsSit.Event');
+		//$this->paginate['contain'] = array('EventsSit.Sit.Location', 'EventsSit.Event');
+		$this->paginate['contain'] = array(
+			'SellsDetail.EventsSit.Sit.Location',
+			'SellsDetail.EventsSit.Event'
+		);
 		$this->paginate['conditions'] = array('Sell.user_id' => User::get('/User/id'));
 		$this->__index();
 	}
@@ -16,7 +20,7 @@ class SellsController extends AppController {
 
 	function __index() {
 		$this->Filter->process();
-		$this->paginate['order'] = array('Sell.date' => 'DESC');
+		$this->paginate['order'] = array('Sell.created' => 'DESC');
 		$this->set('data', $this->paginate());
 	}
 
@@ -26,7 +30,19 @@ class SellsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$data = $this->Sell->findById($id);
+
+		$data = $this->Sell->find('first',
+			array(
+				'contain'		=> array(
+					'User',
+					'SellsDetail.EventsSit.Event',
+					'SellsDetail.EventsSit.Sit.Location'
+				),
+				'conditions'	=> array(
+					'Sell.id'	=> $id
+				)
+			)
+		);
 		$this->set('data', $data);
 	}
 
@@ -73,8 +89,9 @@ class SellsController extends AppController {
 
 		} else {
 			if (empty($this->data)) {
-				$this->set('events', 
-					$this->Sell->EventsSit->Event->find(
+
+				$this->set('events',
+					$this->Sell->SellsDetail->EventsSit->Event->find(
 						'list', array('conditions' => array('Event.state' => 'active'))
 					)
 				);
@@ -103,7 +120,7 @@ class SellsController extends AppController {
 				//Sell resume
 				$sellData = $this->Session->read('sellData');
 				$ids = explode(',', $sellData['sits_ids']);
-				$sits = $this->Sell->EventsSit->Sit->find('all',
+				$sits = $this->Sell->SellsDetail->EventsSit->Sit->find('all',
 					array(
 						'contain'		=> array('Location.Price'),
 						'conditions'	=> array(
@@ -111,7 +128,6 @@ class SellsController extends AppController {
 						)
 					)
 				);
-
 				$price = Set::combine($sits[0]['Location']['Price'], '{n}.type', '{n}');
 				$this->set('price', $price[User::get('/User/type')]['price']);
 				$this->set('data', $sits);
@@ -120,9 +136,10 @@ class SellsController extends AppController {
 
 				
 			} else if ($this->data['Sell']['step'] == 4) {
+				$sellData = $this->Session->read('sellData');
+				$this->Session->write('sellData', array_merge($sellData, $this->data['Sell']));
+
 				$this->set('step', 5);
-				
-				
 				
 			} else if ($this->data['Sell']['step'] == 5) {
 				$this->set('step', 5);
@@ -135,7 +152,9 @@ class SellsController extends AppController {
 				unset($sellData['step']);
 				$event_id = $sellData['event_id'];
 				unset($sellData['event_id']);
-
+				$price = $sellData['price'];
+				unset($sellData['price']);
+				
 				if ($this->Sell->save($sellData)) {
 
 					foreach ($sits_ids as $sit) {
@@ -144,8 +163,14 @@ class SellsController extends AppController {
 							'sit_id'	=> $sit,
 							'sell_id'	=> $this->Sell->id
 						);
+						$sellDetail[]['SellsDetail'] = array(
+							'sell_id'		=> $this->Sell->id,
+							'events_sit_id'	=> $sit,
+							'price'			=> $price
+						);
 					}
-					$this->Sell->EventsSit->saveAll($eventSits);
+					$this->Sell->SellsDetail->EventsSit->saveAll($eventSits);
+					$this->Sell->SellsDetail->saveAll($sellDetail);
 
 					$this->Session->setFlash(
 						__('Compra realizada con exito', true), 'flash_success'

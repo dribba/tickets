@@ -21,13 +21,13 @@
 		$jsFiles[] = 'jquery/jquery-ui-1.8.1.custom';
 		$jsFiles[] = 'jquery/jquery.maphilight';
 		$jsFiles[] = 'default';
+		
 		echo $this->Html->script($jsFiles);
-
 		echo $scripts_for_layout;
-
+		$prefix = ((!empty($this->params['prefix'])) ? $this->params['prefix'] : '');
 		$info = json_encode(
 			array(
-				'base_url'				=> Router::url('/') . $this->params['prefix'] . '/',
+				'base_url'				=> Router::url('/') . $prefix . '/',
 				'current_controller' 	=> $this->params['controller'],
 				'current_action' 		=> $this->params['action']
 			)

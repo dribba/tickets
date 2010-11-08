@@ -8,9 +8,14 @@ class EventsController extends AppController {
 		$data['width'] = 250;
 		$data['height'] = 150;
 		$data['title'] = __('Estadistica de ventas', true);
-		$data['legends'] = array('Libres (%1.1f%%)', 'Vendidas (%1.1f%%)');
+		
 		$r = $this->Event->findStats($eventId, $locationId);
-
+		
+		//$data['legends'] = array('Libres (%1.1f%%)', 'Vendidas (%1.1f%%)');
+		$data['legends'] = array(
+			'Libres (' . $r['Location']['total_free_sits'] . ')',
+			'Vendidas (' . $r['Location']['total_selled_sits'] . ')'
+		);
 		$data['data'] = array($r['Location']['total_free_sits'], $r['Location']['total_selled_sits']);
 
 		$this->set('data', $data);
@@ -33,7 +38,9 @@ class EventsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
+		$stat = $this->Event->daily_stat($id, date('Y-m-d'));
 		
+		$this->set('stat', $stat);
 		//$stats = $this->Event->EventsSit->findStats($id);
 		//d($this->Event->EventsSit->Sit->findSits($id));
 		$this->Event->contain('Site.Location');

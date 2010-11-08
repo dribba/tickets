@@ -61,30 +61,30 @@ $(document).ready(function($) {
 		changeMonth: true,
 		changeYear: true
 	});*/
-
-	$('.datepicker').AnyTime_picker({
-		format: '%Y-%m-%d %H:%i',
-		labelHour: 'Hora',
-		labelYear: 'Ano',
-		labelMinute: 'Minuto',
-		dayAbbreviations: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-		labelDayOfMonth: 'Dia',
-		labelMonth: 'Mes',
-		firstDOW: 0,
-		labelTitle: 'Seleccionar fecha',
-		monthAbbreviations: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-	});
-	$('.datepicker-onlydate').AnyTime_picker({
-		format: '%Y-%m-%d',
-		labelYear: 'Ano',
-		dayAbbreviations: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-		labelDayOfMonth: 'Dia',
-		labelMonth: 'Mes',
-		firstDOW: 0,
-		labelTitle: 'Seleccionar fecha',
-		monthAbbreviations: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-	});
-
+	if (typeof($.AnyTime_picker) != 'undefined') {
+		$('.datepicker').AnyTime_picker({
+			format: '%Y-%m-%d %H:%i',
+			labelHour: 'Hora',
+			labelYear: 'Ano',
+			labelMinute: 'Minuto',
+			dayAbbreviations: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+			labelDayOfMonth: 'Dia',
+			labelMonth: 'Mes',
+			firstDOW: 0,
+			labelTitle: 'Seleccionar fecha',
+			monthAbbreviations: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+		});
+		$('.datepicker-onlydate').AnyTime_picker({
+			format: '%Y-%m-%d',
+			labelYear: 'Ano',
+			dayAbbreviations: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+			labelDayOfMonth: 'Dia',
+			labelMonth: 'Mes',
+			firstDOW: 0,
+			labelTitle: 'Seleccionar fecha',
+			monthAbbreviations: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+		});
+	}
 
 
 	/** Menu actions */

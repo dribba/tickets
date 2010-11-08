@@ -94,7 +94,7 @@
 				} else {
 					echo $this->MyHtml->tag('li',
 						$this->MyHtml->link(
-							__('Recuperar contrasena', true),
+							__('Recuperar contraseña', true),
 							array('admin' => false, 'controller' => 'users', 'action' => 'forgot_password')
 						)
 					);

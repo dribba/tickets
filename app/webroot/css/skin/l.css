@@ -977,3 +977,10 @@ p#author {
     float: right;
     margin: 15px 10px 0 0;
 }
+
+.boxContent dd {
+	width:90px !important;
+}
+.boxContent dt{
+	border-bottom: 1px solid #ccc !important;
+}

@@ -5,7 +5,7 @@ class Sell extends AppModel {
 		'formated_date' => 'DATE_FORMAT(Sell.created, "%d-%m-%Y %H:%i")'
 	);
 
-	var $belongsTo = array('User', 'Event');
+	var $belongsTo = array('User');
 
 	var $hasMany = array('SellsDetail');
 

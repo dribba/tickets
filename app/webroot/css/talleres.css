@@ -654,3 +654,26 @@ input {
 #grid > table {
 	width:100%;
 }
+.wide img{
+	padding:1px;
+}
+.wide td{
+	padding:0px !important;
+}
+
+.fullscreen {
+	float:right;
+	width: 120px;
+	padding-right: 185px;
+}
+.position-relative{
+	position: relative;
+}
+#stepsNavigation{
+	width:180px !important;
+	position: absolute;
+	padding:0px;
+	right:0px;
+	top:-55px;
+	border:none;
+}

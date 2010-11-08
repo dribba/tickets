@@ -19,13 +19,13 @@
 	$body = array();
 	foreach ($data as $record) {
 		$td = null;
-		$sits = Set::combine($record['EventsSit'], '{n}.Sit.id', '{n}.code');
+		$sits = Set::combine($record['SellsDetail'], '{n}.EventsSit.Sit.id', '{n}.EventsSit.Sit.code');
 		$td[] = $this->MyHtml->tag('td', $record['Sell']['formated_date']);
-		$td[] = $this->MyHtml->tag('td', $record['EventsSit'][0]['Event']['name']);
-		$td[] = $this->MyHtml->tag('td', $record['EventsSit'][0]['Sit']['Location']['name']);
-		$td[] = $this->MyHtml->tag('td', sizeof($record['EventsSit']));
+		$td[] = $this->MyHtml->tag('td', $record['SellsDetail'][0]['EventsSit']['Event']['name']);
+		$td[] = $this->MyHtml->tag('td', $record['SellsDetail'][0]['EventsSit']['Sit']['Location']['name']);
+		$td[] = $this->MyHtml->tag('td', sizeof($record['SellsDetail']));
 		$td[] = $this->MyHtml->tag('td', implode(', ', $sits));
-		$td[] = $this->MyHtml->tag('td', 'a');
+		$td[] = $this->MyHtml->tag('td', $record['SellsDetail'][0]['price']);
 		$td[] = $this->MyHtml->tag('td', $record['Sell']['total']);
 		$body[] = $this->MyHtml->tag('tr', $td);
 

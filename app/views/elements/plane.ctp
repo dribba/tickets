@@ -26,6 +26,7 @@ echo $this->MyHtml->scriptBlock(
 	'$(document).ready(
 
 		function($) {
+			$("#btnSubmit").hide();
 
 			$("img[usemap]").maphilight({
 				strokeColor: "eeeeee",
@@ -39,6 +40,6 @@ echo $this->MyHtml->scriptBlock(
 				}
 			);
 		}
-	);', array('inline' => false)
+	);'
 );
 ?>
