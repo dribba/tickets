@@ -85,8 +85,8 @@ class UsersController extends AppController {
 						$params['to'] = $user['User']['mobile_area'] . $user['User']['mobile_phone'];
 						$params['company'] = $user['User']['mobile_company'];
 						$params['message'] = sprintf('
-							DATOS DE ACCESO A TALLERES:
-							Usuario/document %s
+							DATOS DE ACCESO AL SISTEMA:
+							Usuario/documento %s
 							Contrasena %s',
 							$user['User']['username'],
 							$uuid
@@ -125,15 +125,22 @@ class UsersController extends AppController {
 					)
 				)
 			);
-
+			
 			if (!empty($user)) {
+
+				$new_pass = rand(1000, 9999);
+				$updateUser['User'] = array(
+					'id'		=> $user['User']['id'],
+					'password'	=> md5($new_pass)
+				);
 				
+				$this->User->save($updateUser);
 				$params['message'] = sprintf('
-							DATOS DE ACCESO A TALLERES:
-							Usuario/document %s
+							DATOS DE ACCESO AL SISTEMA:
+							Usuario/documento %s
 							Contrasena %s',
 							$user['User']['username'],
-							$user['User']['password']
+							$new_pass
 				);
 				$this->User->send_sms($params);
 				return $this->Session->setFlash(
