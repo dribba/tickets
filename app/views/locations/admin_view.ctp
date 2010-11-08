@@ -6,8 +6,9 @@
 		__('Pantalla Completa', true),
 		array(
 			'controller' 	=> 'locations',
-			'action' 		=> 'full_screen',
-			$data['Location']['id']
+			'action' 		=> 'view',
+			$data['Location']['id'],
+			true
 		),
 		array(
 			'target'=> '_BLANK',

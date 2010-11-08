@@ -23,10 +23,10 @@ class LocationsController extends AppController {
 		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], $event_id);
 
 		$this->set('data', $location);
-		if (!$wizard) {
-			$this->render('admin_view');
-		} else if($full_screen) {
+		if ($full_screen) {
 			$this->render('../elements/table', 'print');
+		} else if(!$wizard) {
+			$this->render('admin_view');
 		} else {
 			$this->render('view');
 		}
@@ -38,8 +38,8 @@ class LocationsController extends AppController {
 		$this->__view($id, true, $full_screen, $event_id['Sell']['event_id']);
 	}
 
-	function admin_view($id) {
-		$this->__view($id);
+	function admin_view($id, $full_screen = false) {
+		$this->__view($id, false, $full_screen);
 	}
 
 	function admin_add($id = null) {
