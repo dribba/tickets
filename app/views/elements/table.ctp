@@ -93,7 +93,7 @@ echo $this->MyHtml->scriptBlock(
 			}
 		);
 		var ids = new Array();
-		$("#btnSubmit").click(
+		$(".btnSubmit").click(
 			function() {
 				$(".selected").each(
 					function() {

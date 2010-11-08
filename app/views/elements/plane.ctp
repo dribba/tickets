@@ -26,7 +26,7 @@ echo $this->MyHtml->scriptBlock(
 	'$(document).ready(
 
 		function($) {
-			$("#btnSubmit").hide();
+			$(".btnSubmit").hide();
 
 			$("img[usemap]").maphilight({
 				strokeColor: "eeeeee",

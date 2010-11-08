@@ -112,7 +112,6 @@ class SellsController extends AppController {
 			} else if ($this->data['Sell']['step'] == 3) {
 
 				$sellData = $this->Session->read('sellData');
-
 				$this->Session->write('sellData', array_merge($sellData['Sell'], $this->data['Sell']));
 
 				//Sell resume
@@ -170,7 +169,7 @@ class SellsController extends AppController {
 					}
 					$this->Sell->SellsDetail->EventsSit->saveAll($eventSits);
 					$this->Sell->SellsDetail->saveAll($sellDetail);
-
+					//$this->Session->delete('sellData');
 					$this->Session->setFlash(
 						__('Compra realizada con exito', true), 'flash_success'
 					);
