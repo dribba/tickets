@@ -7,7 +7,7 @@ class LocationsController extends AppController {
 		$this->set('data', $this->paginate());
 	}
 
-	private function __view($id = null, $wizard = false, $full_screen = false) {
+	private function __view($id = null, $wizard = false, $full_screen = false, $event_id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid location', true));
 			$this->redirect(array('action' => 'index'));
@@ -16,7 +16,11 @@ class LocationsController extends AppController {
 		$this->Location->contain(array('Price.Event'));
 		$location = $this->Location->read(null, $id);
 
-		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], 2);
+		if (empty($event_id)) {
+			$event_id = $location['Price'][0]['event_id'];
+		}
+
+		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], $event_id);
 
 		$this->set('data', $location);
 		if (!$wizard) {
@@ -30,7 +34,8 @@ class LocationsController extends AppController {
 
 	function view($id = null, $full_screen = false) {
 		$this->layout = 'talleres';
-		$this->__view($id, true, $full_screen);
+		$event_id = $this->Session->read('sellData');
+		$this->__view($id, true, $full_screen, $event_id['Sell']['event_id']);
 	}
 
 	function admin_view($id) {
@@ -42,10 +47,10 @@ class LocationsController extends AppController {
 		if (!empty($this->data)) {
 			$this->Location->create();
 			if ($this->Location->save($this->data)) {
-				$this->Session->setFlash(__('Locacion agregada', true), 'flash_success');
+				$this->Session->setFlash(__('Locación agregada', true), 'flash_success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('La locacion no se pudo agregar', true), 'flash_error');
+				$this->Session->setFlash(__('La locación no se pudo agregar', true), 'flash_error');
 			}
 		} else {
 			if (!empty($id)) {
@@ -61,10 +66,10 @@ class LocationsController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Location->delete($id)) {
-			$this->Session->setFlash(__('Locacion eliminada', true), 'flash_success');
+			$this->Session->setFlash(__('Locación eliminada', true), 'flash_success');
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Error al eliminar locacion', true), 'flash_error');
+		$this->Session->setFlash(__('Error al eliminar locación', true), 'flash_error');
 		$this->redirect(array('action' => 'index'));
 	}
 }

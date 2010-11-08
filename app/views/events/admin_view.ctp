@@ -76,7 +76,7 @@
 	$side[] = $this->MyHtml->tag('dt', __('Recaudacion', true));
 	$side[] = $this->MyHtml->tag('dd', $stat['total']);
 
-	$extraSideContent['title'] = __('Estadisticas diarias', true);
+	$extraSideContent['title'] = __('Estadística diaria', true);
 	$extraSideContent['data'] = $this->MyHtml->tag('dl', $side, array('class' => 'clear'));
 
 	echo $this->element('view', 

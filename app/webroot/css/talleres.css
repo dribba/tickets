@@ -208,7 +208,7 @@ a:hover {
 }
 #header {
   width: 960px;
-  height: 220px;
+  height: 195px;
   background: #071f45;
 }
 #blogtitle {
@@ -663,17 +663,38 @@ input {
 
 .fullscreen {
 	float:right;
-	width: 120px;
-	padding-right: 185px;
+	width: 145px;
+	padding-right: 205px;
 }
 .position-relative{
 	position: relative;
 }
 #stepsNavigation{
-	width:180px !important;
+	width:200px !important;
 	position: absolute;
 	padding:0px;
 	right:0px;
 	top:-55px;
 	border:none;
+}
+#login h2{
+	background: url(talleres.images/nav.png) repeat-x;
+	line-height: 36px;
+}
+.button.primary{
+	background: url(talleres.images/nav.png) repeat-x;
+	color:#fff !important;
+	font-weight: bold;
+}
+#main thead tr, thead th{
+	background: url(talleres.images/nav.png) repeat-x;
+	font-weight: bold;
+}
+.mainForm legend{
+	background: url(talleres.images/nav.png) repeat-x;
+	color:#fff;
+}
+
+#align-right #btnSubmit, #align-right #btnCancel{
+	float:right !important;
 }
