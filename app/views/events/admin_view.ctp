@@ -72,7 +72,7 @@
 	$side[] = $this->MyHtml->tag('dt', __('Total de ventas', true));
 	$side[] = $this->MyHtml->tag('dd', $stat['total_sells']);
 	$side[] = $this->MyHtml->tag('dt', __('Cant. Butacas', true));
-	$side[] = $this->MyHtml->tag('dd', $stat['amount_stis_selled']);
+	$side[] = $this->MyHtml->tag('dd', $stat['amount_sits_selled']);
 	$side[] = $this->MyHtml->tag('dt', __('Recaudacion', true));
 	$side[] = $this->MyHtml->tag('dd', $stat['total']);
 
