@@ -19,17 +19,6 @@ $content[] = $myForm->input('mobile_phone',
 		'after' 	=> __('Sin el 15', true)
 	)
 );
-$content[] = $myForm->input('mobile_company',
-	array(
-		'type'		=> 'select',
-		'options'	=> array(
-			'3' 		=> 'Claro',
-			'1' 		=> 'Movistar',
-			'4' 		=> 'Personal'
-		),
-		'label' 	=> __('Compañia', true),
-	)
-);
 
 $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 

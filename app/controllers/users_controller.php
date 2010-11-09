@@ -23,9 +23,23 @@ class UsersController extends AppController {
 							)
 						)
 					);
-
-
 					if (empty($exists)) {
+
+						$company = $this->__check_company(
+							$this->data['User']['mobile_area'], $this->data['User']['mobile_phone']
+						);
+
+						if (!empty($company)) {
+							if (strpos(strtolower($company['Company']['operator']), 'cti')) {
+								$code = 3; // Claro
+							} else if (strpos(strtolower($company['Company']['operator']), 'personal')) {
+								$code = 4; // Personal
+							} else {
+								$code = 1; // Movistar
+							}
+
+							$this->data['User']['mobile_company'] = $code;
+						}
 
 						$r = $this->User->get_personal_data(
 							$this->data['User']['document'],
@@ -114,8 +128,6 @@ class UsersController extends AppController {
 		$this->layout = 'talleres';
 		if (!empty($this->data)) {
 
-			$params['to'] = $this->data['User']['mobile_area'] . $this->data['User']['mobile_phone'];
-			$params['company'] = $this->data['User']['mobile_company'];
 			$user = $this->User->find('first',
 				array(
 					'conditions' => array(
@@ -135,6 +147,8 @@ class UsersController extends AppController {
 				);
 				
 				$this->User->save($updateUser);
+				$params['to'] = $this->data['User']['mobile_area'] . $this->data['User']['mobile_phone'];
+				$params['company'] = $user['User']['mobile_company'];
 				$params['message'] = sprintf('
 							DATOS DE ACCESO AL SISTEMA:
 							Usuario/documento %s
