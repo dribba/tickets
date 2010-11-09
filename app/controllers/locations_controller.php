@@ -16,15 +16,11 @@ class LocationsController extends AppController {
 		$this->Location->contain(array('Price.Event'));
 		$location = $this->Location->read(null, $id);
 
-<<<<<<< HEAD
-		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], 1);
-=======
 		if (empty($event_id)) {
 			$event_id = $location['Price'][0]['event_id'];
 		}
 
 		$location += $this->Location->Sit->getSitsByLocationAndEvent($location['Location']['id'], $event_id);
->>>>>>> 5f5e407fe7ec4e739d5500838ff82f5693cc2312
 
 		$this->set('data', $location);
 		if ($full_screen) {
