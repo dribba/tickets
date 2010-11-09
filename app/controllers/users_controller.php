@@ -28,11 +28,11 @@ class UsersController extends AppController {
 						$company = $this->__check_company(
 							$this->data['User']['mobile_area'], $this->data['User']['mobile_phone']
 						);
-
+						
 						if (!empty($company)) {
-							if (strpos(strtolower($company['Company']['operator']), 'cti')) {
+							if (strpos(strtolower($company['Company']['operator']), 'cti') !== false) {
 								$code = 3; // Claro
-							} else if (strpos(strtolower($company['Company']['operator']), 'personal')) {
+							} else if (strpos(strtolower($company['Company']['operator']), 'personal') !== false) {
 								$code = 4; // Personal
 							} else {
 								$code = 1; // Movistar
