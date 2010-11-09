@@ -65,6 +65,9 @@ class MyHtmlHelper extends HtmlHelper {
 		if (!is_array($options)) {
 			$options = array('class' => $options);
 		}
+		if ($name == 'dd' && empty($toOutput)) {
+			$toOutput = '&nbsp;';
+		}
 
 		return parent::tag($name, $toOutput, $options);
 	}

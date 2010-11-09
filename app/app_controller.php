@@ -117,6 +117,18 @@ class AppController extends Controller {
 			App::import('Model', 'User');
 			User::store($user);
 
+			$prefix = ((!empty($this->params['prefix'])) ? $this->params['prefix'] : '');
+
+			if (User::get('/User/type') != 'admin' && $prefix == 'admin') {
+				$this->redirect(
+					array(
+						'admin'			=> false,
+						'controller' 	=> 'sells',
+						'action' 		=> 'index'
+					)
+				);
+			}
+
 		} else if (
 			!in_array(
 				$this->params['action'],

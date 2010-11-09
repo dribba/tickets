@@ -2,31 +2,37 @@
 class SellsController extends AppController {
 
 
-	function admin_stats($period) {
-
-
-		$conditions['date <='] = date('Y-m-d');
+	function admin_stats($period = null) {
+		$title = __('Resultado de la busqueda', true);
+		$conditions['Sell.date <='] = date('Y-m-d');
 		switch($period) {
 			case 'today':
-				$conditions['date >='] = date('Y-m-d');
+				$conditions['Sell.date >='] = date('Y-m-d');
+				$title = __('Ventas del Dia', true);
 			break;
 			case 'week':
-				$conditions['date >='] = date('Y-m-d', strtotime('-1 week'));
+				$conditions['Sell.date >='] = date('Y-m-d', strtotime('-1 week'));
+				$title = __('Ventas de la Semana', true);
 			break;
 			case 'month':
-				$conditions['date >='] = date('Y-m-d', strtotime('-1 month'));
+				$conditions['Sell.date >='] = date('Y-m-d', strtotime('-1 month'));
+				$title = __('Ventas del Mes', true);
 			break;
 			case 'all':
+				$title = __('Todas las Ventas', true);
 			break;
 		}
+		
+		$this->paginate['limit'] = 1000;
+		
+		$extraConditions = $this->Filter->process(true);
 
-
-		return $this->Sell->find('all',
-			array(
-				'recursive'		=> -1,
-				'conditions'	=> $conditions
-			)
-		);
+		$this->paginate['conditions'] = array_merge($conditions, $extraConditions);
+		//d($this->paginate['conditions']);
+		
+		$data = $this->paginate();
+		$this->set('data', $data);
+		$this->set('title', $title);
 	}
 	
 

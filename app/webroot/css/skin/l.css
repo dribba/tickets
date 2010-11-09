@@ -984,3 +984,8 @@ p#author {
 .boxContent dt{
 	border-bottom: 1px solid #ccc !important;
 }
+.total{
+	font-weight: bold !important;
+	text-align: right !important;
+	color:red;
+}
