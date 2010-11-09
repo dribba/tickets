@@ -30,9 +30,17 @@
 
 	$sideContent[] = $this->MyHtml->tag('div', $links, array('class' => 'boxContent clear'));
 
-
-
 	$sidebarContent[] = $this->MyHtml->tag('div', $this->MyHtml->tag('div', $sideContent, array('class' => 'sidebox clear', 'id' => 'boxFirst')));
+
+
+	if (!empty($extraSideContent)) {
+		$sideContentExtra[] = $this->MyHtml->tag('h1', $extraSideContent['title']);
+
+		$sideContentExtra[] = $this->MyHtml->tag('div', $extraSideContent['data'], array('class' => 'boxContent clear'));
+
+		$sidebarContent[] = $this->MyHtml->tag('div', $this->MyHtml->tag('div', $sideContentExtra, array('class' => 'sidebox clear', 'id' => 'boxFirst')));
+
+	}
 
 	echo $this->MyHtml->tag('div', $sidebarContent, array('id' => 'sidebar', 'class' => ''));
 

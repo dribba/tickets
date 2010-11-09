@@ -72,11 +72,11 @@
 	$side[] = $this->MyHtml->tag('dt', __('Total de ventas', true));
 	$side[] = $this->MyHtml->tag('dd', $stat['total_sells']);
 	$side[] = $this->MyHtml->tag('dt', __('Cant. Butacas', true));
-	$side[] = $this->MyHtml->tag('dd', $stat['amount_stis_selled']);
+	$side[] = $this->MyHtml->tag('dd', $stat['amount_sits_selled']);
 	$side[] = $this->MyHtml->tag('dt', __('Recaudacion', true));
 	$side[] = $this->MyHtml->tag('dd', $stat['total']);
 
-	$extraSideContent['title'] = __('Estadisticas diarias', true);
+	$extraSideContent['title'] = __('Estadística diaria', true);
 	$extraSideContent['data'] = $this->MyHtml->tag('dl', $side, array('class' => 'clear'));
 
 	echo $this->element('view', 

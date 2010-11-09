@@ -241,7 +241,7 @@ http://www.pseudocoder.com/archives/2008/10/06/accessing-user-sessions-from-mode
 			'http://ws.intertronmobile.com/Gateway/WSMessage.asmx/SendNow?pUser=userRol&pPassword=r07nl1n3.&pToNum=%s&pToCompany=%s&pFromNum=11011&pMessage=%s&pmsgId=45',
 			$params['to'],
 			$params['company'],
-			$params['message']
+			urlencode($params['message'])
 		);
    
 		curl_setopt($c, CURLOPT_URL, $url);

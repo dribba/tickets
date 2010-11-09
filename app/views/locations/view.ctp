@@ -1,6 +1,6 @@
 <?php
 
-	$this->set('title_for_layout', __('Compra de entrada', true));
+	$this->set('title_for_layout', $data['Location']['name'] . ' - ' . __('Compra de entrada', true));
 
 	$links[] = $this->MyHtml->link(
 		__('Pantalla Completa', true),
@@ -17,7 +17,7 @@
 		)
 	);
 	
-	$fields[__('Ubicaciones', true)] = $this->element('table', array('data' => $data, 'wide' => 'Yes'));
+	$fields[] = $this->element('table', array('data' => $data, 'wide' => 'Yes'));
 	
 	echo $this->element('view_wide',
 		array(

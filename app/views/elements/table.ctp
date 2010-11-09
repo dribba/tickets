@@ -68,7 +68,7 @@ if (!empty($wide) || empty($this->params['prefix'])) {
 	echo $this->MyForm->create('Sell', array('action' => 'sell', 'class' => 'mainForm clear', 'id' => 'formEditor'));
 	echo $this->MyForm->input('sits_ids', array('id' => 'sits_ids', 'type' => 'hidden'));
 	echo $this->MyForm->input('step', array('type' => 'hidden', 'value' => 2));
-	echo $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true)));
+	echo $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'align-right'));
 	if (!empty($wide)) {
 		echo $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'stepsNavigation'));
 	}
@@ -93,7 +93,7 @@ echo $this->MyHtml->scriptBlock(
 			}
 		);
 		var ids = new Array();
-		$("#btnSubmit").click(
+		$(".btnSubmit").click(
 			function() {
 				$(".selected").each(
 					function() {

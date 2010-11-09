@@ -46,7 +46,7 @@ $(document).ready(function($) {
 		}
 	);
 
-	$('#btnCancel').live('click',
+	$('.btnCancel').live('click',
 		function() {
 			location.href = base_url + $(this).attr('href');
 		}

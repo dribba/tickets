@@ -266,7 +266,7 @@ $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
 //$out[] = $this->MyForm->end(__('Siguiente', true));
 
-$out[] = $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true)));
+$out[] = $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'align-right'));
 
 if ($step != 2) {
 	$out[] = $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'stepsNavigation'));

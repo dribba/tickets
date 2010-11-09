@@ -49,21 +49,9 @@
     <div id="shadow">
       <div id="mainwrap">
         <div id="header">
-          <!-- CATEGORY MENU -->
-          <div id="nav2">
-            <ul class="sf-menu sf-js-enabled sf-shadow">
-              <li class="category_item">
-                <a href="http://www.talleresdecordoba.com.ar/rdcs" id="home">Home</a>
-              </li>
-              <li class="cat-item cat-item-1">
-                <a href="http://www.talleresdecordoba.com.ar/rdcs/category/ultimas-noticias/"
-                title="Ver todas las entradas archivadas en Ultimas noticias">Ultimas noticias</a>
-              </li>
-            </ul>
-          </div><!-- END CATEGORY MENU -->
           <div id="blogtitle">
             <h1>
-              <a id="heading" href="http://www.talleresdecordoba.com.ar/rdcs/"><?php echo $this->MyHtml->image('blogtitle.png'); ?></a>
+              <?php echo $this->MyHtml->image('blogtitle.png'); ?>
             </h1>
           </div>
           <!-- PAGE MENU -->

@@ -46,10 +46,10 @@ class PricesController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Price->delete($id)) {
-			$this->Session->setFlash(__('Butaca eliminada', true), 'flash_success');
+			$this->Session->setFlash(__('Precio eliminada', true), 'flash_success');
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Error al eliminar Butaca', true), 'flash_error');
+		$this->Session->setFlash(__('Error al eliminar Precio', true), 'flash_error');
 		$this->redirect(array('action' => 'index'));
 	}
 

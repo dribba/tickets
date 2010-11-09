@@ -19,15 +19,6 @@
 
 	$sidebarContent = array();
 	
-	if (!empty($extraSideContent)) {
-		$sideContent[] = $this->MyHtml->tag('h1', $extraSideContent['title']);
-		
-		$sideContent[] = $this->MyHtml->tag('div', $extraSideContent['data'], array('class' => 'boxContent clear'));
-	
-		$sidebarContent[] = $this->MyHtml->tag('div', $this->MyHtml->tag('div', $sideContent, array('class' => 'sidebox clear', 'id' => 'boxFirst')));
-	
-	}
-
 	if (!empty($menu)) {
 		$sideContent[] = $this->MyHtml->tag('h1', __('Acciones', true));
 
