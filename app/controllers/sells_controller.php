@@ -15,11 +15,11 @@ class SellsController extends AppController {
 	}
 
 	function admin_index() {
+		$this->Filter->process();
 		$this->__index();
 	}
 
 	function __index() {
-		$this->Filter->process();
 		$this->paginate['order'] = array('Sell.created' => 'DESC');
 		$this->set('data', $this->paginate());
 	}
