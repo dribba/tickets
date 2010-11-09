@@ -61,7 +61,8 @@ $(document).ready(function($) {
 		changeMonth: true,
 		changeYear: true
 	});*/
-	if (typeof($.AnyTime_picker) != 'undefined') {
+	
+	if (typeof($.AnyTime_picker) != undefined) {
 		$('.datepicker').AnyTime_picker({
 			format: '%Y-%m-%d %H:%i',
 			labelHour: 'Hora',
