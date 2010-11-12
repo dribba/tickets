@@ -15,12 +15,12 @@
 			echo $this->Html->css('skin/_sk/bk');
 			echo $this->Html->css('skin/r');
 			echo $this->Html->css('talleres');
-			//echo $this->Html->css('smoothness/jquery-ui-1.8.1.custom');
+			echo $this->Html->css('smoothness/jquery-ui-1.8.1.custom');
 			echo $this->Html->css('anytime/anytimec');
 			//echo $this->Html->css('app.generic');
 
 			$jsFiles[] = 'jquery/jquery-1.4.3.min';
-			//$jsFiles[] = 'jquery/jquery-ui-1.8.1.custom';
+			$jsFiles[] = 'jquery/jquery-ui-1.8.1.custom';
 			$jsFiles[] = 'jquery/jquery.maphilight';
 			$jsFiles[] = 'anytime/anytimec';
 			$jsFiles[] = 'default';

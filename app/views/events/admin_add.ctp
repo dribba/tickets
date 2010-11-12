@@ -2,7 +2,7 @@
 
 $this->set('title_for_layout', __('Agregar evento', true));
 
-$out[] = $this->MyForm->create('Event', array('class' => 'mainForm clear', 'id' => 'formEditor'));
+$out[] = $this->MyForm->create('Event', array('type' => 'file', 'class' => 'mainForm clear', 'id' => 'formEditor'));
 
 $out[] = $this->MyHtml->tag(
 	'p', 
@@ -52,6 +52,12 @@ $content[] = $this->MyForm->input('Event.end',
 		'label' 	=> __('Fecha de cierre', true),
 		'class'		=> 'datepicker',
 		'help'		=> __('Fecha de finalización del evento<br /> Formato yyyy-mm-dd hh:mm:ss', true)
+	)
+);
+$content[] = $this->MyForm->input('Event.image',
+	array(
+		'type'		=> 'file',
+		'label' 	=> __('Imagen', true),
 	)
 );
 $content[] = $this->MyForm->input('Event.comments',

@@ -124,8 +124,11 @@ class SellsController extends AppController {
 			if (empty($this->data)) {
 
 				$this->set('events',
-					$this->Sell->SellsDetail->EventsSit->Event->find(
-						'list', array('conditions' => array('Event.state' => 'active'))
+					$this->Sell->SellsDetail->EventsSit->Event->find('all',
+						array(
+							'recursive'		=> -1,
+							'conditions' 	=> array('Event.state' => 'active')
+						)
 					)
 				);
 				$this->set('step', 1);

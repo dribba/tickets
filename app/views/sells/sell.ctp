@@ -10,11 +10,56 @@ $out[] = $this->MyForm->create('Sell', array('class' => 'mainForm clear', 'id' =
 ############################################################################
 */
 $steps[1][] = $this->MyHtml->tag('legend', __('Seleccione un evento', true));
+/*
 $steps[1][] = $this->MyForm->input('Sell.event_id',
 	array(
 		'label' 	=> __('Evento', true)
 	)
 );
+*/
+if (!empty($events) && $step == 1) {
+	$lis = array();
+	foreach ($events as $event) {
+		$lis[] = $this->MyHtml->tag('li',
+			$this->MyHtml->image('event_' . $event['Event']['id'] . '.jpg',
+				array(
+					'class' 	=> 'event',
+					'comments' 	=> $event['Event']['comments'],
+    	'event' 	=> $event['Event']['id'],
+				)
+			)
+		);
+	}
+	$steps[1][] = $this->MyHtml->tag('ul', $lis, array('class' => 'events'));
+}
+$steps[1][] = $this->MyForm->input('Sell.event_id',
+	array(
+		'type'		=> 'hidden',
+		'label' 	=> __('Evento', true)
+	)
+);
+
+$steps[1][] = $this->MyHtml->scriptBlock(
+	'$(document).ready(function($) {
+		$(".event").hover(
+			function() {
+				$(this).addClass("border");
+			},
+			function() {
+				$(this).removeClass("border");
+			}
+		);
+		$(".event").bind("click", function() {
+
+			$("#SellEventId").val($(this).attr("event"));
+
+			$(this).addClass("border");
+
+			$("<div/>").html($(this).attr("comments")).dialog();
+		});
+	});'
+);
+
 
 
 /**

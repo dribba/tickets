@@ -3,6 +3,19 @@ Theme Name: Club Atletico Talleres
 Author: one360
 */
 
+ul.events {
+	padding:5px;
+}
+img.event {
+	margin:5px;
+	border:2px solid transparent;
+	cursor:pointer;
+}
+img.border {
+	border:2px solid #00407F;
+}
+
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, address, big, cite, code, pre,

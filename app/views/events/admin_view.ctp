@@ -46,7 +46,9 @@
 	
 	$fields[__('Fecha de inicio', true)] = $data['Event']['formated_start'];
 	$fields[__('Fecha de cierre', true)] = $data['Event']['formated_end'];
-	
+
+	$fields[__('Imagen', true)] = $this->MyHtml->image($data['Event']['image']);
+
 	$fields[__('Observaciones', true)] = $data['Event']['comments'];
 
 
@@ -55,8 +57,6 @@
 		$statContent = null;
 		$statContent[] = $this->MyHtml->tag('legend', $location['name']);
 
-//		$percentSelled = ($stat['Location']['total_selled_sits'] * 100) / $stat['Location']['total_sits'];
-//		$percentFree = ($stat['Location']['total_free_sits'] * 100) / $stat['Location']['total_sits'];
 		$statContent[] = $this->MyHtml->image(
 			array(
 				'controller' 	=> 'events',
