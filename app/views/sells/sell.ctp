@@ -157,7 +157,7 @@ if ($step == 3) {
 		});'
 	);
 	$steps[3][] = $this->MyHtml->tag('legend', __('Terminos y condiciones de compra', true));
-	$steps[3][] = $this->MyHtml->tag('div', __('Acepto los Terminosd y Condiciones de compra de …..........
+	$steps[3][] = $this->MyHtml->tag('div', __('Acepto los Terminos y Condiciones de compra de …..........
 
 
 Las Entradas son vendidas por "…................" (Empresa) en su carácter de mandatario, en nombre y representación de la Sala Teatral (Vendedor). El Vendedor es responsable del servicio, función o espectáculo o evento a realizarse, y define las condiciones de venta en todos los casos.

@@ -1,6 +1,7 @@
 <?php
 class UsersController extends AppController {
 
+	var $components = array('Captcha');
 	var $paginate = array('order' => array('User.username'));
 
 
@@ -46,25 +47,33 @@ class UsersController extends AppController {
 							$this->data['User']['sex']
 						);
 
-						$valid['address'] = $data['address'][] = $r['domicilio_completo_1_calle'] . ' ' . $r['domicilio_completo_1_numero'];
-						$data['address'][] = $r['dato_falso_domicilio_1'];
-						$data['address'][] = $r['dato_falso_domicilio_2'];
-						shuffle($data['address']);
+						if ($r) {
+							$valid['address'] = $data['address'][] = $r['domicilio_completo_1_calle'] . ' ' . $r['domicilio_completo_1_numero'];
+							$data['address'][] = $r['dato_falso_domicilio_1'];
+							$data['address'][] = $r['dato_falso_domicilio_2'];
+							shuffle($data['address']);
 
-						$valid['phone'] = $data['phone'][] = $r['telefono_calidad_sugerido'];
-						$data['phone'][] = $r['dato_falso_telefono_1'];
-						$data['phone'][] = $r['dato_falso_telefono_2'];
-						shuffle($data['phone']);
+							$valid['phone'] = $data['phone'][] = $r['telefono_calidad_sugerido'];
+							$data['phone'][] = $r['dato_falso_telefono_1'];
+							$data['phone'][] = $r['dato_falso_telefono_2'];
+							shuffle($data['phone']);
 
-						$valid['know'] = $data['know'][] = $r['persona_relacionada_1'];
-						$data['know'][] = $r['dato_falso_persona_relacionada_1'];
-						$data['know'][] = $r['dato_falso_persona_relacionada_2'];
-						shuffle($data['know']);
-						
-						$this->data['User']['full_name'] = $r['apellido'] . ' ' . $r['nombre'];
-						$this->Session->write('user_data', $this->data);
-						$this->Session->write('valid_data', $valid);
-						$this->set('validation_data', $data);
+							$valid['know'] = $data['know'][] = $r['persona_relacionada_1'];
+							$data['know'][] = $r['dato_falso_persona_relacionada_1'];
+							$data['know'][] = $r['dato_falso_persona_relacionada_2'];
+							shuffle($data['know']);
+							
+							$this->data['User']['full_name'] = $r['apellido'] . ' ' . $r['nombre'];
+							$this->Session->write('user_data', $this->data);
+							$this->Session->write('valid_data', $valid);
+							$this->set('validation_data', $data);
+						} else {
+							$this->Session->setFlash(
+								__('Persona no encontrada. Verifique los datos ingresados.', true),
+								'flash_error'
+							);
+							$this->redirect(array('controller' => 'users', 'action' => 'register'));
+						}
 					} else {
 						$this->Session->setFlash(
 							__('Usted ya esta registrado.', true),
@@ -77,44 +86,54 @@ class UsersController extends AppController {
 					$this->set('step', 1);
 				}
 			} else if ($this->data['User']['step'] == 2) {
-				
-				$this->set('step', 3);
 
-				$validData = $this->Session->read('valid_data');
-				if (
-					$this->data['User']['address'] == $validData['address'] &&
-					$this->data['User']['phone'] == $validData['phone'] &&
-					$this->data['User']['know'] == $validData['know']
-				) {
-					$uuid = rand(1000, 9999);
-					$user = $this->Session->read('user_data');
-					unset($user['User']['step']);
-					$user['User']['password'] = md5($uuid);
-					$user['User']['username'] = $user['User']['document'];
-					
-					$this->User->create();
-					if ($this->User->save($user)) {
+				if (!$this->Captcha->protect()) {
+					$this->Session->setFlash(__('Los numeros de la imagen ingresados no coinciden', true), 'flash_error');
+				} else {
+
+					$this->set('step', 3);
+
+					$validData = $this->Session->read('valid_data');
+					if (
+						$this->data['User']['address'] == $validData['address'] &&
+						$this->data['User']['phone'] == $validData['phone'] &&
+						$this->data['User']['know'] == $validData['know']
+					) {
+						$uuid = rand(1000, 9999);
+						$user = $this->Session->read('user_data');
+						unset($user['User']['step']);
+						$user['User']['password'] = md5($uuid);
+						$user['User']['username'] = $user['User']['document'];
+						
+						$this->User->create();
+						if ($this->User->save($user)) {
 
 
-						$params['to'] = $user['User']['mobile_area'] . $user['User']['mobile_phone'];
-						$params['company'] = $user['User']['mobile_company'];
-						$params['message'] = sprintf('
-							DATOS DE ACCESO AL SISTEMA:
-							Usuario/documento %s
-							Contrasena %s',
-							$user['User']['username'],
-							$uuid
-						);
-						$this->User->send_sms($params);
+							$params['to'] = $user['User']['mobile_area'] . $user['User']['mobile_phone'];
+							$params['company'] = $user['User']['mobile_company'];
+							$params['message'] = sprintf('
+								DATOS DE ACCESO AL SISTEMA:
+								Usuario/documento %s
+								Contrasena %s',
+								$user['User']['username'],
+								$uuid
+							);
+							$this->User->send_sms($params);
 
-						$this->Session->setFlash(__('Usuario creado con exito, su contrasena fue enviada a su celular', true), 'flash_success');
-					} else {
-						$this->Session->setFlash(__('Error guardando los datos', true), 'flash_error');
+							$this->Session->setFlash(__('Usuario creado con exito, su contrasena fue enviada a su celular', true), 'flash_success');
+						} else {
+							$this->Session->setFlash(__('Error guardando los datos', true), 'flash_error');
+						}
 					}
 				}
 				$this->redirect(array('controller' => 'users', 'action' => 'login'));
 			}
 		}
+	}
+
+
+	function captcha() {
+		$this->Captcha->show();
 	}
 
 

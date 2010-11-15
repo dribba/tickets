@@ -258,7 +258,12 @@ http://www.pseudocoder.com/archives/2008/10/06/accessing-user-sessions-from-mode
 				array('documento' => $document, 'sexo' => $sex)
 			)
 		);
-		return $r;
+
+		if (!empty($r[0]['error'][800])) {
+			return false;
+		} else {
+			return $r;
+		}
 	}
 
 	/**

@@ -124,6 +124,8 @@ if (!empty($validation_data)) {
 	}
 }
 
+$steps[2][] = $this->MyHtml->tag('div', $this->MyHtml->image('/' . $this->params['controller'] . '/captcha', array('id' => 'captcha_image')), array('class' => 'captcha'));
+$steps[2][] = $this->MyForm->input('captcha', array('label' => __('Ingrese los numeros que se muestran en la imagen', true)));
 
 
 $out[] = $this->MyForm->input('step',
