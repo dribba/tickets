@@ -712,7 +712,8 @@ input {
 	float:right !important;
 }
 .tos {
-	width: 938px !important;
+	margin: 10px 0 10px 0;
+	width: 500px !important;
 }
 .mainForm fieldset div:last-child{
 	border:none !important;

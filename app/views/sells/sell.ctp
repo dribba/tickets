@@ -179,9 +179,10 @@ La Empresa se encuentra inscripta dentro del régimen especial de emisión y alm
 
 	$steps[3][] = $this->MyForm->input('Sell.tos',
 		array(
-			'label' => __('Acepto los terminos y condiciones de compra', true),
-			'type'	=> 'checkbox',
-			'div'	=> 'checkTos clear field'
+			'label' 	=> __('Acepto los terminos y condiciones de compra', true),
+   			'type'		=> 'checkbox',
+			'checked' 	=> 1, 
+			'div'		=> 'checkTos clear field'
 		)
 	);
 
@@ -311,10 +312,10 @@ $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
 //$out[] = $this->MyForm->end(__('Siguiente', true));
 
-$out[] = $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'align-right'));
+$out[] = $this->element('footer', array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'align-right'));
 
 if ($step != 2) {
-	$out[] = $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'stepsNavigation'));
+	$out[] = $this->element('footer', array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'stepsNavigation'));
 }
 $mainContent = $this->MyHtml->tag('div', $out, array('class' => 'position-relative'));
 
