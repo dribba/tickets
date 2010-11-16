@@ -718,3 +718,6 @@ input {
 .mainForm fieldset div:last-child{
 	border:none !important;
 }
+.cursor {
+	cursor:pointer;
+}

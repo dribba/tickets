@@ -89,6 +89,13 @@ if ($step == 3) {
 			'label' 	=> __('Dispone de carnet', true)
 		)
 	);
+
+	
+	$types[] = $this->MyHtml->tag('label', __('Tipo de carnet', true));
+	$types[] = $this->MyHtml->image('nuevo.png', array('class' => 'cursor'));
+	$types[] = $this->MyHtml->image('viejo.png', array('id' => 'antiguo', 'class' => 'cursor'));
+
+	$steps[3][] = $this->MyHtml->tag('div', $types, array('id' => 'card_type', 'class' => 'field clear'));
 	$steps[3][] = $this->MyForm->input('Sell.license_number',
 		array(
 			'label' 	=> __('Numero de carnet', true)
@@ -127,17 +134,35 @@ if ($step == 3) {
 
 	$steps[3][] = $this->MyHtml->scriptBlock(
 		'$(document).ready(function($) {
-			$("#SellLicenseAvailable").click(
+			$("#antiguo").click(
+				function() {
+					alert("' . __("Debe renovar su carnet de socio", true) . '");
+					$("#SellLicenseAvailable").val("N");
+					hideCardData();
+				}
+			);
+			$(".cursor").click(
+				function() {
+					$(".cursor").css("border", "none");
+					$(this).css("border", "2px solid #ccc");
+				}
+			);
+			$("#SellLicenseAvailable").change(
 				function() {
 					if ($(this).val() == "N") {
-						$("#street").show();
-						$("#SellLicenseNumber").parent().hide();
+						hideCardData();
 					} else {
+						$("#card_type").show();
 						$("#street").hide();
 						$("#SellLicenseNumber").parent().show();
 					}
 				}
 			);
+			function hideCardData() {
+				$("#street").show();
+				$("#SellLicenseNumber").parent().hide();
+				$("#card_type").hide();
+			}
 			$("#btnSubmit").click(
 				function() {
 					
@@ -237,7 +262,7 @@ if ($step == 4) {
 	$sellData = $this->Session->read('sellData');
 	$priceLicense = 0;
 	if ($sellData['license_available'] == 'N') {
-		$priceLicense = (($sellData['send'] == 'S') ? '20' : '15');
+		$priceLicense = (($sellData['send'] == 'Y') ? '20' : '15');
 	}
 	if ($sellData['license_available'] == 'N') {
 		$resume[] = $this->MyHtml->tag('dt',
