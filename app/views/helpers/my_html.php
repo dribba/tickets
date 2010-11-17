@@ -64,6 +64,10 @@ class MyHtmlHelper extends HtmlHelper {
  */
 	function image($path, $options = array()) {
 
+		if (empty($path)) {
+			return '';
+		}
+
 		if (!empty($options['confirm'])) {
 
 			$confirm = $options['confirm'];
