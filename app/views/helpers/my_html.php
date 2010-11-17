@@ -36,6 +36,51 @@ class MyHtmlHelper extends HtmlHelper {
 		return parent::link($title, $url, $options, $confirmMessage);
 	}
 
+
+/**
+ * Creates a formatted IMG element. If `$options['url']` is provided, an image link will be
+ * generated with the link pointed at `$options['url']`.  This method will set an empty
+ * alt attribute if one is not supplied.
+ *
+ * ### Usage
+ *
+ * Create a regular image:
+ *
+ * `echo $html->image('cake_icon.png', array('alt' => 'CakePHP'));`
+ *
+ * Create an image link:
+ *
+ * `echo $html->image('cake_icon.png', array('alt' => 'CakePHP', 'url' => 'http://cakephp.org'));`
+ *
+ * Create an image link with a confirm:
+ *
+ * `echo $html->image('cake_icon.png', array('alt' => 'CakePHP', 'url' => 'http://cakephp.org', 'confirm' => 'Are you sure?'));`
+ *
+ * @param string $path Path to the image file, relative to the app/webroot/img/ directory.
+ * @param array $options Array of HTML attributes.
+ * @return string completed img tag
+ * @access public
+ * @link http://book.cakephp.org/view/1441/image
+ */
+	function image($path, $options = array()) {
+
+		if (!empty($options['confirm'])) {
+
+			$confirm = $options['confirm'];
+			$url = $options['url'];
+			unset($options['confirm']);
+			unset($options['url']);
+			$options['escape'] = false;
+
+			return $this->link(parent::image($path, $options), $url, $options, $confirm);
+
+		} else {
+			return parent::image($path, $options);
+		}
+
+	}
+
+
 /**
  * Returns a formatted block tag, i.e DIV, SPAN, P.
  *

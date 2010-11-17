@@ -221,17 +221,4 @@ class SellsController extends AppController {
 		}
 	}
 
-	function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for site', true));
-			$this->redirect(array('action'=>'index'));
-		}
-		if ($this->Sell->delete($id)) {
-			$this->Session->setFlash(__('Venta eliminada', true), 'flash_success');
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->Session->setFlash(__('Error al eliminar venta', true), 'flash_error');
-		$this->redirect(array('action' => 'index'));
-	}
 }
-?>

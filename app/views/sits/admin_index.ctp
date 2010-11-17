@@ -60,7 +60,7 @@
 			array(
 				'class' => 'open_modal',
 				'title' => __('Editar', true) . ' ' . $record['Sit']['id'],
-				'url' => array(
+				'url' 	=> array(
 					'controller' 	=> 'sits',
 					'action' 		=> 'add',
 					$record['Sit']['id']
@@ -70,13 +70,14 @@
 		$actions[] = $this->MyHtml->image(
 			'delete.png',
 			array(
-				'class' => 'open_modal',
-				'title' => __('Eliminar', true) . ' ' . $record['Sit']['id'],
-				'url' => array(
+				'class' 	=> 'open_modal',
+				'title' 	=> __('Eliminar', true) . ' ' . $record['Sit']['id'],
+				'url' 		=> array(
 					'controller' 	=> 'sits',
 					'action' 		=> 'delete',
 					$record['Sit']['id']
 				),
+				'confirm'	=> __('Esta seguro que desea eliminar la butaca?', true),
 			)
 		);
 

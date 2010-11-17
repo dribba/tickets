@@ -59,6 +59,7 @@
 					'action' 		=> 'delete',
 					$record['Site']['id']
 				),
+				'confirm'	=> __('Esta seguro que desea eliminar el sitio?', true),
 			)
 		);
 

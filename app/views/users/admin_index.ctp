@@ -61,6 +61,7 @@ foreach ($data as $record) {
 					'action' 		=> 'delete',
 					$record['User']['id']
 				),
+				'confirm'	=> __('Esta seguro que desea eliminar el usuario?', true),
 			)
 		);
 

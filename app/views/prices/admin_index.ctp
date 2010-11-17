@@ -65,7 +65,8 @@ $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 					'action' 		=> 'delete',
 					$record['Price']['id']
 				),
-			)
+			),
+			'confirm'	=> __('Esta seguro que desea eliminar el precio?', true),
 		);
 
 

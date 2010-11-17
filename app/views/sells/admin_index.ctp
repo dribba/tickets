@@ -99,18 +99,6 @@
 				),
 			)
 		);
-		$actions[] = $this->MyHtml->image(
-			'delete.png',
-			array(
-				'class' => 'open_modal',
-				'title' => __('Eliminar', true) . ' ' . $record['Sell']['formated_date'],
-				'url' => array(
-					'controller' 	=> 'sells',
-					'action' 		=> 'delete',
-					$record['Sell']['id']
-				),
-			)
-		);
 
 		$td[] = $this->MyHtml->tag('td', $actions);
 		$td[] = $this->MyHtml->tag('td', $record['Sell']['formated_date']);

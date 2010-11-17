@@ -1,4 +1,3 @@
-
 <?php
 
 $this->set('title_for_layout', __('Listado de Ubicaciones', true));
@@ -64,6 +63,7 @@ $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 					'action' 		=> 'delete',
 					$record['Location']['id']
 				),
+				'confirm'	=> __('Esta seguro que desea eliminar la ubicación?', true),
 			)
 		);
 

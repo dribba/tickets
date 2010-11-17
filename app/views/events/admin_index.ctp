@@ -56,6 +56,7 @@
 					'action' 		=> 'delete',
 					$record['Event']['id']
 				),
+				'confirm'	=> __('Esta seguro que desea eliminar el evento?', true),
 			)
 		);
 
