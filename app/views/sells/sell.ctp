@@ -332,18 +332,14 @@ foreach ($steps[$step] as $field) {
 $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
 
-//$out[] = $this->MyForm->end(__('Siguiente', true));
-
+$next = false;
+if ($step >= 3 && $step <= 4) {
+	$next = true;
+}
 $out[] = $this->element('footer',
-	array('link' => 'sells/index', 'text' => __('Siguiente', true), 'next' => false)
+	array('link' => 'sells/index', 'text' => __('Siguiente', true), 'next' => $next)
 );
 
-
-/*
-if ($step > 2) {
-	$out[] = $this->element('footer', array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'stepsNavigation'));
-}
-*/
 $mainContent = $this->MyHtml->tag('div', $out, array('class' => 'position-relative'));
 
 echo $this->element('add', array('content' => $mainContent));
