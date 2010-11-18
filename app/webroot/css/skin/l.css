@@ -22,10 +22,14 @@ td > img{
 #grid-sits table {
 	border-bottom: 0px !important;
 }
+#grid-sits table tr {
+	height: 15px;
+	line-height: 15px;
+}
 #grid-sits table tr td {
 	padding:0 2px;
-	height: 20px;
-	line-height: 20px;
+	height: 15px;
+	line-height: 15px;
 }
 .checkTos > label{
 	width: 350px !important;

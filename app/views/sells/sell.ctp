@@ -24,10 +24,9 @@ if (!empty($events) && $step == 1) {
 			$this->MyHtml->image('event_' . $event['Event']['id'] . '.jpg',
 				array(
 					'class' 	=> 'event',
-					'comments' 	=> $event['Event']['comments'],
-    	'event' 	=> $event['Event']['id'],
+    				'event' 	=> $event['Event']['id'],
 				)
-			)
+			) . $this->MyHtml->tag('div', $event['Event']['comments'])
 		);
 	}
 	$steps[1][] = $this->MyHtml->tag('ul', $lis, array('class' => 'events'));
@@ -52,10 +51,8 @@ $steps[1][] = $this->MyHtml->scriptBlock(
 		$(".event").bind("click", function() {
 
 			$("#SellEventId").val($(this).attr("event"));
+			$("#formEditor").submit();
 
-			$(this).addClass("border");
-
-			$("<div/>").html($(this).attr("comments")).dialog();
 		});
 	});'
 );
@@ -69,7 +66,7 @@ $steps[1][] = $this->MyHtml->scriptBlock(
 */
 
 
-$steps[2][] = $this->MyHtml->tag('legend', __('Seleccione ubicacion', true));
+$steps[2][] = $this->MyHtml->tag('legend', __('Seleccione ubicación', true));
 $steps[2][] = $this->element('plane', array('wizard' => 'Yes', 'event_id' => (!empty($event_id) ? $event_id : '')));
 
 
@@ -337,11 +334,16 @@ $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 
 //$out[] = $this->MyForm->end(__('Siguiente', true));
 
-$out[] = $this->element('footer', array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'align-right'));
+$out[] = $this->element('footer',
+	array('link' => 'sells/index', 'text' => __('Siguiente', true), 'next' => false)
+);
 
-if ($step != 2) {
+
+/*
+if ($step > 2) {
 	$out[] = $this->element('footer', array('link' => 'sells/index', 'text' => __('Siguiente', true), 'id' => 'stepsNavigation'));
 }
+*/
 $mainContent = $this->MyHtml->tag('div', $out, array('class' => 'position-relative'));
 
 echo $this->element('add', array('content' => $mainContent));

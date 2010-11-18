@@ -668,6 +668,8 @@ input {
 	width:100%;
 }
 .wide img{
+	width: 13px;
+	height: 13px;
 	padding:1px;
 }
 .wide td{
@@ -714,6 +716,7 @@ input {
 .tos {
 	margin: 10px 0 10px 0;
 	width: 500px !important;
+	height: 100px;
 }
 .mainForm fieldset div:last-child{
 	border:none !important;
