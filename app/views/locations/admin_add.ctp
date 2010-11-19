@@ -21,14 +21,20 @@ if (!empty($id)) {
 		)
 	);
 }
+$content[] = $this->MyForm->input('Location.site_id',
+	array(
+		'label' 	=> __('Sitio', true),
+	)
+);
+
 $content[] = $this->MyForm->input('Location.name',
 	array(
 		'label' 	=> __('Nombre', true),
 	)
 );
-$content[] = $this->MyForm->input('Location.site_id',
+$content[] = $this->MyForm->input('Location.sits',
 	array(
-		'label' 	=> __('Sitio', true),
+		'label' 	=> __('Butacas', true),
 	)
 );
 

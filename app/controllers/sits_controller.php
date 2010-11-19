@@ -4,6 +4,29 @@ class SitsController extends AppController {
 	var $name = 'Sits';
 
 
+	function admin_no_numbers() {
+
+		$locations = $this->Sit->Location->find('all', array('contain' => 'Site'));
+		$this->set('locations',
+			Set::combine($locations, '{n}.Location.id', '{n}.Location.name', '{n}.Site.name')
+		);
+
+		if (!empty($this->data)) {
+			for ($i = 0; $i < $this->data['Sit']['amount']; $i++) {
+				$saveAll[] = array(
+					'Sit' => array(
+						'location_id' 	=> $this->data['Sit']['location_id'],
+						'icon' 			=> 'sit.gif'
+					)
+				);
+			}
+		}
+		if (!empty($saveAll)) {
+			//$this->saveAll($saveAll);
+		}
+
+	}
+
 	function admin_load() {
 
 		set_include_path(get_include_path() . PATH_SEPARATOR . APP . 'vendors' . DS . 'PHPExcel' . DS . 'Classes');

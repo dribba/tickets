@@ -19,6 +19,14 @@
 		),
 		array('class' => 'button primary', 'title' => __('Agregar Butaca', true))
 	);
+	$menu[] = $this->MyHtml->link(
+		__('Agregar sin numerar', true),
+		array(
+			'controller'	=> 'sits',
+			'action'		=> 'no_numbers',
+		),
+		array('class' => 'button primary', 'title' => __('Agregar sin numerar', true))
+	);
 
 	$filters = array(
 		'Sit.code' 			=> array('label' => __('Código', true)),

@@ -116,12 +116,12 @@ if (!empty($validation_data)) {
 				'label' 	=> __($t[$d], true),
 				'type'		=> 'radio',
 				'options'	=> $v,
-				'div'		=> 'No',
+				'separator'	=> '<br/><br/><br/>',
 				'class'		=> 'validation_data'
 			)
 		);
-
 	}
+
 }
 
 $steps[2][] = $this->MyHtml->tag('div', $this->MyHtml->image('/' . $this->params['controller'] . '/captcha', array('id' => 'captcha_image')), array('class' => 'captcha'));

@@ -42,10 +42,14 @@ class UsersController extends AppController {
 							$this->data['User']['mobile_company'] = $code;
 						}
 
+						$r = Cache::read('x');
+/*
 						$r = $this->User->get_personal_data(
 							$this->data['User']['document'],
 							$this->data['User']['sex']
 						);
+*/
+
 
 						if ($r) {
 							$valid['address'] = $data['address'][] = $r['domicilio_completo_1_calle'] . ' ' . $r['domicilio_completo_1_numero'];

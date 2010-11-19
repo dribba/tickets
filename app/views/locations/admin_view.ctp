@@ -58,6 +58,8 @@
 
 
 	$fields[__('Nombre', true)] = $data['Location']['name'];
+	$fields[__('Butacas', true)] = $data['Location']['sits'];
+
 	foreach ($data['Price'] as $price) {
 		$edit = $this->MyHtml->image(
 			'edit.png',
@@ -97,4 +99,3 @@
 			'title' 	=> __('Detalle de la ubicación', true),
 		)
 	);
-

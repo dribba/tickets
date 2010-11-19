@@ -20,8 +20,9 @@ $filters = array(
 /** The grid */
 $header	= null;
 $header[] = __('Acciones', true);
-$header[] = __('Nombre', true);
 $header[] = __('Sitio', true);
+$header[] = __('Nombre', true);
+$header[] = __('Butacas', true);
 
 $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 
@@ -69,8 +70,9 @@ $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 
 
 		$td[] = $this->MyHtml->tag('td', $actions);
-		$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Site']['name']);
+		$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
+		$td[] = $this->MyHtml->tag('td', $record['Location']['sits']);
 
 		$body[] = $this->MyHtml->tag('tr', $td);
 

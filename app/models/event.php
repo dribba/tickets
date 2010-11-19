@@ -66,8 +66,8 @@ class Event extends AppModel {
 				'fields' 		=> array(
 					'Sit.location_id',
 					'COUNT(`EventsSit`.`id`) AS total_sits',
-					'SUM(IF(`EventsSit`.`sell_id`>0, 1, 0)) AS total_selled_sits',
-					'COUNT(`EventsSit`.`id`) - SUM(IF(`EventsSit`.`sell_id`>0, 1, 0)) AS total_free_sits'
+					'SUM(IF(`EventsSit`.`sell_id` > 0, 1, 0)) AS total_selled_sits',
+					'COUNT(`EventsSit`.`id`) - SUM(IF(`EventsSit`.`sell_id` > 0, 1, 0)) AS total_free_sits'
 				),
 				'conditions'	=> $conditions,
 				'group'			=> array('Sit.location_id'),

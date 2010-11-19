@@ -15,21 +15,6 @@
 		)
 	);
 
-	$links[] = $this->MyHtml->link(
-		__('Eliminar', true),
-		array(
-			'controller' 	=> 'sells',
-			'action' 		=> 'delete',
-			$data['Sell']['id']
-		),
-		array(
-			'title' => __('Eliminar', true),
-			'class'	=> 'button primary'
-		),
-		__('Eliminar venta?', true)
-	);
-
-
 
 	$fields[__('Fecha de compra', true)] = $data['Sell']['formated_date'];
 	$fields[__('Usuario', true)] = $data['User']['full_name'];
@@ -46,8 +31,8 @@
 	//$fields[__('Sitio', true)] = $data['Location']['name'];
 	$fields[__('Ubicacion', true)] = $data['SellsDetail'][0]['EventsSit']['Sit']['Location']['name'];
 
-	$sits = Set::combine($data['SellsDetail'], '{n}.EventsSit.Sit.id', '{n}.EventsSit.Sit.code');
-	$fields[__('Butacas', true)] = implode(', ', $sits);
+	//$sits = Set::combine($data['SellsDetail'], '{n}.EventsSit.Sit.id', '{n}.EventsSit.Sit.code');
+	$fields[__('Butacas', true)] = count($data['SellsDetail']);
 
 	$fields[__('Precio unitario', true)] = $data['SellsDetail'][0]['price'];
 	$fields[__('Total', true)] = $data['Sell']['total'];
