@@ -41,6 +41,12 @@ $content[] = $this->MyForm->input('Sit.col',
 		'label' 	=> __('Posicion eje Y', true),
 	)
 );
+$content[] = $this->MyForm->input('Sit.state',
+	array(
+		'options'	=> array('En venta' => 'En venta', 'Bloqueado' => 'Bloqueado'),
+		'label' 	=> __('Estado', true),
+	)
+);
 
 $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 

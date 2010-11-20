@@ -13,7 +13,8 @@ $menu[] = $this->MyHtml->link(
 
 $filters = array(
 	'Price.type'		=> array('label' => __('Tipo', true)),
-	'Price.location_id'	=> array('label' => __('Ubicación', true))
+	'Price.location_id'	=> array('label' => __('Ubicación', true)),
+	'Price.event_id'	=> array('label' => __('Evento', true))
 );
 
 

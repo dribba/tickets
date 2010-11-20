@@ -26,7 +26,6 @@ for ($x = 1; $x <= $data['limits']['lastRow']; $x++) {
 	for ($y = 1; $y <= $data['limits']['lastCol']; $y++) {
 
 		if (!empty($data['sits'][$x][$y])) {
-			$clase = ((strpos($data['sits'][$x][$y]['Sit']['icon'], 'blue') > 0) ? 'blue' : 'white');
 
 			if (!empty($data['sits'][$x][$y]['Sell']['id'])) {
 				$sitImg = $this->MyHtml->image('sit_occupied.gif',
@@ -38,9 +37,8 @@ for ($x = 1; $x <= $data['limits']['lastRow']; $x++) {
 				$sitImg = $this->MyHtml->image(
 					$data['sits'][$x][$y]['Sit']['icon'],
 					array(
-						'class' => 'sit ' . $clase,
 						'id'	=> $data['sits'][$x][$y]['Sit']['id'],
-						'title' => __('Comprar', true),
+						'title' => $data['sits'][$x][$y]['Sit']['code'],
 						'url' => array(
 							'controller' 	=> 'sells',
 							'action' 		=> 'sell',
@@ -108,4 +106,3 @@ echo $this->MyHtml->scriptBlock(
 
 	});', array('inline' => false)
 );
-	

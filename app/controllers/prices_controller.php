@@ -4,7 +4,12 @@ class PricesController extends AppController {
 
 	function admin_index() {
 		$this->Filter->process();
-		$this->set('locations', $this->Price->Location->find('list'));
+		$locations = $this->Price->Location->find('all', array('contain' => 'Site'));
+		$this->set('locations',
+			Set::combine($locations, '{n}.Location.id', '{n}.Location.name', '{n}.Site.name')
+		);
+		$this->set('events', $this->Price->Event->find('list'));
+
 		$this->set('data', $this->paginate());
 	}
 

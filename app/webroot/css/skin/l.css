@@ -107,6 +107,10 @@ dt {
 .view dd, dt{
 	border-bottom: 0px;
 }
+.view dd img{
+	width: 100px;
+	height: 100px;
+}
 .boxContent .button{
 	margin:5px auto;
 }

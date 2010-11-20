@@ -46,6 +46,7 @@
 	$fields[__('Ubicación', true)] = $data['Location']['name'];
 	$fields[__('Fila', true)] = $data['Sit']['row'];
 	$fields[__('Columna', true)] = $data['Sit']['col'];
+	$fields[__('Estado', true)] = $data['Sit']['state'];
 	$fields[__('Ícono', true)] = $data['Sit']['icon'];
 	
 	echo $this->element('view',
