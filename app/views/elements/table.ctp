@@ -63,6 +63,7 @@ echo $this->MyHtml->tag('div',
 	$this->MyHtml->tag('table', $body),
 	array('id' => 'grid-sits', 'class' => $wide)
 );
+echo $this->MyHtml->tag('div', __('Escenario', true), array('class' => 'scenary'));
 
 if (!empty($wide) || empty($this->params['prefix'])) {
 	echo $this->MyForm->create('Sell', array('action' => 'sell', 'class' => 'mainForm clear', 'id' => 'formEditor'));

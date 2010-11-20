@@ -52,14 +52,29 @@ class UsersController extends AppController {
 
 
 						if ($r) {
-							$valid['address'] = $data['address'][] = $r['domicilio_completo_1_calle'] . ' ' . $r['domicilio_completo_1_numero'];
-							$data['address'][] = $r['dato_falso_domicilio_1'];
-							$data['address'][] = $r['dato_falso_domicilio_2'];
+							if (!empty($r['domicilios_v_1'])) {
+								$valid['address'] = $data['address'][] = $r['domicilios_v_1'];
+							} elseif (!empty($r['domicilios_v_2'])) {
+								$valid['address'] = $data['address'][] = $r['domicilios_v_2'];
+							} elseif (!empty($r['domicilios_v_3'])) {
+								$valid['address'] = $data['address'][] = $r['domicilios_v_3'];
+							} elseif (!empty($r['domicilios_v_4'])) {
+								$valid['address'] = $data['address'][] = $r['domicilios_v_4'];
+							}
+							$data['address'][] = $r['domicilios_f_1'];
+							$data['address'][] = $r['domicilios_f_2'];
+							$data['address'][] = $r['domicilios_f_3'];
 							shuffle($data['address']);
 
-							$valid['phone'] = $data['phone'][] = $r['telefono_calidad_sugerido'];
-							$data['phone'][] = $r['dato_falso_telefono_1'];
-							$data['phone'][] = $r['dato_falso_telefono_2'];
+
+							if (!empty($r['telefonos_v_1'])) {
+								$valid['phone'] = $data['phone'][] = $r['telefonos_v_1'];
+							} else {
+								$valid['phone'] = $data['phone'][] = $r['telefonos_v_2'];
+							}
+							$data['phone'][] = $r['telefonos_f_1'];
+							$data['phone'][] = $r['telefonos_f_2'];
+							$data['phone'][] = $r['telefonos_f_3'];
 							shuffle($data['phone']);
 
 							$valid['know'] = $data['know'][] = $r['persona_relacionada_1'];

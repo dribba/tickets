@@ -660,7 +660,15 @@ input {
 .maphilighted {
 	background-repeat: no-repeat !important;
 }
-
+.scenary {
+	height:10px;
+	padding: 13px;
+	font-weight:bold;
+	color:white;
+	font-size:14px;
+	text-align:center;
+	background-color:green;
+}
 #contentwrap #main fieldset legend {
 	width: 920px !important;
 }
@@ -668,8 +676,8 @@ input {
 	width:100%;
 }
 .wide img{
-	width: 13px;
-	height: 13px;
+	width: 10.5px;
+	height: 10.5px;
 	padding:1px;
 }
 .wide td{

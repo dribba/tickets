@@ -50,6 +50,32 @@ class EventsController extends AppController {
 
 	function admin_add($id = null) {
 		if (!empty($this->data)) {
+
+			$allowedExtensions = array('jpg', 'gif', 'png');
+			$extension = array_pop(explode('.', $this->data['Event']['image']['name']));
+			if (!empty($this->data['Event']['image']['name'])) {
+
+				if (!in_array($extension, $allowedExtensions)) {
+					$this->Session->setFlash(__('Sólo se permiten archivos de tipo imagen', true), 'flash_error');
+					$this->Site->invalidate('Event.image');
+				} else {
+
+					$plane = uniqid();
+					$uploadfile = IMAGES . $plane;
+
+					if (move_uploaded_file($this->data['Event']['image']['tmp_name'], $uploadfile)) {
+						$this->data['Event']['image'] = $plane . '|' .
+							strtolower(basename($this->data['Event']['image']['name']));
+					} else {
+						$this->Session->setFlash(__('Error subiendo la imagen', true), 'flash_error');
+						$this->Site->invalidate('Event.image');
+					}
+				}
+			} else {
+				unset($this->data['Event']['image']);
+			}
+
+
 			$this->Event->create();
 			if ($this->Event->save($this->data)) {
 				$this->Session->setFlash(__('Evento agregado', true), 'flash_success');

@@ -19,40 +19,40 @@ class SitesController extends AppController {
 	}
 	
 	function admin_add($id = null) {
-		if (!empty($this->data)) {
-			$this->Site->create();
 
+		if (!empty($this->data)) {
 
 			$allowedExtensions = array('jpg', 'gif', 'png');
-			$extension = array_pop(explode('.', $this->data['Site']['plane']['name']));
-			
-			if (!in_array($extension, $allowedExtensions)) {
-				$this->Session->setFlash(__('Sólo se permiten archivos del tipo imagen', true), 'flash_error');
-				$this->Site->invalidate('Site.plane');
-			}
+			$extension = array_pop(explode('.', $this->data['Site']['plane']['name']));		
+			if (!empty($this->data['Site']['plane']['name'])) {
 
-			$plane = uniqid();
+				if (!in_array($extension, $allowedExtensions)) {
+					$this->Session->setFlash(__('Sólo se permiten archivos de tipo imagen', true), 'flash_error');
+					$this->Site->invalidate('Site.plane');
+				} else {
 
-			$uploaddir = WWW_ROOT . DS . 'files' . DS;
-			$uploadfile = $uploaddir . $plane;
-			
-			if (move_uploaded_file($this->data['Site']['plane']['tmp_name'], $uploadfile)) {
+					$plane = uniqid();
+					$uploadfile = IMAGES . $plane;
 
-				$this->data['Site']['plane'] = $plane . 
-					'|' .
-					strtolower(basename($this->data['Site']['plane']['name']));
+					if (move_uploaded_file($this->data['Site']['plane']['tmp_name'], $uploadfile)) {
+						$this->data['Site']['plane'] = $plane . '|' .
+							strtolower(basename($this->data['Site']['plane']['name']));
+					} else {
+						$this->Session->setFlash(__('Error subiendo la imagen', true), 'flash_error');
+						$this->Site->invalidate('Site.plane');
+					}
+				}
 			} else {
-				$this->Session->setFlash(__('Error subiendo archivo', true), 'flash_error');
-				$this->Site->invalidate('Site.plane');
+				unset($this->data['Site']['plane']);
 			}
-			
-			
+
 			if ($this->Site->save($this->data)) {
 				$this->Session->setFlash(__('Sitio agregado', true), 'flash_success');
-				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('El sitio no se pudo agregar', true), 'flash_error');
 			}
+			$this->redirect(array('action' => 'index'));
+
 		} else {
 			if (!empty($id)) {
 				$this->data = $this->Site->read(null, $id);
@@ -74,4 +74,3 @@ class SitesController extends AppController {
 		$this->redirect(array('action' => 'index'));
 	}
 }
-?>

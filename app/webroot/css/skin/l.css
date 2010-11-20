@@ -551,6 +551,7 @@ form.sideForm, .sideForm fieldset {
     text-align: center;
 }
 #main td, th { padding: 0 10px; }
+#main td img { width: 17px; height: 17px;}
 #main th {
     border-right: 1px solid #000;
     border-left: 1px solid #575757;

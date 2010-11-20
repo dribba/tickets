@@ -44,7 +44,7 @@
 
 
 	$fields[__('Nombre', true)] = $data['Site']['name'];
-	$fields[__('Plano', true)] = $this->element('plane', array('data' => $data));
+	$fields[__('Esquema', true)] = $this->element('plane', array('data' => $data));
 
 	echo $this->element('view',
 		array(
