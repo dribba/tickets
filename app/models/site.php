@@ -20,4 +20,16 @@ class Site extends AppModel {
     }
 
 
+	function afterFind($results, $primary = false) {
+
+		if ($primary && empty($results[0][0])) {
+			foreach ($results as $k => $v) {
+				$results[$k]['Site']['locations'] = count($results[$k]['Location']);
+			}
+		}
+
+		return parent::afterFind($results, $primary);
+	}
+
+
 }

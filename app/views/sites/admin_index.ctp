@@ -18,6 +18,7 @@
 	$header	= null;
 	$headers[] = __('Acciones', true);
 	$headers[] = __('Nombre', true);
+	$headers[] = __('Ubicaciones', true);
 	$headers[] = __('Esquema', true);
 
 	$head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($headers));
@@ -66,6 +67,7 @@
 
 		$td[] = $this->MyHtml->tag('td', $actions);
 		$td[] = $this->MyHtml->tag('td', $record['Site']['name']);
+		$td[] = $this->MyHtml->tag('td', $record['Site']['locations']);
 		$td[] = $this->MyHtml->tag('td', $this->MyHtml->image(array_shift(explode('|', $record['Site']['plane']))));
 		$body[] = $this->MyHtml->tag('tr', $td);
 
