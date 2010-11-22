@@ -94,10 +94,11 @@ echo $this->MyHtml->scriptBlock(
 			$.getJSON($.path("events/locations/" + siteId), function(data) {
 				var options = "";
 				$.each(data, function(i, option) {
-					if (option.split("|").pop() == "selected" || ' . $new . ') {
-						options += "<option selected value=\"" + i + "\">" + option + "</option>";
+					var tmp = option.split("|");
+					if (tmp[1] == "selected" || ' . $new . ') {
+						options += "<option selected value=\"" + i + "\">" + tmp[0] + "</option>";
 					} else {
-						options += "<option value=\"" + i + "\">" + option + "</option>";
+						options += "<option value=\"" + i + "\">" + tmp[0] + "</option>";
 					}
 				});
 				$("#EventLocationId").html(options);

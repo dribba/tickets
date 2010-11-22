@@ -4,32 +4,8 @@ class EventsController extends AppController {
 
 	function admin_locations($siteId) {
 
-		$this->Event->EventsSit->Sit->Location->recursive = -1;
-		$locationsId = Set::extract('/Location/id',
-			 $this->Event->EventsSit->Sit->Location->findAllBySiteId($siteId)
-		);
-		$related = $this->Event->EventsSit->Sit->find('all',
-			array(
-				'recursive'		=> -1,
-				'fields'		=> array('Sit.location_id'),
-				'conditions'	=> array('Sit.location_id' => $locationsId),
-				'group'			=> array('Sit.location_id'),
-			)
-		);
-		$relatedLocationId = Set::extract('/Sit/location_id', $related);
+		$locations = $this->Event->EventsSit->Sit->Location->locations($siteId);
 
-		//$locations = Set::combine($this->Site->findById($id), 'Location.{n}.id', 'Location.{n}.name');
-
-
-		$locations = array();
-		$this->Event->EventsSit->Sit->Location->recursive = -1;
-		foreach ($this->Event->EventsSit->Sit->Location->findAllBySiteId($siteId) as $location) {
-			if (in_array($location['Location']['id'], $relatedLocationId)) {
-				$locations[$location['Location']['id']] = $location['Location']['name'] . '|selected';
-			} else {
-				$locations[$location['Location']['id']] = $location['Location']['name'] . '|not_selected';
-			}
-		}
 		$this->set('data', json_encode($locations));
 		$this->render('../elements/only_text', 'ajax');
 

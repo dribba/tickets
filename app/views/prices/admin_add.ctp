@@ -23,6 +23,7 @@ if (!empty($id)) {
 }
 $content[] = $this->MyForm->input('Price.event_id',
 	array(
+		'empty'		=> true,
 		'label' 	=> __('Evento', true),
 	)
 );
@@ -60,3 +61,29 @@ $out[] = $this->MyForm->end();
 $content = $this->MyHtml->tag('div', $out);
 
 echo $this->element('add', array('content' => $content));
+
+echo $this->MyHtml->scriptBlock(
+	'$(document).ready(function($) {
+
+		var getLocations = function(eventId) {
+			$.getJSON($.path("prices/locations/" + eventId), function(data) {
+				var options = "";
+				$.each(data, function(i, option) {
+					var tmp = option.split("|");
+					if (tmp[1] == "selected") {
+						options += "<option selected value=\"" + i + "\">" + tmp[0] + "</option>";
+					} else {
+						options += "<option value=\"" + i + "\">" + tmp[0] + "</option>";
+					}
+				});
+				$("#PriceLocationId").html(options);
+			});
+		};
+
+		$("#PriceEventId").change(function() {
+			getLocations($(this).val());
+		});
+		getLocations($("#PriceEventId").val());
+
+	});', array('inline' => false)
+);

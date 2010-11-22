@@ -6,6 +6,20 @@ class Price extends AppModel {
 	protected function _initialitation() {
 
 		$this->validate = array(
+			'event_id' => array(
+				'notempty' => array(
+					'rule' => array('notempty'),
+					'message' => __('Seleccione el evento', true),
+					'last' => true,
+				),
+			),
+			'location_id' => array(
+				'notempty' => array(
+					'rule' => array('notempty'),
+					'message' => __('Seleccione la ubicación', true),
+					'last' => true,
+				),
+			),
 			'type' => array(
 				'notempty' => array(
 					'rule' => array('notempty'),

@@ -2,6 +2,19 @@
 class PricesController extends AppController {
 
 
+	function admin_locations($eventId) {
+
+		$this->Price->Event->recursive = -1;
+		$event = $this->Price->Event->findById($eventId);
+
+		$locations = $this->Price->Event->EventsSit->Sit->Location->locations($event['Event']['site_id']);
+
+		$this->set('data', json_encode($locations));
+		$this->render('../elements/only_text', 'ajax');
+
+	}
+
+
 	function admin_index() {
 		$this->Filter->process();
 		$locations = $this->Price->Location->find('all', array('contain' => 'Site'));

@@ -32,4 +32,33 @@ class Location extends AppModel {
 	}
 
 
+	function locations($siteId) {
+
+		$locationsId = Set::extract('/Location/id',
+			 $this->findAllBySiteId($siteId)
+		);
+		$related = $this->Sit->find('all',
+			array(
+				'recursive'		=> -1,
+				'fields'		=> array('Sit.location_id'),
+				'conditions'	=> array('Sit.location_id' => $locationsId),
+				'group'			=> array('Sit.location_id'),
+			)
+		);
+		$relatedLocationId = Set::extract('/Sit/location_id', $related);
+
+		$locations = array();
+		$this->recursive = -1;
+		foreach ($this->findAllBySiteId($siteId) as $location) {
+			if (in_array($location['Location']['id'], $relatedLocationId)) {
+				$locations[$location['Location']['id']] = $location['Location']['name'] . '|selected';
+			} else {
+				$locations[$location['Location']['id']] = $location['Location']['name'] . '|not_selected';
+			}
+		}
+
+		return $locations;
+	}
+	
+
 }

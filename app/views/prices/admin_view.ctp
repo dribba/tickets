@@ -45,7 +45,7 @@
 	$fields[__('Evento', true)] = $data['Event']['name'];
 	$fields[__('Ubicación', true)] = $data['Location']['name'];
 	$fields[__('Tipo', true)] = $data['Price']['type'];
-	$fields[__('Precio', true)] = $data['Price']['price'];
+	$fields[__('Precio', true)] = '$ ' . $data['Price']['price'];
 	
 	echo $this->element('view',
 		array(
