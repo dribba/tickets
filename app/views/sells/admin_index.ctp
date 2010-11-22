@@ -105,7 +105,7 @@
 		$td[] = $this->MyHtml->tag('td', $record['User']['full_name']);
 		$td[] = $this->MyHtml->tag('td', $record['Sell']['license_available']);
 		$td[] = $this->MyHtml->tag('td', $record['Sell']['send']);
-		$td[] = $this->MyHtml->tag('td', $record['Sell']['total']);
+		$td[] = $this->MyHtml->tag('td', '$ ' . $record['Sell']['total']);
 		$body[] = $this->MyHtml->tag('tr', $td);
 
 	}

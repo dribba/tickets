@@ -22,7 +22,7 @@ class Location extends AppModel {
 
 	function afterFind($results, $primary = false) {
 
-		if ($primary && empty($results[0][0])) {
+		if ($primary && empty($results[0][0]) && !empty($results[0]['Sit'])) {
 			foreach ($results as $k => $v) {
 				$results[$k]['Location']['sits'] = count($results[$k]['Sit']);
 			}

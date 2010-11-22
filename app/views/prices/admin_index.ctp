@@ -75,7 +75,7 @@ $head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($header));
 		$td[] = $this->MyHtml->tag('td', $record['Event']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Location']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Price']['type']);
-		$td[] = $this->MyHtml->tag('td', $record['Price']['price']);
+		$td[] = $this->MyHtml->tag('td', '$ ' . $record['Price']['price']);
 
 		$body[] = $this->MyHtml->tag('tr', $td);
 
