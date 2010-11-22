@@ -60,7 +60,20 @@
 	$fields[__('Nombre', true)] = $data['Location']['name'];
 	$fields[__('Butacas', true)] = $data['Location']['sits'];
 
+	$lis = array();
 	foreach ($data['Price'] as $price) {
+		$view = $this->MyHtml->image(
+			'view.png',
+			array(
+				'class' => 'action',
+				'title' => __('Ver', true),
+				'url' => array(
+					'controller' 	=> 'prices',
+					'action' 		=> 'view',
+					$price['id']
+				),
+			)
+		);
 		$edit = $this->MyHtml->image(
 			'edit.png',
 			array(
@@ -83,13 +96,14 @@
 					'action' 		=> 'delete',
 					$price['id']
 				),
+				'confirm'	=> __('Esta seguro que desea eliminar el precio?', true)
 			)
 		);
-		$prices[] = $this->MyHtml->tag('div',
-			sprintf('%s: $ %s %s %s', $price['type'], $price['price'], $edit, $delete)
+		$lis[] = $this->MyHtml->tag('li',
+			sprintf('%s: $ %s %s %s %s', $price['type'], $price['price'], $view, $edit, $delete)
 		);
 	}
-	$fields[__('Precios', true)] = $this->MyHtml->tag('div', $prices);
+	$fields[__('Precios', true)] = $this->MyHtml->tag('ul', $lis);
 	$fields[__('Ubicaciones', true)] = $this->element('table', array('data' => $data));
 	
 	echo $this->element('view',
