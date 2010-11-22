@@ -32,11 +32,6 @@ $content[] = $this->MyForm->input('Location.name',
 		'label' 	=> __('Nombre', true),
 	)
 );
-$content[] = $this->MyForm->input('Location.sits',
-	array(
-		'label' 	=> __('Butacas', true),
-	)
-);
 
 
 $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));

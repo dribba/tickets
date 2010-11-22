@@ -2,6 +2,40 @@
 class EventsController extends AppController {
 
 
+	function admin_locations($siteId) {
+
+		$this->Event->EventsSit->Sit->Location->recursive = -1;
+		$locationsId = Set::extract('/Location/id',
+			 $this->Event->EventsSit->Sit->Location->findAllBySiteId($siteId)
+		);
+		$related = $this->Event->EventsSit->Sit->find('all',
+			array(
+				'recursive'		=> -1,
+				'fields'		=> array('Sit.location_id'),
+				'conditions'	=> array('Sit.location_id' => $locationsId),
+				'group'			=> array('Sit.location_id'),
+			)
+		);
+		$relatedLocationId = Set::extract('/Sit/location_id', $related);
+
+		//$locations = Set::combine($this->Site->findById($id), 'Location.{n}.id', 'Location.{n}.name');
+
+
+		$locations = array();
+		$this->Event->EventsSit->Sit->Location->recursive = -1;
+		foreach ($this->Event->EventsSit->Sit->Location->findAllBySiteId($siteId) as $location) {
+			if (in_array($location['Location']['id'], $relatedLocationId)) {
+				$locations[$location['Location']['id']] = $location['Location']['name'] . '|selected';
+			} else {
+				$locations[$location['Location']['id']] = $location['Location']['name'] . '|not_selected';
+			}
+		}
+		$this->set('data', json_encode($locations));
+		$this->render('../elements/only_text', 'ajax');
+
+	}
+
+
 	function admin_stat($eventId, $locationId) {
 
 
@@ -76,12 +110,26 @@ class EventsController extends AppController {
 			}
 
 
-			$this->Event->create();
-			if ($this->Event->save($this->data)) {
-				$this->Session->setFlash(__('Evento agregado', true), 'flash_success');
-				$this->redirect(array('action' => 'index'));
+			if (empty($this->data['Event']['location_id'])) {
+				$this->Session->setFlash(__('Debe seleccionar al menos un ubicación', true), 'flash_error');
+				$this->Site->invalidate('Event.location_id');
 			} else {
-				$this->Session->setFlash(__('El evento no se pudo agregar', true), 'flash_error');
+
+				$locationsId = $this->data['Event']['location_id'];
+				unset($this->data['Event']['location_id']);
+
+				$this->Event->create();
+				if ($this->Event->save($this->data)) {
+
+					foreach ($locationsId as $locationId) {
+						$this->Event->EventsSit->sync($this->Event->id, $locationId);
+					}
+
+					$this->Session->setFlash(__('Evento agregado', true), 'flash_success');
+					$this->redirect(array('action' => 'index'));
+				} else {
+					$this->Session->setFlash(__('El evento no se pudo agregar', true), 'flash_error');
+				}
 			}
 		} else {
 			if (!empty($id)) {

@@ -64,7 +64,7 @@
 		$edit = $this->MyHtml->image(
 			'edit.png',
 			array(
-				'class' => 'open_modal',
+				'class' => 'action',
 				'title' => __('Editar', true),
 				'url' => array(
 					'controller' 	=> 'prices',
@@ -76,7 +76,7 @@
 		$delete = $this->MyHtml->image(
 			'delete.png',
 			array(
-				'class' => 'open_modal',
+				'class' => 'action',
 				'title' => __('Eliminar', true),
 				'url' => array(
 					'controller' 	=> 'prices',
@@ -86,7 +86,7 @@
 			)
 		);
 		$prices[] = $this->MyHtml->tag('div',
-			sprintf('%s: %s %s %s', $price['type'], $price['price'], $edit, $delete)
+			sprintf('%s: $ %s %s %s', $price['type'], $price['price'], $edit, $delete)
 		);
 	}
 	$fields[__('Precios', true)] = $this->MyHtml->tag('div', $prices);

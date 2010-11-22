@@ -3,10 +3,10 @@ class SitesController extends AppController {
 
 
 	function admin_index() {
-		//$this->Event->recursive = 0;
 		$this->Filter->process();
 		$this->set('data', $this->paginate());
 	}
+
 
 	function admin_view($id = null) {
 		if (!$id) {
@@ -17,6 +17,7 @@ class SitesController extends AppController {
 		$data = $this->Site->findById($id);
 		$this->set('data', $data);
 	}
+
 	
 	function admin_add($id = null) {
 

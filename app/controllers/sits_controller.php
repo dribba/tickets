@@ -22,7 +22,7 @@ class SitsController extends AppController {
 			}
 		}
 		if (!empty($saveAll)) {
-			//$this->saveAll($saveAll);
+			$this->Sit->saveAll($saveAll);
 		}
 
 	}

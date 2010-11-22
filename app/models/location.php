@@ -19,4 +19,17 @@ class Location extends AppModel {
 
     }
 
+
+	function afterFind($results, $primary = false) {
+
+		if ($primary && empty($results[0][0])) {
+			foreach ($results as $k => $v) {
+				$results[$k]['Location']['sits'] = count($results[$k]['Sit']);
+			}
+		}
+
+		return parent::afterFind($results, $primary);
+	}
+
+
 }

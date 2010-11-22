@@ -67,6 +67,30 @@ class Sit extends AppModel {
 	}
 
 
+	function formatToPaint($data) {
+
+		$sits = array();
+		$lastRow = $lastCol = 0;
+		foreach ($data['Sit'] as $sit) {
+
+			if ($sit['row'] > $lastRow) {
+				$lastRow = $sit['row'];
+			}
+			if ($sit['col'] > $lastCol) {
+				$lastCol = $sit['col'];
+			}
+
+			$sits[$sit['row']][$sit['col']]['Sit'] = $sit;
+		}
+
+		return array(
+			'sits' 		=> $sits,
+			'limits' 	=> array('lastRow' => $lastRow, 'lastCol' => $lastCol)
+		);
+
+	}
+
+
 	function getSitsByLocationAndEvent($locationId, $eventId) {
 
 		$this->unbindModel(
@@ -104,10 +128,9 @@ class Sit extends AppModel {
 				'order'			=> array(
 					'Sit.row', 'Sit.col'
 				),
-				//'limit' 		=> 100,
 			)
 		);
-//ds($sits);
+
 
 		$data = array();
 		$lastRow = $lastCol = 0;
