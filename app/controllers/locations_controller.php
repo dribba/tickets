@@ -26,10 +26,9 @@ class LocationsController extends AppController {
 		}
 	}
 
-	function view($id = null) {
+	function view($id, $eventId) {
 		$this->layout = 'talleres';
-		$event_id = $this->Session->read('sellData');
-		$this->__view($id, true, $event_id['Sell']['event_id']);
+		$this->__view($id, true, $eventId);
 	}
 
 	function admin_view($id) {

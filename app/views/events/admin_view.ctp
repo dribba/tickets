@@ -47,8 +47,11 @@
 	$fields[__('Fecha de inicio', true)] = $data['Event']['formated_start'];
 	$fields[__('Fecha de cierre', true)] = $data['Event']['formated_end'];
 
-	$fields[__('Imagen', true)] = $this->MyHtml->image(array_shift(explode('|', $data['Event']['image'])));
+	$fields[__('Imagen', true)] = $this->MyHtml->image($data['Event']['uuid_image'],
+		array('class' => 'view')
+	);
 
+	$fields[__('Recibo', true)] = $data['Event']['receipt'];
 	$fields[__('Observaciones', true)] = $data['Event']['comments'];
 
 

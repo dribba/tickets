@@ -107,7 +107,7 @@ dt {
 .view dd, dt{
 	border-bottom: 0px;
 }
-.view dd img{
+.view dd img.view{
 	width: 100px;
 	height: 100px;
 }

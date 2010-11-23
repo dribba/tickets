@@ -2,60 +2,64 @@
 
 $this->set('title_for_layout', __('Compra de entrada', true));
 
-$out[] = $this->MyForm->create('Sell', array('class' => 'mainForm clear', 'id' => 'formEditor'));
 
 /**
 ############################################################################
 # STEP 1
 ############################################################################
 */
-$steps[1][] = $this->MyHtml->tag('legend', __('Seleccione un evento', true));
-/*
-$steps[1][] = $this->MyForm->input('Sell.event_id',
-	array(
-		'label' 	=> __('Evento', true)
-	)
-);
-*/
-if (!empty($events) && $step == 1) {
+
+if ($step == 1) {
+
+	$steps[$step][] = $this->MyHtml->tag('legend', __('Seleccione un evento', true));
+
 	$lis = array();
-	foreach ($events as $event) {
-		$lis[] = $this->MyHtml->tag('li',
-			$this->MyHtml->image('event_' . $event['Event']['id'] . '.jpg',
-				array(
-					'class' 	=> 'event',
-    				'event' 	=> $event['Event']['id'],
-				)
-			) . $this->MyHtml->tag('div', $event['Event']['comments'])
-		);
+	if (!empty($events)) {
+		foreach ($events as $event) {
+			$lis[] = $this->MyHtml->tag('li',
+				$this->MyHtml->image(
+					empty($event['Event']['uuid_image'])?'logo.png':$event['Event']['uuid_image'],
+					array(
+						'class' 	=> 'event',
+						'url'		=> array(
+							'controller'	=> 'sells',
+							'action'		=> 'sell',
+							$step,
+							'event' 		=> $event['Event']['id'],
+							'site' 			=> $event['Event']['site_id'],
+						),
+					)
+				) . $this->MyHtml->tag('div', $event['Event']['comments'])
+			);
+		}
 	}
-	$steps[1][] = $this->MyHtml->tag('ul', $lis, array('class' => 'events'));
-}
-$steps[1][] = $this->MyForm->input('Sell.event_id',
-	array(
-		'type'		=> 'hidden',
-		'label' 	=> __('Evento', true)
-	)
-);
 
-$steps[1][] = $this->MyHtml->scriptBlock(
-	'$(document).ready(function($) {
-		$(".event").hover(
-			function() {
-				$(this).addClass("border");
-			},
-			function() {
-				$(this).removeClass("border");
-			}
-		);
-		$(".event").bind("click", function() {
+	$steps[$step][] = $this->MyHtml->tag('ul', $lis, array('class' => 'events'));
+	$steps[$step][] = $this->MyForm->input('Sell.event_id',
+		array(
+			'type'		=> 'hidden'
+		)
+	);
+	$steps[$step][] = $this->MyForm->input('Sell.site_id',
+		array(
+			'type'		=> 'hidden'
+		)
+	);
 
-			$("#SellEventId").val($(this).attr("event"));
-			$("#formEditor").submit();
+	$steps[$step][] = $this->MyHtml->scriptBlock(
+		'$(document).ready(function($) {
+			$(".event").hover(
+				function() {
+					$(this).addClass("border");
+				},
+				function() {
+					$(this).removeClass("border");
+				}
+			);
+		});'
+	);
 
-		});
-	});'
-);
+} // step 1
 
 
 
@@ -65,10 +69,10 @@ $steps[1][] = $this->MyHtml->scriptBlock(
 ############################################################################
 */
 
-
-$steps[2][] = $this->MyHtml->tag('legend', __('Seleccione ubicación', true));
-$steps[2][] = $this->element('plane', array('wizard' => 'Yes', 'event_id' => (!empty($event_id) ? $event_id : '')));
-
+if ($step == 2) {
+	$steps[$step][] = $this->MyHtml->tag('legend', __('Seleccione ubicación', true));
+	$steps[$step][] = $this->element('plane', array('href' => 'sells/sell/2/location:'));
+} //step 2
 
 
 
@@ -78,44 +82,75 @@ $steps[2][] = $this->element('plane', array('wizard' => 'Yes', 'event_id' => (!e
 ############################################################################
 */
 if ($step == 3) {
+	$steps[$step][] = $this->MyHtml->tag('legend', __('Seleccione la butaca', true));
+	$steps[$step][] = $this->requestAction(
+		vsprintf('%s/%s/%s/%s',
+			array(
+				'controller'	=> 'locations',
+				'action'		=> 'view',
+				$sellData['Location']['id'],
+				$sellData['event_id']
+			)
+		),
+		array('return')
+	);
+} //step 3
 
-	$steps[3][] = $this->MyHtml->tag('legend', __('Detalles de la compra', true));
-	$steps[3][] = $this->MyForm->input('Sell.license_available',
+
+/**
+############################################################################
+# STEP 4
+############################################################################
+*/
+if ($step == 4) {
+
+	$steps[$step][] = $this->MyHtml->tag('legend', __('Detalles de la compra', true));
+
+	$steps[$step][] = $this->MyForm->create('Sell',
 		array(
-			'options' 	=> array('Y' => __('Si', true), 'N' => __('No', true)),
+			'action' 	=> 'sell/4',
+			'class' 	=> 'mainForm clear',
+			'id' 		=> 'formEditor'
+		)
+	);
+
+	$steps[$step][] = $this->MyForm->input('Sell.license_available',
+		array(
+			'options' 	=> array(__('Si', true) => __('Si', true), __('No', true) => __('No', true)),
 			'label' 	=> __('Dispone de carnet', true)
 		)
 	);
 
 	
-	$types[] = $this->MyHtml->tag('label', __('Tipo de carnet', true));
+	$types[] = $this->MyHtml->tag('label', __('Qué carnet?', true));
 	$types[] = $this->MyHtml->image('nuevo.png', array('class' => 'cursor'));
 	$types[] = $this->MyHtml->image('viejo.png', array('id' => 'antiguo', 'class' => 'cursor'));
 
-	$steps[3][] = $this->MyHtml->tag('div', $types, array('id' => 'card_type', 'class' => 'field clear'));
-	$steps[3][] = $this->MyForm->input('Sell.license_number',
+	$steps[$step][] = $this->MyHtml->tag('div', $types, array('id' => 'card_type', 'class' => 'field clear'));
+	$steps[$step][] = $this->MyForm->input('Sell.license_number',
 		array(
-			'label' 	=> __('Numero de carnet', true)
+			'label' 	=> __('Número de carnet', true)
 		)
 	);
 	
 	$street[] = $this->MyHtml->tag('div',
-		__('Envio a domicilio, costo $20', true),
+		__('Envio a domicilio, costo $ 20', true),
 		array('class' => 'clear field')
 	);
 	$street[] = $this->MyHtml->tag('div',
-		__('Retirar en sede, costo $15', true),
+		__('Retira en la sede, costo $ 15', true),
 		array('class' => 'clear field')
 	);
 	$street[] = $this->MyForm->input('Sell.send',
 		array(
-			'options' 	=> array('Y' => __('Si', true), 'N' => __('No', true)),
+			'options' 	=> array(__('Si', true) => __('Si', true), __('No', true) => __('No', true)),
+			'default'	=> __('No', true),
 			'label' 	=> __('Enviar a domicilio', true)
 		)
 	);
 	$street[] = $this->MyForm->input('Sell.street',
 		array(
-			'label' 	=> __('Direccion de envio', true)
+			'label' 	=> __('Dirección de envio', true)
 		)
 	);
 	$street[] = $this->MyForm->input('Sell.horary',
@@ -123,30 +158,33 @@ if ($step == 3) {
 			'label' 	=> __('Horario de envio', true)
 		)
 	);
-	$steps[3][] = $this->MyHtml->tag('div',
+	$steps[$step][] = $this->MyHtml->tag('div',
 		$street,
 		array('id' => 'street')
 	);
 
 
-	$steps[3][] = $this->MyHtml->scriptBlock(
+	$steps[$step][] = $this->MyHtml->scriptBlock(
 		'$(document).ready(function($) {
+
 			$("#antiguo").click(
 				function() {
 					alert("' . __("Debe renovar su carnet de socio", true) . '");
-					$("#SellLicenseAvailable").val("N");
+					$("#SellLicenseAvailable").val("No");
 					hideCardData();
 				}
 			);
+
 			$(".cursor").click(
 				function() {
 					$(".cursor").css("border", "none");
 					$(this).css("border", "2px solid #ccc");
 				}
 			);
+
 			$("#SellLicenseAvailable").change(
 				function() {
-					if ($(this).val() == "N") {
+					if ($(this).val() == "No") {
 						hideCardData();
 					} else {
 						$("#card_type").show();
@@ -155,20 +193,30 @@ if ($step == 3) {
 					}
 				}
 			);
+
 			function hideCardData() {
 				$("#street").show();
 				$("#SellLicenseNumber").parent().hide();
 				$("#card_type").hide();
 			}
-			$("#btnSubmit").click(
+
+			$("#formEditor").submit(
 				function() {
 					
 					if (!$("#SellTos").is(":checked")) {
 						alert("Para continuar, debe aceptar los terminos y condiciones de compra");
 						return false;
 					}
+
+					if ($("#SellLicenseAvailable").val() == "Si" && $("#SellLicenseNumber").val() == "") {
+						alert("Para continuar, debe ingresar el número de su carnet");
+						return false;
+					}
+
+
 				}
 			);
+
 			$("#SellSend").change(
 				function() {
 					$("#SellStreet").parent().toggle();
@@ -178,8 +226,8 @@ if ($step == 3) {
 
 		});'
 	);
-	$steps[3][] = $this->MyHtml->tag('legend', __('Terminos y condiciones de compra', true));
-	$steps[3][] = $this->MyHtml->tag('div', __('Acepto los Terminos y Condiciones de compra de …..........
+	$steps[$step][] = $this->MyHtml->tag('legend', __('Terminos y condiciones de compra', true));
+	$steps[$step][] = $this->MyHtml->tag('div', __('Acepto los Terminos y Condiciones de compra de …..........
 
 
 Las Entradas son vendidas por "…................" (Empresa) en su carácter de mandatario, en nombre y representación de la Sala Teatral (Vendedor). El Vendedor es responsable del servicio, función o espectáculo o evento a realizarse, y define las condiciones de venta en todos los casos.
@@ -197,9 +245,11 @@ El servicio de envío a domicilio es opcional y tiene un cargo adicional al del 
 
 
 
-La Empresa se encuentra inscripta dentro del régimen especial de emisión y almacenamiento electrónico de comprobantes en los términos provistos por las resoluciones generales Nº1361, sus modificatorias y complementarias, y Nº2177, con fecha de inscripción en el registro 01/10/2009. ', true), array('class' => 'tos'));
+La Empresa se encuentra inscripta dentro del régimen especial de emisión y almacenamiento electrónico de comprobantes en los términos provistos por las resoluciones generales Nº1361, sus modificatorias y complementarias, y Nº2177, con fecha de inscripción en el registro 01/10/2009. ', true),
+		array('class' => 'tos')
+	);
 
-	$steps[3][] = $this->MyForm->input('Sell.tos',
+	$steps[$step][] = $this->MyForm->input('Sell.tos',
 		array(
 			'label' 	=> __('Acepto los terminos y condiciones de compra', true),
    			'type'		=> 'checkbox',
@@ -208,89 +258,8 @@ La Empresa se encuentra inscripta dentro del régimen especial de emisión y alm
 		)
 	);
 
+} // step 4
 
-}
-
-
-/**
-############################################################################
-# STEP 4
-############################################################################
-*/
-if ($step == 4) {
-
-	$steps[4][] = $this->MyHtml->tag('legend', __('Resumen de la compra', true));
-	$resume[] = $this->MyHtml->tag('dt',
-		__('Ubicacion', true),
-		array('class' => '')
-	);
-	$resume[] = $this->MyHtml->tag('dd',
-		$data[0]['Location']['name'],
-		array('class' => '')
-	);
-	
-	foreach ($data as $sit) {
-		$resume[] = $this->MyHtml->tag('dt',
-			__('Butaca numero', true),
-			array('class' => '')
-		);
-		$resume[] = $this->MyHtml->tag('dd',
-			$sit['Sit']['code'],
-			array('class' => '')
-		);
-	}
-
-	$resume[] = $this->MyHtml->tag('dt',
-		__('Precio unitario', true),
-		array('class' => '')
-	);
-	$resume[] = $this->MyHtml->tag('dd',
-		__('$', true) . $price,
-		array('class' => '')
-	);
-	$resume[] = $this->MyHtml->tag('dt',
-		__('Precio total', true),
-		array('class' => '')
-	);
-	$resume[] = $this->MyHtml->tag('dd',
-		__('$', true) . $price * sizeof($data),
-		array('class' => '')
-	);
-	$sellData = $this->Session->read('sellData');
-	$priceLicense = 0;
-	if ($sellData['license_available'] == 'N') {
-		$priceLicense = (($sellData['send'] == 'Y') ? '20' : '15');
-	}
-	if ($sellData['license_available'] == 'N') {
-		$resume[] = $this->MyHtml->tag('dt',
-			__('Costo del carnet', true),
-			array('class' => '')
-		);
-		$resume[] = $this->MyHtml->tag('dd',
-			__('$', true) . $priceLicense,
-			array('class' => '')
-		);
-	}
-
-	$total = ($price * sizeof($data)) + $priceLicense;
-	$steps[4][] = $this->MyForm->input('Sell.total',
-		array(
-			'type' 		=> 'hidden',
-			'value' 	=> $total,
-		)
-	);
-	$steps[4][] = $this->MyForm->input('Sell.price',
-		array(
-			'type' 		=> 'hidden',
-			'value' 	=> $price,
-		)
-	);
-	$steps[4][] = $this->MyHtml->tag('dl', $resume, array('class' => 'view'));
-	$steps[4][] = $this->MyHtml->tag('div',
-		__('Costo total a pagar: $', true) . $total,
-		array('class' => 'clear field alert')
-	);
-}
 
 /**
 ############################################################################
@@ -299,35 +268,99 @@ if ($step == 4) {
 */
 if ($step == 5) {
 
-	$steps[5][] = $this->MyHtml->tag('legend', __('Opciones de pago', true));
-	$steps[5][] = "<form action='https://argentina.dineromail.com/Shop/Shop_Ingreso.asp' method='post'>
-					<input type='hidden' name='NombreItem' value='Pagar'>
-					<input type='hidden' name='TipoMoneda' value='1'>
-					<input type='hidden' name='PrecioItem' value='100.00'>
-					<input type='hidden' name='E_Comercio' value='765202'>
-					<input type='hidden' name='NroItem' value='-'>
-					<input type='hidden' name='image_url' value='http://'>
-					<input type='hidden' name='DireccionExito' value='http://'>
-					<input type='hidden' name='DireccionFracaso' value='http://'>
-					<input type='hidden' name='DireccionEnvio' value='1'>
-					<input type='hidden' name='Mensaje' value='1'>
-					<input type='image' src='https://argentina.dineromail.com/imagenes/botones/pagar-medios_c.gif' border='0' name='submit' alt='Pagar con DineroMail'>
-					</form>";
+	$steps[$step][] = $this->MyHtml->tag('legend', __('Resumen de la compra', true));
+	$resume[] = $this->MyHtml->tag('dt',
+		__('Ubicación', true)
+	);
+
+	$resume[] = $this->MyHtml->tag('dd',
+		$sellData['Location']['name']
+	);
+
+	foreach ($sellData['sits'] as $sit) {
+
+		$resume[] = $this->MyHtml->tag('dt',
+			__('Butaca número', true)
+		);
+		$resume[] = $this->MyHtml->tag('dd',
+			sprintf('%s ---> $ %s', $sit['Sit']['code'], $sit['Sit']['price'])
+		);
+	}
+
+	$resume[] = $this->MyHtml->tag('dt',
+		__('Sub-Total', true)
+	);
+
+	$resume[] = $this->MyHtml->tag('dd',
+		'$ ' . $sellData['sub_total']
+	);
+
+	if ($sellData['license_available'] == 'No') {
+		$resume[] = $this->MyHtml->tag('dt',
+			__('Costo del carnet', true)
+		);
+		$resume[] = $this->MyHtml->tag('dd',
+			'$ ' . $sellData['license_price']
+		);
+	}
+
+	$steps[$step][] = $this->MyHtml->tag('dl', $resume, array('class' => 'view'));
+	$steps[$step][] = $this->MyHtml->tag('div',
+		'<br/><br/>' . __('Costo total a pagar: $ ', true) . $sellData['total'],
+		array('class' => 'clear field alert')
+	);
+
+
+	$data['NombreItem'] = 'entrada';
+	$data['TipoMoneda'] = '1';
+	$data['PrecioItem'] = $sellData['total'];
+	$data['E_Comercio'] = '765202';
+	$data['NroItem'] = 'xxxxxxxxxxxxxxxxxxxxx';
+	$data['image_url'] = '';
+	$data['DireccionExito'] = 'x';
+	$data['DireccionFracaso'] = 'x';
+	$data['DireccionEnvio'] = '0';
+	$data['Mensaje'] = '1';
+
+	$data['MediosPago'] = '4,5,6,14,15,16,17,18';
+	$payments[] = $this->MyHtml->tag('li',
+		$this->MyHtml->link('Tarjeta de Crédito', vsprintf('https://argentina.dineromail.com/Shop/Shop_Ingreso.asp?NombreItem=%s&TipoMoneda=%s&PrecioItem=%s&E_Comercio=%s&NroItem=%s&image_url=%s&DireccionExito=%s&DireccionFracaso=%s&DireccionEnvio=%s&Mensaje=%s&MediosPago=%s', $data), array('target' => '_BLANK', 'class' => 'payment', 'payment' => 'card'))
+	);
+	$data['MediosPago'] = '18,2';
+	$payments[] = $this->MyHtml->tag('li',
+		$this->MyHtml->link('Pago Facil / Rapi-Pago', vsprintf('https://argentina.dineromail.com/Shop/Shop_Ingreso.asp?NombreItem=%s&TipoMoneda=%s&PrecioItem=%s&E_Comercio=%s&NroItem=%s&image_url=%s&DireccionExito=%s&DireccionFracaso=%s&DireccionEnvio=%s&Mensaje=%s&MediosPago=%s', $data), array('target' => '_BLANK', 'class' => 'payment', 'payment' => 'cash'))
+	);
+	$data['MediosPago'] = '18,13';
+	$payments[] = $this->MyHtml->tag('li',
+		$this->MyHtml->link('Transferencia Bancaria', vsprintf('https://argentina.dineromail.com/Shop/Shop_Ingreso.asp?NombreItem=%s&TipoMoneda=%s&PrecioItem=%s&E_Comercio=%s&NroItem=%s&image_url=%s&DireccionExito=%s&DireccionFracaso=%s&DireccionEnvio=%s&Mensaje=%s&MediosPago=%s', $data), array('target' => '_BLANK', 'class' => 'payment', 'payment' => 'transfer'))
+	);
+	$steps[$step][] = '<br/><br/>';
+	$r[] = $this->MyHtml->tag('dt', 'Pagar con:');
+	$r[] = $this->MyHtml->tag('dd', $this->MyHtml->tag('ul', $payments));
+	$steps[$step][] = $this->MyHtml->tag('dl', $r, array('class' => 'view'));
+
+	$steps[$step][] = $this->MyHtml->scriptBlock(
+		'$(document).ready(function($) {
+			$(".payment").click(
+				function() {
+					$.ajax({
+						url: $.path("sells/sell/5/payment:" + $(".payment").attr("payment")),
+						success: function(data) {
+							//console.log(data);
+						}
+					});
+				}
+			);
+		});'
+	);
+
 
 }
 
 
-$out[] = $this->MyForm->input('step',
-	array(
-		'type' 		=> 'hidden',
-		'value' 	=> $step,
-	)
-);
 foreach ($steps[$step] as $field) {
 	$content[] = $field;
 }
-
-
 
 $out[] = $this->MyHtml->tag('fieldset', $content, array('class' => 'clear'));
 

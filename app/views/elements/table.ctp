@@ -39,12 +39,7 @@ for ($x = 1; $x <= $data['limits']['lastRow']; $x++) {
 					array(
 						'id'	=> $data['sits'][$x][$y]['Sit']['id'],
 						'title' => $data['sits'][$x][$y]['Sit']['code'],
-						'url' => array(
-							'controller' 	=> 'sells',
-							'action' 		=> 'sell',
-							2,
-							$data['sits'][$x][$y]['Sit']['id']
-						),
+						'class'	=> 'sit cursor',
 					)
 				);
 			}
@@ -63,28 +58,26 @@ echo $this->MyHtml->tag('div',
 );
 echo $this->MyHtml->tag('div', __('Escenario', true), array('class' => 'scenary'));
 
+/*
 if (!empty($wide) || empty($this->params['prefix'])) {
 	echo $this->MyForm->create('Sell', array('action' => 'sell', 'class' => 'mainForm clear', 'id' => 'formEditor'));
 	echo $this->MyForm->input('sits_ids', array('id' => 'sits_ids', 'type' => 'hidden'));
 	echo $this->MyForm->input('step', array('type' => 'hidden', 'value' => 2));
 	echo $this->element("footer", array('link' => 'sells/index', 'text' => __('Siguiente', true)));
 }
+*/
 echo $this->MyHtml->scriptBlock(
 	'$(document).ready(function($) {
 		$(".sit").click(
 			function() {
 				if(!$(this).hasClass("selected")) {
 					$(this).addClass("selected");
+					$(this).attr("prev_src", $(this).attr("src"));
 					$(this).attr("src", $.path(base_url + "img/sit_selected.gif"));
 				} else {
 					$(this).removeClass("selected");
-					if($(this).hasClass("blue")) {
-						$(this).attr("src", $.path(base_url + "img/sit_blue.gif"));
-					} else {
-						$(this).attr("src", $.path(base_url + "img/sit_white.gif"));
-					}
+					$(this).attr("src", $(this).attr("prev_src"));
 				}
-				//alert($(".selected").length);
 				return false;
 			}
 		);
@@ -96,11 +89,16 @@ echo $this->MyHtml->scriptBlock(
 						ids.push($(this).attr("id"));
 					}
 				);
-				$("#sits_ids").val(ids);
-				if ($("#sits_ids").val() == "") {
+
+				if (ids.lenght == 0) {
 					alert("Seleccione al menos una butaca");
 					return false;
+				} else {
+					ids.join("|")
+					location.replace($.path("sells/sell/3/sits:" + ids.join("|")));
 				}
+
+				return false;
 			}
 		);
 

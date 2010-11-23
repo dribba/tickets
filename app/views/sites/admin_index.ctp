@@ -68,7 +68,7 @@
 		$td[] = $this->MyHtml->tag('td', $actions);
 		$td[] = $this->MyHtml->tag('td', $record['Site']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Site']['locations']);
-		$td[] = $this->MyHtml->tag('td', $this->MyHtml->image(array_shift(explode('|', $record['Site']['plane']))));
+		$td[] = $this->MyHtml->tag('td', $this->MyHtml->image($record['Site']['uuid_plane']));
 		$body[] = $this->MyHtml->tag('tr', $td);
 
 	}

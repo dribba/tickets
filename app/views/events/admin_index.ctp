@@ -66,7 +66,7 @@
 		$td[] = $this->MyHtml->tag('td', $record['Site']['name']);
 		$td[] = $this->MyHtml->tag('td', $record['Event']['formated_start']);
 		$td[] = $this->MyHtml->tag('td', $record['Event']['formated_end']);
-		$td[] = $this->MyHtml->tag('td', $this->MyHtml->image(array_shift(explode('|', $record['Event']['image']))));
+		$td[] = $this->MyHtml->tag('td', $this->MyHtml->image($record['Event']['uuid_image']));
 		$body[] = $this->MyHtml->tag('tr', $td);
 
 	}

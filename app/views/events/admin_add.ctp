@@ -69,6 +69,13 @@ $content[] = $this->MyForm->input('Event.image',
 		'help'		=> __('Sólo archivos de tipo imagen<br/>(jpg, gif, png)', true)
 	)
 );
+$content[] = $this->MyForm->input('Event.receipt',
+	array(
+		'label' 	=> __('Recibo', true),
+		'class'		=> 'area longest',
+		'help'		=> __('Texto que se mostrará en el recibo', true)
+	)
+);
 $content[] = $this->MyForm->input('Event.comments',
 	array(
 		'label' 	=> __('Observaciones', true),

@@ -28,6 +28,13 @@ $content[] = $this->MyForm->input('Site.name',
 		'label' 	=> __('Nombre', true),
 	)
 );
+$content[] = $this->MyForm->input('Site.image_map',
+	array(
+		'label' 	=> __('Image Map', true),
+		'class'		=> 'area longest',
+		'help'		=> __('Código Html correspondiente al Image Map', true)
+	)
+);
 
 $content[] = $this->MyForm->input('Site.plane',
 	array(

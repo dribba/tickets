@@ -6,8 +6,13 @@ Author: one360
 ul.events {
 	padding:5px;
 }
+ul.events li {
+	float:left;
+}
 img.event {
 	margin:5px;
+	width:280px;
+	height:120px;
 	border:2px solid transparent;
 	cursor:pointer;
 }
@@ -675,7 +680,7 @@ input {
 #grid > table {
 	width:100%;
 }
-.wide img{
+#main div.wide img{
 	width: 10.5px;
 	height: 10.5px;
 	padding:1px;

@@ -87,8 +87,8 @@
 	}
 
 	$fields[__('Nombre', true)] = $data['Site']['name'];
-	$fields[__('Ubicaciones', true)] = $this->MyHtml->tag('ul', $lis);
 	$fields[__('Esquema', true)] = $this->element('plane', array('data' => $data));
+	$fields[__('Ubicaciones', true)] = $this->MyHtml->tag('ul', $lis);
 
 	echo $this->element('view',
 		array(

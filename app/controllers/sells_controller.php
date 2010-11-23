@@ -113,112 +113,170 @@ class SellsController extends AppController {
 	}
 	 */
 
-	function sell($step = null, $sit = null) {
+	function sell($step = 0) {
+
 		$this->layout = 'talleres';
-		if ($step == 3) {
+
+		if ($step == 0) { //Select event
+
+			// ensure no previous data is in the session
+			$this->Session->delete('sellData');
+
+			$this->set('step', 1);
+
+			$this->set('events',
+				$this->Sell->SellsDetail->EventsSit->Event->find('all',
+					array(
+						'recursive'		=> -1,
+						'conditions' 	=> array('Event.state' => 'active')
+					)
+				)
+			);
+
+		} elseif ($step == 1) {  //Select location
+
+			$this->set('step', 2);
+
+			$Site = ClassRegistry::init('Site');
+			$Site->recursive = -1;
+			$sellData = $Site->findById($this->params['named']['site']);
+
+			$this->set('data', $sellData);
+			$sellData['event_id'] = $this->params['named']['event'];
+			$this->Session->write('sellData', $sellData);
+
+		} elseif ($step == 2) { // Select sits [optional]
 
 			$this->set('step', 3);
-			$this->set('sit', $sit);
 
-		} else {
-			if (empty($this->data)) {
+			$sellData = $this->Session->read('sellData');
+			$this->Sell->SellsDetail->EventsSit->Sit->Location->recursive = -1;
+			$sellData += $this->Sell->SellsDetail->EventsSit->Sit->Location->findById($this->params['named']['location']);
+			$this->Session->write('sellData', $sellData);
 
-				$this->set('events',
-					$this->Sell->SellsDetail->EventsSit->Event->find('all',
+			$this->set('sellData', $sellData);
+
+		} elseif ($step == 3) { // tos
+
+			$this->set('step', 4);
+
+			$sellData = $this->Session->read('sellData');
+			$sellData['sits'] = $this->Sell->SellsDetail->EventsSit->Sit->find('all',
+				array(
+					'contain'		=> array('Location.Price'),
+					'conditions'	=> array(
+						'Sit.id' 	=> explode('|', $this->params['named']['sits'])
+					)
+				)
+			);
+			$userType = User::get('/User/type');
+			$sub_total = 0;
+			foreach ($sellData['sits'] as $k => $sit) {
+				$price = Set::combine($sit['Location']['Price'], '{n}.type', '{n}');
+				$sellData['sits'][$k]['Sit']['price'] = $price[$userType]['price'];
+				$sub_total += $price[$userType]['price'];
+			}
+			$sellData['sub_total'] = $sub_total;
+
+			$licensePrice = 0;
+			if (!empty($sellData['license_available']) && $sellData['license_available'] == 'No') {
+				$licensePrice = (($sellData['send'] == 'Si') ? '20' : '15');
+			}
+			$sellData['license_price'] = $licensePrice;
+
+			$sellData['total'] = $sub_total + $licensePrice;
+
+			$this->Session->write('sellData', $sellData);
+
+		} elseif ($step == 4) { // resume
+
+			$this->set('step', 5);
+			$sellData = $this->Session->read('sellData');
+
+			$sellData += $this->data['Sell'];
+
+			//$price = Set::combine($sits[0]['Location']['Price'], '{n}.type', '{n}');
+			$this->Session->write('sellData', $sellData);
+			//$this->set('price', $price[User::get('/User/type')]['price']);
+			$this->set('sellData', $sellData);
+
+		} elseif ($step == 5) { // payment
+
+			$this->set('step', 6);
+
+			$sellData = $this->Session->read('sellData');
+
+			if ($this->params['named']['payment'] == 'card') {
+				$sellData['payment'] = '4,5,6,14,15,16,17,18';
+			} elseif ($this->params['named']['payment'] == 'cash') {
+				$sellData['payment'] = '18,2';
+			} elseif ($this->params['named']['payment'] == 'transfer') {
+				$sellData['payment'] = '18,13';
+			}
+
+			$save['date'] = date('Y-m-d h:i:s');
+			$save['user_id'] = User::get('/User/id');
+			$save['license_available'] = $sellData['license_available'];
+			$save['license_number'] = $sellData['license_number'];
+			$save['send'] = $sellData['send'];
+			$save['street'] = $sellData['street'];
+			$save['horary'] = $sellData['horary'];
+			$save['payment'] = $this->params['named']['payment'];
+			$save['total'] = $sellData['total'];
+
+			if ($this->Sell->save($save)) {
+
+				$sellDetail = array();
+				foreach ($sellData['sits'] as $sit) {
+
+					$eventsSit = $this->Sell->SellsDetail->EventsSit->find('first',
 						array(
 							'recursive'		=> -1,
-							'conditions' 	=> array('Event.state' => 'active')
+							'conditions' 	=> array(
+								'EventsSit.event_id'	=> $sellData['event_id'],
+								'EventsSit.sit_id'		=> $sit['Sit']['id']
+							)
 						)
-					)
-				);
-				$this->set('step', 1);
-			} else if ($this->data['Sell']['step'] == 1) {
-
-				$this->set('step', 2);
-				$sell['Sell']['event_id'] = $this->data['Sell']['event_id'];
-				$this->Session->write('sellData', $sell);
-			} else if ($this->data['Sell']['step'] == 2) {
-				
-				$this->set('step', 3);
-
-				$sellData = $this->Session->read('sellData');
-				$sellData['Sell']['sits_ids'] = $this->data['Sell']['sits_ids'];
-				$this->Session->write('sellData', $sellData);
-				
-			} else if ($this->data['Sell']['step'] == 3) {
-
-				$sellData = $this->Session->read('sellData');
-				$this->Session->write('sellData', array_merge($sellData['Sell'], $this->data['Sell']));
-
-				//Sell resume
-				$sellData = $this->Session->read('sellData');
-				$ids = explode(',', $sellData['sits_ids']);
-				$sits = $this->Sell->SellsDetail->EventsSit->Sit->find('all',
-					array(
-						'contain'		=> array('Location.Price'),
-						'conditions'	=> array(
-							'Sit.id' => $ids
-						)
-					)
-				);
-				$price = Set::combine($sits[0]['Location']['Price'], '{n}.type', '{n}');
-				$this->set('price', $price[User::get('/User/type')]['price']);
-				$this->set('data', $sits);
-
-				$this->set('step', 4);
-
-				
-			} else if ($this->data['Sell']['step'] == 4) {
-				$sellData = $this->Session->read('sellData');
-				$this->Session->write('sellData', array_merge($sellData, $this->data['Sell']));
-
-				$this->set('step', 5);
-				
-			} else if ($this->data['Sell']['step'] == 5) {
-				$this->set('step', 5);
-
-				$sellData = $this->Session->read('sellData');
-				$sellData['user_id'] = User::get('/User/id');
-				unset($sellData['tos']);
-				$sits_ids = explode(',', $sellData['sits_ids']);
-				unset($sellData['sits_ids']);
-				unset($sellData['step']);
-				$event_id = $sellData['event_id'];
-				unset($sellData['event_id']);
-				$price = $sellData['price'];
-				unset($sellData['price']);
-				$sellData['date'] = date("Y-m-d");
-				
-				if ($this->Sell->save($sellData)) {
-
-					foreach ($sits_ids as $sit) {
-						$eventSits[]['EventsSit'] = array(
-							'event_id'	=> $event_id,
-							'sit_id'	=> $sit,
-							'sell_id'	=> $this->Sell->id
-						);
-						$sellDetail[]['SellsDetail'] = array(
-							'sell_id'		=> $this->Sell->id,
-							'events_sit_id'	=> $sit,
-							'price'			=> $price
-						);
-					}
-					$this->Sell->SellsDetail->EventsSit->saveAll($eventSits);
-					$this->Sell->SellsDetail->saveAll($sellDetail);
-					//$this->Session->delete('sellData');
-					$this->Session->setFlash(
-						__('Compra realizada con exito', true), 'flash_success'
 					);
-				} else {
-					$this->Session->setFlash(
-						__('Se produjo un error al intentar realizar la compra', true), 'flash_error'
+					$this->Sell->SellsDetail->EventsSit->save(
+						array('EventsSit' =>
+							array(
+								'id'		=> $eventsSit['EventsSit']['id'],
+								'sell_id' 	=> $this->Sell->id
+							)
+						)
+					);
+
+					$sellDetail[]['SellsDetail'] = array(
+						'sell_id'		=> $this->Sell->id,
+						'events_sit_id'	=> $sit['Sit']['id'],
+						'price'			=> $sit['Sit']['price']
 					);
 				}
+				$this->Sell->SellsDetail->saveAll($sellDetail);
+
+
+				$this->set('data', $this->Sell->id);
+				$this->render('../elements/only_text', 'ajax');
+		
+				$this->Session->setFlash(
+					__('Compra realizada con exito', true), 'flash_success'
+				);
+
+			} else {
+
+				$this->Session->setFlash(
+					__('Se produjo un error al intentar realizar la compra', true), 'flash_error'
+				);
+
 				$this->redirect(array('controller' => 'sells', 'action' => 'index'));
-				//d($sellData);
 
 			}
-		}
+
+		} // step 6
 	}
+
+
+
 
 }

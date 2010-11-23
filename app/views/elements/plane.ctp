@@ -1,3 +1,26 @@
+<?php
+
+	$info = getimagesize(IMAGES . $data['Site']['uuid_plane']);
+	echo $this->MyHtml->image($data['Site']['uuid_plane'],
+		array(
+			'width' 	=> $info[0],
+			'height'	=> $info[1],
+			'border'	=> 0,
+			'usemap'	=> '#map'
+		)
+	);
+
+	//echo preg_replace('/href="([0-9]+)"/', 'href="../../locations/view/$1"', $data['Site']['image_map']);
+	/*
+	if (preg_match_all('/href="([0-9]+)"/', $data['Site']['image_map'], $matches)) {
+		foreach ($matches as $match) {
+		}
+	}
+	*/
+	echo $data['Site']['image_map'];
+
+
+/*
 <img src="/talleres/img/plano_boutique.jpg" width="600" height="419" border="0" usemap="#map" />
 
 <map name="map">
@@ -19,9 +42,12 @@
 <area shape="poly" coords="153,358,160,355,162,363,171,358,187,368,414,367,414,376,416,379,429,373,439,363,445,365,448,356,453,358,452,369,437,383,423,389,184,391,168,386,160,379,154,370,157,368,154,359" title="Tribuna Central" href="10" />
 <area shape="poly" coords="188,346,191,351,411,350,411,346,229,348,208,346,189,346,190,346,189,347" title="Tribuna Central" href="10" />
 </map>
+*/
 
+if (empty($href)) {
+	$href = 'locations/view/';
+}
 
-<?php
 echo $this->MyHtml->scriptBlock(
 	'$(document).ready(
 
@@ -36,7 +62,7 @@ echo $this->MyHtml->scriptBlock(
 
 			$("area").each(
 				function() {
-					$(this).attr("href", $.path("locations/view/" + $(this).attr("href")));
+					$(this).attr("href", $.path("' . $href . '" + $(this).attr("href")));
 				}
 			);
 		}
