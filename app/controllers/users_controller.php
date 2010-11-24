@@ -42,18 +42,18 @@ class UsersController extends AppController {
 							$this->data['User']['mobile_company'] = $code;
 						}
 
-						//$r = Cache::read('x');
-
+						$r = Cache::read('x');
+//						d($r);
+/*
 						$r = $this->User->get_personal_data(
 							$this->data['User']['document'],
 							$this->data['User']['sex']
 						);
-						Cache::write('x', $x);
-						d($x);
+						Cache::write('r', $r);
+						d($r);
+*/
 
-
-
-						if ($r) {
+						if (!empty($r)) {
 							if (!empty($r['domicilios_v_1'])) {
 								$valid['address'] = $data['address'][] = $r['domicilios_v_1'];
 							} elseif (!empty($r['domicilios_v_2'])) {
@@ -69,6 +69,20 @@ class UsersController extends AppController {
 							shuffle($data['address']);
 
 
+							if (!empty($r['laborales_v_1'])) {
+								$valid['know'] = $data['know'][] = $r['laborales_v_1'];
+							} elseif (!empty($r['laborales_v_2'])) {
+								$valid['know'] = $data['address'][] = $r['laborales_v_2'];
+							} elseif (!empty($r['laborales_v_3'])) {
+								$valid['know'] = $data['address'][] = $r['laborales_v_3'];
+							}
+							$data['know'][] = $r['laborales_f_1'];
+							$data['know'][] = $r['laborales_f_2'];
+							$data['know'][] = $r['laborales_f_3'];
+							shuffle($data['know']);
+
+
+
 							if (!empty($r['telefonos_v_1'])) {
 								$valid['phone'] = $data['phone'][] = $r['telefonos_v_1'];
 							} else {
@@ -79,10 +93,6 @@ class UsersController extends AppController {
 							$data['phone'][] = $r['telefonos_f_3'];
 							shuffle($data['phone']);
 
-							$valid['know'] = $data['know'][] = $r['persona_relacionada_1'];
-							$data['know'][] = $r['dato_falso_persona_relacionada_1'];
-							$data['know'][] = $r['dato_falso_persona_relacionada_2'];
-							shuffle($data['know']);
 							
 							$this->data['User']['full_name'] = $r['apellido'] . ' ' . $r['nombre'];
 							$this->Session->write('user_data', $this->data);
