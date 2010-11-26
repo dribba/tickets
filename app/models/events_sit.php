@@ -27,6 +27,7 @@ class EventsSit extends AppModel {
 				),
 			)
 		);
+
 		$SitIds = Set::extract('/Sit/id', $sits);
 
 		//$eventsSitSitIds = array(1, 2, 3);
@@ -37,7 +38,7 @@ class EventsSit extends AppModel {
 
 		if (!empty($toAdd)) {
 			foreach ($toAdd as $sitId) {
-				$save[] = array('sit_id' => $sitId, 'event_id' => $eventId);
+				$save[] = array('sit_id' => $sitId, 'event_id' => $eventId, 'state' => 'En venta');
 			}
 			$this->saveAll($save, array('atomic' => false));
 		}

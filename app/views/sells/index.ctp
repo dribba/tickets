@@ -6,27 +6,30 @@
 	
 	/** The grid */
 	$header	= null;
-	$headers[] = __('Fecha de compra', true);
+	$headers[] = __('Estado', true);
+	$headers[] = __('Compra', true);
 	$headers[] = __('Evento', true);
-	$headers[] = __('Ubicacion', true);
-	$headers[] = __('Cantidad de butacas', true);
+	$headers[] = __('Fecha', true);
+	//$headers[] = __('Ubicación', true);
 	$headers[] = __('Butacas', true);
-	$headers[] = __('Precio Unitario', true);
-	$headers[] = __('Precio Total', true);
+	$headers[] = __('Total', true);
 
 	$head = $this->MyHtml->tag('thead', $this->MyHtml->tableHeaders($headers));
 	
 	$body = array();
 	foreach ($data as $record) {
+
 		$td = null;
-		$sits = Set::combine($record['SellsDetail'], '{n}.EventsSit.Sit.id', '{n}.EventsSit.Sit.code');
+		//$sits = Set::combine($record['SellsDetail'], '{n}.EventsSit.Sit.id', '{n}.EventsSit.Sit.code');
+		$td[] = $this->MyHtml->tag('td', $record['Sell']['state']);
 		$td[] = $this->MyHtml->tag('td', $record['Sell']['formated_date']);
-		$td[] = $this->MyHtml->tag('td', $record['SellsDetail'][0]['EventsSit']['Event']['name']);
-		$td[] = $this->MyHtml->tag('td', $record['SellsDetail'][0]['EventsSit']['Sit']['Location']['name']);
-		$td[] = $this->MyHtml->tag('td', sizeof($record['SellsDetail']));
-		$td[] = $this->MyHtml->tag('td', implode(', ', $sits));
-		$td[] = $this->MyHtml->tag('td', $record['SellsDetail'][0]['price']);
-		$td[] = $this->MyHtml->tag('td', $record['Sell']['total']);
+		$td[] = $this->MyHtml->tag('td', $record['Event']['name']);
+		$td[] = $this->MyHtml->tag('td', $record['Event']['formated_short_start']);
+		//$td[] = $this->MyHtml->tag('td', $record['SellsDetail'][0]['EventsSit']['Sit']['Location']['name']);
+		$td[] = $this->MyHtml->tag('td', count($record['SellsDetail']));
+		//$td[] = $this->MyHtml->tag('td', implode(', ', $sits));
+		//$td[] = $this->MyHtml->tag('td', $record['SellsDetail'][0]['price']);
+		$td[] = $this->MyHtml->tag('td', '$ ' . $record['Sell']['total']);
 		$body[] = $this->MyHtml->tag('tr', $td);
 
 	}

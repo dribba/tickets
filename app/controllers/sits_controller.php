@@ -98,6 +98,7 @@ class SitsController extends AppController {
 
 							$save['location_id'] = $locationId;
 							$save['row'] = $row;
+							$save['state'] = 'En venta';
 							$save['col'] = $col;
 							$tmp = explode('|', $v);
 							if (count($tmp) == 2) {

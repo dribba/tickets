@@ -8,14 +8,18 @@ class LocationsController extends AppController {
 	}
 
 	private function __view($id = null, $wizard = false, $eventId = null) {
+
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid location', true));
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$this->Location->contain(array('Price.Event', 'Sit'));
+		$sits = $this->Location->Sit->findSits($eventId, $id);
+		$this->Location->contain(array('Price.Event'));
 		$location = $this->Location->read(null, $id);
+		$location += $sits;
 		$location += $this->Location->Sit->formatToPaint($location);
+
 		$this->set('data', $location);
 
 

@@ -4,10 +4,12 @@ class Event extends AppModel {
 	var $displayField = 'name';
 
 	var $virtualFields = array(
-		'formated_start' 	=> 'DATE_FORMAT(`Event`.`start`, "%Y-%m-%d %H:%i")',
-		'formated_end' 		=> 'DATE_FORMAT(`Event`.`end`, "%Y-%m-%d %H:%i")',
-		'uuid_image' 		=> 'SUBSTRING_INDEX(`Event`.`image`, "|", 1 )',
-		'filename_image' 	=> 'SUBSTRING_INDEX(SUBSTRING_INDEX(`Event`.`image`, "|", 2 ), "|", -1)'
+		'formated_start' 		=> 'DATE_FORMAT(`Event`.`start`, "%Y-%m-%d %H:%i")',
+		'formated_end' 			=> 'DATE_FORMAT(`Event`.`end`, "%Y-%m-%d %H:%i")',
+		'formated_short_start' 	=> 'DATE_FORMAT(`Event`.`start`, "%Y-%m-%d")',
+		'formated_short_end' 	=> 'DATE_FORMAT(`Event`.`end`, "%Y-%m-%d")',
+		'uuid_image' 			=> 'SUBSTRING_INDEX(`Event`.`image`, "|", 1 )',
+		'filename_image' 		=> 'SUBSTRING_INDEX(SUBSTRING_INDEX(`Event`.`image`, "|", 2 ), "|", -1)'
 	);
 
 	var $hasMany = array('EventsSit');

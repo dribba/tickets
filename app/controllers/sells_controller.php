@@ -38,7 +38,7 @@ class SellsController extends AppController {
 
 	function index() {
 		$this->layout = 'talleres';
-		$this->paginate['contain'] = array('SellsDetail.EventsSit' => array('Event', 'Sit.Location'));
+		$this->paginate['contain'] = array('Event', 'SellsDetail.EventsSit' => array('Sit.Location'));
 		$this->paginate['conditions'] = array('Sell.user_id' => User::get('/User/id'));
 		$this->__index();
 	}
@@ -209,6 +209,8 @@ class SellsController extends AppController {
 			}
 
 			$save['date'] = date('Y-m-d h:i:s');
+			$save['state'] = 'Pendiente';
+			$save['event_id'] = $sellData['event_id'];
 			$save['user_id'] = User::get('/User/id');
 			$save['license_available'] = $sellData['license_available'];
 			$save['license_number'] = $sellData['license_number'];
@@ -232,10 +234,12 @@ class SellsController extends AppController {
 							)
 						)
 					);
+
 					$this->Sell->SellsDetail->EventsSit->save(
 						array('EventsSit' =>
 							array(
 								'id'		=> $eventsSit['EventsSit']['id'],
+								'state'		=> 'Vendido',
 								'sell_id' 	=> $this->Sell->id
 							)
 						)
@@ -269,8 +273,5 @@ class SellsController extends AppController {
 
 		} // step 6
 	}
-
-
-
 
 }
