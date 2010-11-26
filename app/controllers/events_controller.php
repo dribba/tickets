@@ -67,7 +67,7 @@ class EventsController extends AppController {
 
 				if (!in_array($extension, $allowedExtensions)) {
 					$this->Session->setFlash(__('Sólo se permiten archivos de tipo imagen', true), 'flash_error');
-					$this->Site->invalidate('Event.image');
+					$this->Event->invalidate('Event.image');
 				} else {
 
 					$plane = uniqid();
@@ -78,7 +78,7 @@ class EventsController extends AppController {
 							strtolower(basename($this->data['Event']['image']['name']));
 					} else {
 						$this->Session->setFlash(__('Error subiendo la imagen', true), 'flash_error');
-						$this->Site->invalidate('Event.image');
+						$this->Event->invalidate('Event.image');
 					}
 				}
 			} else {
@@ -88,7 +88,7 @@ class EventsController extends AppController {
 
 			if (empty($this->data['Event']['location_id'])) {
 				$this->Session->setFlash(__('Debe seleccionar al menos un ubicación', true), 'flash_error');
-				$this->Site->invalidate('Event.location_id');
+				$this->Event->invalidate('Event.location_id');
 			} else {
 
 				$locationsId = $this->data['Event']['location_id'];

@@ -38,11 +38,7 @@ class SellsController extends AppController {
 
 	function index() {
 		$this->layout = 'talleres';
-		//$this->paginate['contain'] = array('EventsSit.Sit.Location', 'EventsSit.Event');
-		$this->paginate['contain'] = array(
-			'SellsDetail.EventsSit.Sit.Location',
-			'SellsDetail.EventsSit.Event'
-		);
+		$this->paginate['contain'] = array('SellsDetail.EventsSit' => array('Event', 'Sit.Location'));
 		$this->paginate['conditions'] = array('Sell.user_id' => User::get('/User/id'));
 		$this->__index();
 	}
@@ -195,9 +191,7 @@ class SellsController extends AppController {
 
 			$sellData += $this->data['Sell'];
 
-			//$price = Set::combine($sits[0]['Location']['Price'], '{n}.type', '{n}');
 			$this->Session->write('sellData', $sellData);
-			//$this->set('price', $price[User::get('/User/type')]['price']);
 			$this->set('sellData', $sellData);
 
 		} elseif ($step == 5) { // payment
@@ -249,7 +243,7 @@ class SellsController extends AppController {
 
 					$sellDetail[]['SellsDetail'] = array(
 						'sell_id'		=> $this->Sell->id,
-						'events_sit_id'	=> $sit['Sit']['id'],
+						'events_sit_id'	=> $eventsSit['EventsSit']['id'],
 						'price'			=> $sit['Sit']['price']
 					);
 				}
