@@ -96,7 +96,6 @@ class EventsController extends AppController {
 
 				$this->Event->create();
 				if ($this->Event->save($this->data)) {
-
 					foreach ($locationsId as $locationId) {
 						$this->Event->EventsSit->sync($this->Event->id, $locationId);
 					}

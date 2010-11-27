@@ -8,14 +8,15 @@ class EventsSit extends AppModel {
 
 		$eventsSits = $this->find('all',
 			array(
-				'recursive'		=> -1,
+				'contain'		=> array('Sit'),
 				'conditions'	=> array(
 					'EventsSit.event_id'	=> $eventId,
 					'EventsSit.sell_id'		=> 0,
-				),
+					'Sit.location_id'		=> $locationId
+				)
 			)
 		);
-		$eventsSitSitIds = Set::extract('/EventsSit/id', $eventsSits);
+		$eventsSitSitIds = Set::extract('/EventsSit/sit_id', $eventsSits);
 
 
 		$sits = $this->Sit->find('all',
@@ -24,25 +25,23 @@ class EventsSit extends AppModel {
 				'conditions'	=> array(
 					'Sit.location_id'	=> $locationId,
 					'Sit.state'			=> 'En venta',
-				),
+				)
 			)
 		);
+		$sitIds = Set::extract('/Sit/id', $sits);
 
-		$SitIds = Set::extract('/Sit/id', $sits);
 
-		//$eventsSitSitIds = array(1, 2, 3);
-		//$SitIds = array(1, 2, 4);
+		$toAdd = array_diff($sitIds, $eventsSitSitIds);
+		$toDelete = array_diff($eventsSitSitIds, $sitIds);
 
-		$toAdd = array_diff($SitIds, $eventsSitSitIds);
-		$toDelete = array_diff($eventsSitSitIds, $SitIds);
 
 		if (!empty($toAdd)) {
+			$save = array();
 			foreach ($toAdd as $sitId) {
 				$save[] = array('sit_id' => $sitId, 'event_id' => $eventId, 'state' => 'En venta');
 			}
 			$this->saveAll($save, array('atomic' => false));
 		}
-
 
 		if (!empty($toDelete)) {
 			$this->unbindModel(array('belongsTo' => array('Event', 'Sit', 'Sell')));
