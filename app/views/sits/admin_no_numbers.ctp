@@ -13,7 +13,6 @@ $out[] = $this->MyHtml->tag(
 	array('id' => 'asterisk')
 );
 
-$content[] = $this->MyHtml->tag('legend', __('Importar butacas desde archivo MS Excel', true));
 
 $content[] = $this->MyForm->input('Sit.location_id',
 	array(

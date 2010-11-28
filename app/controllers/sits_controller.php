@@ -1,8 +1,6 @@
 <?php
 class SitsController extends AppController {
 
-	var $name = 'Sits';
-
 
 	function admin_no_numbers() {
 
@@ -16,13 +14,20 @@ class SitsController extends AppController {
 				$saveAll[] = array(
 					'Sit' => array(
 						'location_id' 	=> $this->data['Sit']['location_id'],
-						'icon' 			=> 'sit.gif'
+						'icon' 			=> 'sit.gif',
+						'state' 		=> 'En venta'
 					)
 				);
 			}
-		}
-		if (!empty($saveAll)) {
-			$this->Sit->saveAll($saveAll);
+
+
+			if (!empty($saveAll) && $this->Sit->saveAll($saveAll)) {
+				$this->Session->setFlash(__('Se crearon las butacas correctamente', true), 'flash_success');
+			} else {
+				$this->Session->setFlash(__('No fue posible generar las butacas', true), 'flash_error');
+			}
+			$this->redirect(array('action' => 'index'));
+
 		}
 
 	}
@@ -81,25 +86,25 @@ class SitsController extends AppController {
 				}
 
 				$toDelete = $toSave = array();
-				for ($row = 1; $row < $highestRow; $row++) {
-					for ($col = 1; $col < $highestCol; $col++) {
+				for ($row = 1; $row <= $highestRow; $row++) {
+					for ($col = 0; $col < $highestCol; $col++) {
 
 						$v = $objPHPExcel->getActiveSheet()->getCellByColumnAndRow($col, $row)->getValue();
 
 						$save = null;
 						if (empty($v)) {
-							if (!empty($existingSits[$row][$col])) {
-								$toDelete[] = $existingSits[$row][$col]['id'];
+							if (!empty($existingSits[$row][($col+1)])) {
+								$toDelete[] = $existingSits[$row][($col+1)]['id'];
 							}
 						} else {
-							if (!empty($existingSits[$row][$col])) {
-								$save['id'] = $existingSits[$row][$col]['id'];
+							if (!empty($existingSits[$row][($col+1)])) {
+								$save['id'] = $existingSits[$row][($col+1)]['id'];
 							}
 
 							$save['location_id'] = $locationId;
 							$save['row'] = $row;
 							$save['state'] = 'En venta';
-							$save['col'] = $col;
+							$save['col'] = ($col+1);
 							$tmp = explode('|', $v);
 							if (count($tmp) == 2) {
 								$save['code'] = $tmp[0];
@@ -134,7 +139,10 @@ class SitsController extends AppController {
 
 	function admin_index() {
 		$this->Filter->process();
-		$this->set('locations', $this->Sit->Location->find('list'));
+		$locations = $this->Sit->Location->find('all', array('contain' => 'Site'));
+		$this->set('locations',
+			Set::combine($locations, '{n}.Location.id', '{n}.Location.name', '{n}.Site.name')
+		);
 		$this->set('data', $this->paginate());
 	}
 
