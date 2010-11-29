@@ -154,9 +154,37 @@ class SellsController extends AppController {
 
 		} elseif ($step == 3) { // tos
 
+
 			$this->set('step', 4);
 
 			$sellData = $this->Session->read('sellData');
+			$sellData['numbered'] = $this->params['named']['numbered'];
+
+			if (!$this->params['named']['numbered']) {
+				// must search for n emty sits in the locations & event
+				$eventsSit = $this->Sell->SellsDetail->EventsSit->find('all',
+					array(
+						'contain'		=> array('Sit'),
+						'conditions'	=> array(
+							'Sit.location_id' 		=> $sellData['Location']['id'],
+							'EventsSit.event_id'	=> $sellData['event_id'],
+							'EventsSit.state'		=> 'En venta',
+							'EventsSit.sell_id'		=> '0',
+						),
+						'limit'			=> $this->params['named']['sits']
+					)
+				);
+
+				if (count($eventsSit) < $this->params['named']['sits']) {
+					$this->Session->setFlash(
+						__('No hay butacas suficientes para el evento', true), 'flash_error'
+					);
+					$this->redirect(array('controller' => 'sells', 'action' => 'sell'));
+				} else {
+					$this->params['named']['sits'] = implode('|', Set::extract('/EventsSit/sit_id', $eventsSit));
+				}
+			}
+
 			$sellData['sits'] = $this->Sell->SellsDetail->EventsSit->Sit->find('all',
 				array(
 					'contain'		=> array('Location.Price'),
@@ -165,6 +193,7 @@ class SellsController extends AppController {
 					)
 				)
 			);
+
 			$userType = User::get('/User/type');
 			$sub_total = 0;
 			foreach ($sellData['sits'] as $k => $sit) {
@@ -174,22 +203,22 @@ class SellsController extends AppController {
 			}
 			$sellData['sub_total'] = $sub_total;
 
+			$this->Session->write('sellData', $sellData);
+
+		} elseif ($step == 4) { // resume
+
+			$this->set('step', 5);
+
+			$sellData = $this->Session->read('sellData');
+			$sellData += $this->data['Sell'];
+
 			$licensePrice = 0;
 			if (!empty($sellData['license_available']) && $sellData['license_available'] == 'No') {
 				$licensePrice = (($sellData['send'] == 'Si') ? '20' : '15');
 			}
 			$sellData['license_price'] = $licensePrice;
 
-			$sellData['total'] = $sub_total + $licensePrice;
-
-			$this->Session->write('sellData', $sellData);
-
-		} elseif ($step == 4) { // resume
-
-			$this->set('step', 5);
-			$sellData = $this->Session->read('sellData');
-
-			$sellData += $this->data['Sell'];
+			$sellData['total'] = $sellData['sub_total'] + $licensePrice;
 
 			$this->Session->write('sellData', $sellData);
 			$this->set('sellData', $sellData);

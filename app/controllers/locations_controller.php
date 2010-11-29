@@ -14,17 +14,21 @@ class LocationsController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 
-		$sits = $this->Location->Sit->findSits($eventId, $id);
-		$this->Location->contain(array('Price.Event'));
+		$this->Location->contain(array('Price.Event', 'Sit'));
 		$location = $this->Location->read(null, $id);
-		$location += $sits;
+		$location += $this->Location->Sit->findSits($eventId, $id);
 		$location += $this->Location->Sit->formatToPaint($location);
+		if ($location['Location']['sits'] == count($location['sits'])) {
+			$location['Location']['numbered'] = 1;
+		} else {
+			$location['Location']['numbered'] = 0;
+		}
 
 		$this->set('data', $location);
 
 
 		if (!$wizard) {
-			$this->render('admin_view');
+   			$this->render('admin_view');
 		} else {
 			$this->render('view');
 		}
