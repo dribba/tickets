@@ -18,11 +18,14 @@ class LocationsController extends AppController {
 		$location = $this->Location->read(null, $id);
 		$location += $this->Location->Sit->findSits($eventId, $id);
 		$location += $this->Location->Sit->formatToPaint($location);
+
+		/*
 		if ($location['Location']['sits'] == count($location['sits'])) {
 			$location['Location']['numbered'] = 1;
 		} else {
 			$location['Location']['numbered'] = 0;
 		}
+		*/
 
 		$this->set('data', $location);
 

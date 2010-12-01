@@ -42,16 +42,10 @@ class UsersController extends AppController {
 							$this->data['User']['mobile_company'] = $code;
 						}
 
-						$r = Cache::read('x');
-//						d($r);
-/*
 						$r = $this->User->get_personal_data(
 							$this->data['User']['document'],
 							$this->data['User']['sex']
 						);
-						Cache::write('r', $r);
-						d($r);
-*/
 
 						if (!empty($r)) {
 							if (!empty($r['domicilios_v_1'])) {
