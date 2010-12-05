@@ -16,6 +16,7 @@ class LocationsController extends AppController {
 
 		$this->Location->contain(array('Price.Event', 'Sit'));
 		$location = $this->Location->read(null, $id);
+		unset($location['Sit']);
 		$location += $this->Location->Sit->findSits($eventId, $id);
 		$location += $this->Location->Sit->formatToPaint($location);
 
