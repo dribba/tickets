@@ -4,7 +4,8 @@ class SellsController extends AppController {
 
 	function admin_stats($period = null) {
 		$title = __('Resultado de la busqueda', true);
-		$conditions['Sell.date <='] = date('Y-m-d');
+		//$conditions['Sell.date <='] = date('Y-m-d');
+		$conditions = array();
 		switch($period) {
 			case 'today':
 				$conditions['Sell.date >='] = date('Y-m-d');
@@ -26,11 +27,11 @@ class SellsController extends AppController {
 		$this->paginate['limit'] = 1000;
 		
 		$extraConditions = $this->Filter->process(true);
+		//$this->paginate['conditions'] = array_merge($conditions, $extraConditions);
+		$this->paginate['conditions'] = $conditions;
 
-		$this->paginate['conditions'] = array_merge($conditions, $extraConditions);
-		//d($this->paginate['conditions']);
-		
 		$data = $this->paginate();
+
 		$this->set('data', $data);
 		$this->set('title', $title);
 	}

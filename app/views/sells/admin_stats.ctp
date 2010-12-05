@@ -116,14 +116,14 @@
 		$td[] = $this->MyHtml->tag('td', $record['User']['full_name']);
 		$td[] = $this->MyHtml->tag('td', $record['Sell']['license_available']);
 		$td[] = $this->MyHtml->tag('td', $record['Sell']['send']);
-		$td[] = $this->MyHtml->tag('td', $record['Sell']['total']);
+		$td[] = $this->MyHtml->tag('td', '$ ' . $record['Sell']['total']);
 		$total += $record['Sell']['total'];
 		$body[] = $this->MyHtml->tag('tr', $td);
 		$td = null;
 
 	}
 	$td[] = $this->MyHtml->tag('td', __('Total', true), array('colspan' => 5, 'class' => 'total'));
-	$td[] = $this->MyHtml->tag('td', $total);
+	$td[] = $this->MyHtml->tag('td', '$ ' . $total);
 	$body[] = $this->MyHtml->tag('tr', $td, array('class' => 'total'));
 
 	if ($body != null) {

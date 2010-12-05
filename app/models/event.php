@@ -32,25 +32,19 @@ class Event extends AppModel {
 	function daily_stat($event_id, $date) {
 		$sells = $this->EventsSit->find('all',
 			array(
-				//'contain' => array('SellsDetail.EventsSit'),
 				'conditions' => array(
-					'Sell.created LIKE'	=>  '%' . $date . '%',
+					'Sell.date LIKE'	=> '%' . $date . '%',
+					'EventsSit.state'	=> 'Vendido',
 					'Event.id'			=> $event_id
 				)
 			)
 		);
-		
-		$sellData = Set::combine($sells, '{n}.Sell.id', '{n}.Sell.total');
 
-		$total = 0;
-		foreach ($sellData as $id => $sell) {
-			$total += $sell;
-		}
+		$sellData = Set::combine($sells, '{n}.Sell.id', '{n}.Sell.total');
 
 		$data['total_sells'] =  sizeof($sellData);
 		$data['amount_sits_selled'] = sizeof($sells);
-		$data['total'] = $total;
-		
+		$data['total'] = array_sum($sellData);
 		return $data;
 	}
 
