@@ -324,15 +324,15 @@ if ($step == 5) {
 
 	$data['MediosPago'] = '4,5,6,14,15,16,17,18';
 	$payments[] = $this->MyHtml->tag('li',
-		$this->MyHtml->link('Tarjeta de Crédito', vsprintf('https://argentina.dineromail.com/Shop/Shop_Ingreso.asp?NombreItem=%s&TipoMoneda=%s&PrecioItem=%s&E_Comercio=%s&NroItem=%s&image_url=%s&DireccionExito=%s&DireccionFracaso=%s&DireccionEnvio=%s&Mensaje=%s&MediosPago=%s', $data), array('target' => '_BLANK', 'class' => 'payment', 'payment' => 'card'))
+		$this->MyHtml->link($this->MyHtml->image('payment_credit_card.png', array('title' => __('Tarjeta de Crédito', true))), vsprintf('https://argentina.dineromail.com/Shop/Shop_Ingreso.asp?NombreItem=%s&TipoMoneda=%s&PrecioItem=%s&E_Comercio=%s&NroItem=%s&image_url=%s&DireccionExito=%s&DireccionFracaso=%s&DireccionEnvio=%s&Mensaje=%s&MediosPago=%s', $data), array('target' => '_BLANK', 'class' => 'payment', 'payment' => 'card', 'escape' => false))
 	);
 	$data['MediosPago'] = '18,2';
 	$payments[] = $this->MyHtml->tag('li',
-		$this->MyHtml->link('Pago Facil / Rapi-Pago', vsprintf('https://argentina.dineromail.com/Shop/Shop_Ingreso.asp?NombreItem=%s&TipoMoneda=%s&PrecioItem=%s&E_Comercio=%s&NroItem=%s&image_url=%s&DireccionExito=%s&DireccionFracaso=%s&DireccionEnvio=%s&Mensaje=%s&MediosPago=%s', $data), array('target' => '_BLANK', 'class' => 'payment', 'payment' => 'cash'))
+		$this->MyHtml->link($this->MyHtml->image('payment_cash.png', array('title' => __('Pago Facil / Rapi-Pago', true))), vsprintf('https://argentina.dineromail.com/Shop/Shop_Ingreso.asp?NombreItem=%s&TipoMoneda=%s&PrecioItem=%s&E_Comercio=%s&NroItem=%s&image_url=%s&DireccionExito=%s&DireccionFracaso=%s&DireccionEnvio=%s&Mensaje=%s&MediosPago=%s', $data), array('target' => '_BLANK', 'class' => 'payment', 'payment' => 'cash', 'escape' => false))
 	);
 	$data['MediosPago'] = '18,13';
 	$payments[] = $this->MyHtml->tag('li',
-		$this->MyHtml->link('Transferencia Bancaria', vsprintf('https://argentina.dineromail.com/Shop/Shop_Ingreso.asp?NombreItem=%s&TipoMoneda=%s&PrecioItem=%s&E_Comercio=%s&NroItem=%s&image_url=%s&DireccionExito=%s&DireccionFracaso=%s&DireccionEnvio=%s&Mensaje=%s&MediosPago=%s', $data), array('target' => '_BLANK', 'class' => 'payment', 'payment' => 'transfer'))
+		$this->MyHtml->link($this->MyHtml->image('payment_transfer.png', array('title' => __('Transferencia Bancaria', true))), vsprintf('https://argentina.dineromail.com/Shop/Shop_Ingreso.asp?NombreItem=%s&TipoMoneda=%s&PrecioItem=%s&E_Comercio=%s&NroItem=%s&image_url=%s&DireccionExito=%s&DireccionFracaso=%s&DireccionEnvio=%s&Mensaje=%s&MediosPago=%s', $data), array('target' => '_BLANK', 'class' => 'payment', 'payment' => 'transfer', 'escape' => false))
 	);
 	$steps[$step][] = '<br/><br/>';
 	$r[] = $this->MyHtml->tag('dt', 'Pagar con:');
